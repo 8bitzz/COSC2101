@@ -2,7 +2,7 @@ import Navbar from '../../components/navbar/Navbar'
 import Featured from '../../components/featured/Featured'
 import MovieList from '../../components/movieList/MovieList'
 
-const movieList = ["Thrillers", "Romantic", "Sci-fi", "Family"]
+const movieList = ["Award-Winning", "Crime", "Action", "Documentaries", "Horror", "Sci-Fi", "Romance", "Children & Family", "Anime", "Fantasy"]
 
 const Home = () => {
   return (

@@ -3,7 +3,7 @@ import "./navbar.css";
 const Navbar = () => {
   return (
     <div className="navbar w-screen fixed top-0 z-50 text-white">
-      <div className="h-20 py-0 px-12 flex justify-between items-center text-sm">
+      <div className="h-20 py-3 px-12 flex justify-between items-center text-sm">
         <div className="flex items-center font-light">
           <img
             className="h-6 mr-8 cursor-pointer"

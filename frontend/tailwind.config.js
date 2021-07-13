@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'netflix-black': '#0b0b0b',
+        'netflix-black': '#141414',
       }
     }
   },
