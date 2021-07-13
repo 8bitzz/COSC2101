@@ -3,22 +3,22 @@ import "./navbar.css";
 const Navbar = () => {
   return (
     <div className="navbar w-screen fixed top-0 z-50 text-white">
-      <div className="h-20 py-0 px-12 flex justify-between items-center">
-        <div className="flex items-center">
+      <div className="h-20 py-0 px-12 flex justify-between items-center text-sm">
+        <div className="flex items-center font-light">
           <img
-            className="h-6 mr-8"
+            className="h-6 mr-8 cursor-pointer"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
-          <span className="mr-4">Series</span>
-          <span className="mr-4">Movies</span>
-          <span className="mr-4">New and Popular</span>
-          <span className="mr-4">My List</span>
+          <span className="mr-4 cursor-pointer">Home</span>
+          <span className="mr-4 cursor-pointer">TV Shows</span>
+          <span className="mr-4 cursor-pointer">Movies</span>
+          <span className="mr-4 cursor-pointer">New & Popular</span>
         </div>
         <div className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mr-2 cursor-pointer"
+            className="h-6 w-6 mr-4 cursor-pointer"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -32,7 +32,7 @@ const Navbar = () => {
           </svg>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mr-2 cursor-pointer"
+            className="h-6 w-6 mr-4 cursor-pointer"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -41,10 +41,10 @@ const Navbar = () => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
-              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
             />
           </svg>
-          <button className="bg-red-600 rounded-md py-1 px-3">Sign In</button>
+          <button className="bg-red-600 rounded-md py-2 px-4">Sign In</button>
         </div>
       </div>
     </div>
