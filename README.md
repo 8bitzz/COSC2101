@@ -25,3 +25,7 @@ $ npm install
 $ npm start
 ```
 
+### How to connect to MongoDB and preview data
+1. Download Mongo Compass app at https://www.mongodb.com/try/download/compass
+2. Open and connect with mongodb+srv://admin:abcd12345@moviedatabase.s44w8.mongodb.net/netflix
+3. Select Netflix database in the left panel and preview the data.
