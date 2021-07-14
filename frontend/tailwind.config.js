@@ -10,9 +10,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      flex: ['group-hover', 'hover'],
-      flexDirection: ['group-hover', 'hover'],
-      position: ['group-hover', 'hover'],
+      fontSize: ['responsive', 'hover', 'focus'],
+      fontWeight: ['hover', 'focus'],
     },
   },
   plugins: [],
