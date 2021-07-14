@@ -20,6 +20,12 @@ mongoose.connect(process.env.MONGODB_URL, {
     useCreateIndex: true,
 });
 
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("MongoDB is connected")
+});
+
 //Middleware
 app.use(helmet());
 app.use(cors());
