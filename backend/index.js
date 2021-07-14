@@ -6,6 +6,7 @@ var cors = require("cors");
 require("dotenv").config();
 
 // Import routes
+const productRoutes = require("./src/routes/productRoutes");
 
 // App config
 var app = express();
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use("/products", productRoutes);
 
 // Default route
 app.get("/", function (req, res) {
