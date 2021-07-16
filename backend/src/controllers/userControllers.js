@@ -1,8 +1,20 @@
 const User = require("../models/user");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 const registerUser = async (req, res) => {
+  // Validate email and password
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  // Check if there is any account registered with the email address
+  const user = await User.findOne({ email: req.body.email });
+  if (user) {
+    return res.status(401).json("Email has been registered");
+  }
+
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -11,6 +23,7 @@ const registerUser = async (req, res) => {
       process.env.SECRET_KEY
     ).toString(),
   });
+
   try {
     const user = await newUser.save();
     res.status(201).json(user);
@@ -21,15 +34,18 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
+    // Check if there is any account registered with the email address
     const user = await User.findOne({ email: req.body.email });
-    !user &&
-      res.status(401).json("Can not find any user with that email address");
+    if (!user) {
+      return res.status(401).json("Can not find any user with that email address");
+    }
 
+    // Check if password matched
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-    originalPassword !== req.body.password &&
-      res.status(401).json("Incorrect password");
-      
+    if (originalPassword !== req.body.password) {
+       return res.status(401).json("Incorrect password");
+    } 
     // Generate JWT accessToken
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
@@ -37,9 +53,11 @@ const loginUser = async (req, res) => {
       { expiresIn: "5d" }
     );
 
-    // Extract password from response 
+    // Extract password from response
     const { password, ...userInfo } = user._doc;
-    res.status(200).json({...userInfo}, accessToken);
+
+    // Return accessToken in response
+    res.status(200).json({ ...userInfo, accessToken });
   } catch (err) {
     res.status(500).json(err);
   }
