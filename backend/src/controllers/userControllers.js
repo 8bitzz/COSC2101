@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 
 const registerUser = async (req, res) => {
+  if (!req.body.email || !req.body.password ) {
+    return res.status(401).json("Missing email or password field");
+  }
   // Validate email and password
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -34,6 +37,9 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
+    if (!req.body.email || !req.body.password ) {
+      return res.status(401).json("Missing email or password field");
+    }
     // Check if there is any account registered with the email address
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
