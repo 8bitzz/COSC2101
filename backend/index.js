@@ -1,12 +1,12 @@
 var express = require("express");
 var mongoose = require("mongoose");
-var bodyParser = require("body-parser");
 var helmet = require("helmet");
 var cors = require("cors");
 require("dotenv").config();
 
 // Import routes
-const productRoutes = require("./src/routes/productRoutes");
+const categoryRoutes = require("./src/routes/categoryRoutes");
+const movieRoutes = require("./src/routes/movieRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 
 // App config
@@ -30,22 +30,20 @@ db.once('open', function() {
 //Middleware
 app.use(helmet());
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use((req, res, next) => {
     console.log(req.url)
     next();
 });
 
 // Routes
-app.use("/products", productRoutes);
-//app.use("/api/auth", authRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/v1/categories", categoryRoutes);
+app.use("/api/v1/movies", movieRoutes);
+app.use("/api/v1/auth", authRoutes);
 
-// Default route
-app.get("/", function (req, res) {
-    res.send(`Restful API is running on port ${PORT}!`);
-});
+app.all("*", (req, res, next) => {
+    next(new AppError(`Given url ${req.originalUrl} does not exist`, 404));
+  });
 
 // Express App initialize
 app.listen(PORT, function () {
