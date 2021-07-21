@@ -41,10 +41,9 @@ app.use((req, res, next) => {
 app.use("/products", productRoutes);
 app.use("/api/auth", authRoutes);
 
-// Default route
-app.get("/", function (req, res) {
-    res.send(`Restful API is running on port ${PORT}!`);
-});
+app.all("*", (req, res, next) => {
+    next(new AppError(`Given url ${req.originalUrl} does not exist`, 404));
+  });
 
 // Express App initialize
 app.listen(PORT, function () {

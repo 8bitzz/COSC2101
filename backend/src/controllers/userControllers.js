@@ -3,7 +3,7 @@ const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 
-const registerUser = async (req, res) => {
+const registerUser = catchAsync(async (req, res, next) => {
   if (!req.body.email || !req.body.password ) {
     return res.status(401).json("Missing email or password field");
   }
@@ -33,9 +33,9 @@ const registerUser = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-};
+});
 
-const loginUser = async (req, res) => {
+const loginUser = catchAsync(async (req, res, next) => {
   try {
     if (!req.body.email || !req.body.password ) {
       return res.status(401).json("Missing email or password field");
@@ -67,7 +67,7 @@ const loginUser = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-};
+});
 
 module.exports = {
   registerUser,
