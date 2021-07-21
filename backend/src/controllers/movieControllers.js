@@ -60,3 +60,14 @@ exports.getMovieByCategory = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getMovieByID = catchAsync(async (req, res, next) => {
+  const movie = await Movie.findById(req.params.id);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      movie,
+    },
+  });
+});
