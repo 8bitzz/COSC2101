@@ -18,7 +18,7 @@ const roomSchema = new mongoose.Schema({
   },
   trailerURL: String,
   images: [String],
-  casts: [String]
+  casts: String
 });
 
 module.exports = mongoose.model("Movie", roomSchema);
