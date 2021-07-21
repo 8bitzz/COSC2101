@@ -2,6 +2,7 @@ const User = require("../models/user");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+const catchAsync = require("../util/catchAsync")
 
 const registerUser = catchAsync(async (req, res, next) => {
   if (!req.body.email || !req.body.password ) {
