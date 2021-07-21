@@ -2,8 +2,17 @@ const Movie = require("../models/movie")
 const catchAsync = require("../util/catchAsync")
 
 exports.getAllMovie = catchAsync(async (req, res, next) => {
-  const movies = await Movie.find();
 
+  var name = req.query.name;
+  var movies = []
+  if (name) {
+    // Find by name
+    movies = await Movie.find({name: {$regex: name, $options: 'i'}});
+  } else {
+    // Find all
+    movies = await Movie.find();
+  }
+  
   res.status(200).json({
     status: "success",
     data: {
