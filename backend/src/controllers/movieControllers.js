@@ -2,13 +2,18 @@ const Movie = require("../models/movie");
 const Category = require("../models/category");
 const catchAsync = require("../util/catchAsync");
 
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 exports.getAllMovie = catchAsync(async (req, res, next) => {
   var name = req.query.name;
   var movies = [];
   if (name) {
     // Find by name
+    const text = escapeRegExp(name);
     movies = await Movie.find({
-      name: { $regex: name, $options: "i" },
+      title: { $regex: text, $options: "i" },
     }).populate("category");
   } else {
     // Find all
@@ -43,7 +48,7 @@ exports.getMovieByCategory = catchAsync(async (req, res, next) => {
   }
 
   // Find a category with a given name
-  const category = await Category.findOne({ name });
+  const category = await Category.findOne({ name: { $regex: name, $options: "i" } });
   if (!category) {
     return res.status(404).json({
       status: "error",
