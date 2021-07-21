@@ -1,18 +1,20 @@
-const Movie = require("../models/movie")
-const catchAsync = require("../util/catchAsync")
+const Movie = require("../models/movie");
+const Category = require("../models/category");
+const catchAsync = require("../util/catchAsync");
 
 exports.getAllMovie = catchAsync(async (req, res, next) => {
-
   var name = req.query.name;
-  var movies = []
+  var movies = [];
   if (name) {
     // Find by name
-    movies = await Movie.find({name: {$regex: name, $options: 'i'}});
+    movies = await Movie.find({
+      name: { $regex: name, $options: "i" },
+    }).populate("category");
   } else {
     // Find all
-    movies = await Movie.find();
+    movies = await Movie.find().populate("category");
   }
-  
+
   res.status(200).json({
     status: "success",
     data: {
@@ -27,6 +29,34 @@ exports.createNewMovie = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       movie,
+    },
+  });
+});
+
+exports.getMovieByCategory = catchAsync(async (req, res, next) => {
+  var name = req.query.name;
+  if (!name) {
+    return res.status(400).json({
+      status: "error",
+      message: "Missing Category name",
+    });
+  }
+
+  // Find a category with a given name
+  const category = await Category.findOne({ name });
+  if (!category) {
+    return res.status(404).json({
+      status: "error",
+      message: "Could not find a Category",
+    });
+  }
+
+  // Find movie by category
+  const movies = await Movie.find({ category }).populate("category");
+  res.status(200).json({
+    status: "success",
+    data: {
+      movies,
     },
   });
 });
