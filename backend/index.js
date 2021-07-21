@@ -39,7 +39,6 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/products", productRoutes);
-//app.use("/api/auth", authRoutes);
 app.use("/api/auth", authRoutes);
 
 // Default route
