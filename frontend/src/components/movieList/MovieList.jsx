@@ -22,7 +22,7 @@ const MovieList = ({ title, movie }) => {
       listRef.current.style.transform = `translateX(${-18.25 + distance}rem)`;
     } 
   };
-  console.log('movie', movie)
+  
   return (
     <div className="w-full mt-10">
       <div className="nav-bar">
