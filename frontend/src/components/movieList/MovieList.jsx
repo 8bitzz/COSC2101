@@ -2,7 +2,7 @@ import "./movieList.css";
 import MovieItem from "../movieItem/MovieItem";
 import { useRef } from "react";
 
-const MovieList = ({ title }) => {
+const MovieList = ({ title, movie }) => {
   const listRef = useRef();
   const handleClick = (direction) => {
     let distance = listRef.current.getBoundingClientRect().x / 16;
@@ -16,6 +16,8 @@ const MovieList = ({ title }) => {
   };
   return (
     <div className="w-full mt-10">
+      <div className="nav-bar">
+      </div>
       <span className="text-white text-2xl font-bold ml-12">{title}</span>
       <div className=" text-white relative ">
         <div className="sliderArrow w-12 h-full absolute inset-y-0 left-0 z-40 cursor-pointer">
@@ -36,12 +38,13 @@ const MovieList = ({ title }) => {
           </svg>
         </div>
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
-          {movies.map((movie, index) => {
+          {movie.map((movie, index) => {
             return (
-              <MovieItem movie={movie} key={movie.id} index={index}/>
+              <MovieItem movie={movie} key={movie.id} index={index} />
             );
           })}
         </div>
+        
         <div className="sliderArrow w-12 h-full absolute inset-y-0 right-0 z-40 cursor-pointer ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,151 +66,5 @@ const MovieList = ({ title }) => {
     </div>
   );
 };
-
-const movies = [
-  {
-    id: 1,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 2,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 3,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 4,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 5,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 6,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 7,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 8,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 9,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 10,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 11,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 12,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-  {
-    id: 13,
-    trailer: "",
-    imgSrc:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-    length: "1 hour 14 mins",
-    limit: "16+",
-    year: "1999",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-    genre: "Action",
-  },
-];
 
 export default MovieList;
