@@ -17,17 +17,16 @@ const SearchMovieList = ({ search }) => {
             })
         // eslint-disable-next-line
     }, [search])
-    console.log(filteredmovies)
-
+    const listRef = useRef();
     return (
         <div className="w-full mt-10">
             {(filteredmovies.length <= 0) ? (
-                <div className = "text-white">
+                <div className="text-white">
                     <p >There is no matching movie</p>
                 </div>
             ) : (
-                <div>
-                    {filteredmovies.map((movie, index) => {
+                <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
+                    {/* {filteredmovies.map((movie, index) => {
                         return (
                             <div>
                                 <img
@@ -37,10 +36,16 @@ const SearchMovieList = ({ search }) => {
                                 />
                             </div>
                         )
-                    })}
+                    })} */}
+                    <div className="grid grid-cols-3 gap-4">
+                        {filteredmovies.map((movie, index) => {
+                            return (
+                                <MovieItem movie={movie} key={movie._id} index={index} />
+                            );
+                        })}
+                    </div>
                 </div>
             )}
-
         </div>
     );
 }
