@@ -40,7 +40,7 @@ const MovieList = ({ title, movie }) => {
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
           {movie.map((movie, index) => {
             return (
-              <MovieItem movie={movie} key={movie.id} index={index} />
+              <MovieItem movie={movie} key={movie._id} index={index} />
             );
           })}
         </div>

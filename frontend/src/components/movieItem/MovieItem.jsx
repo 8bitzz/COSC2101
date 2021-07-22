@@ -12,7 +12,7 @@ const MovieItem = ({ movie, index }) => {
       style={{ left: isHovered && index * 240 - 48 + index * 4 }}
     >
       <img
-        src={movie.imgSrc}
+        src={movie.thumbnail}
         alt=""
         className="w-full h-full object-cover rounded"
       />
@@ -82,11 +82,12 @@ const MovieItem = ({ movie, index }) => {
               </div>
             </div>
             <div className="itemInfoTop">
-              <span>{movie.length}</span>
-              <span className="limit">{movie.limit}</span>
-              <span>{movie.year}</span>
+              <span>{movie.title}</span>
+              <span>{movie.duration}</span>
+              <span className="limit">{movie.duration}</span>
+              <span>{movie.publishYear}</span>
             </div>
-            <div className="desc">{movie.desc}</div>
+            <div className="desc">{movie.description}</div>
             <div className="genre">{movie.genre}</div>
           </div>
         </>
