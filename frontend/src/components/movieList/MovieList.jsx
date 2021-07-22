@@ -1,8 +1,16 @@
 import "./movieList.css";
 import MovieItem from "../movieItem/MovieItem";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const MovieList = ({ title, movie }) => {
+  const [newArr, setNewArr] = useState([]);
+  useEffect(()=>{
+    for (let i=0; i< movie.length; i++) { 
+      if (movie[i].length !== 0 )  setNewArr(movie[i])
+    }  
+  }, [movie])
+  
+  
   const listRef = useRef();
   const handleClick = (direction) => {
     let distance = listRef.current.getBoundingClientRect().x / 16;
@@ -12,8 +20,9 @@ const MovieList = ({ title, movie }) => {
     }
     if (direction === "right") {
       listRef.current.style.transform = `translateX(${-18.25 + distance}rem)`;
-    }
+    } 
   };
+  console.log('movie', movie)
   return (
     <div className="w-full mt-10">
       <div className="nav-bar">
@@ -38,7 +47,7 @@ const MovieList = ({ title, movie }) => {
           </svg>
         </div>
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
-          {movie.map((movie, index) => {
+          {newArr.map((movie, index) => {
             return (
               <MovieItem movie={movie} key={movie._id} index={index} />
             );

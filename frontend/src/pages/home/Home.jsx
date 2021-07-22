@@ -9,22 +9,22 @@ const movieList = ["Award-Winning", "Crime", "Action", "Documentaries", "Horror"
 const Home = () => {
   const [search, setSearch] = useState("");
   const [movies, setMovie] = useState([]);
-  
+  const [movieList, setMovieList] = useState([]);
   //Fetch movie from API
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/v1/movies`)
       .then(res => {
-        console.log(res)
-        setMovie(res.data.data.movies)
+        setMovieList(res.data.data.movies.map((movie) => movie.category.name))
+        setMovie(res.data.data.movies.map(item => item.movies))
       })
       .catch(err => {
         console.log(err)
       })
     // eslint-disable-next-line
   }, [])
-  console.log(movies)
-
+  // console.log(movies)
+  // console.log('cate', movies.map((item)=>item.filter(category=> category.category.name==="Dramas")))
   return (
     <div className="bg-netflix-black overflow-hidden">
       <div className="navbar w-screen fixed top-0 z-50 text-white">
@@ -74,9 +74,9 @@ const Home = () => {
       {(search.length <= 0) ? (
         <div>
           <Featured type="movie" />
-          {movieList.map((movieTitle, index) => {
+           {movieList.map((movieTitle, index) => {
             return (
-              <MovieList key={index} title={movieTitle} movie={movies} />
+              <MovieList key = {index} title={movieTitle} movie={movies.map((item,index)=>item.filter((category,index)=> category.category.name===movieTitle))}/>
             )
           })}
         </div>
