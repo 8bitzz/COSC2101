@@ -9,7 +9,7 @@ const movieList = ["Award-Winning", "Crime", "Action", "Documentaries", "Horror"
 const Home = () => {
   const [search, setSearch] = useState("");
   const [movies, setMovie] = useState([]);
-
+  
   //Fetch movie from API
   useEffect(() => {
     axios
@@ -83,158 +83,12 @@ const Home = () => {
       ) : (
         <div>
           <Featured type="movie" />
-          <SearchMovieList search={search} movie={movies} />
+          <SearchMovieList search={search} />
         </div>
 
       )}
     </div>
   )
 }
-
-// const movies = [
-//   {
-//     id: 1,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 2,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 3,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 4,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 5,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 6,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 7,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 8,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 9,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 10,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 11,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 12,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-//   {
-//     id: 13,
-//     trailer: "",
-//     imgSrc:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOE8BkcaKw4AEzl86cvEk12xlqTOA12txqdbdL_7VFhfoxkT1IOfPRHkd9gkR25ZPu9Mo&usqp=CAU",
-//     length: "1 hour 14 mins",
-//     limit: "16+",
-//     year: "1999",
-//     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, laudantium ea sapiente commodi esse atque soluta itaque",
-//     genre: "Action",
-//   },
-// ];
 
 export default Home
