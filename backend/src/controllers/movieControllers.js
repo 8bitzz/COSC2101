@@ -17,7 +17,28 @@ exports.getAllMovie = catchAsync(async (req, res, next) => {
     }).populate("category");
   } else {
     // Find all
-    movies = await Movie.find().populate("category");
+    const allMovies = await Movie.find().populate("category");
+
+    // Get all movie and group by category
+    var cacheData = {}
+    allMovies.forEach(movie => {
+      const category = movie.category;
+      var movieList = cacheData[category.name] ?? []
+      movieList.push(movie)
+      cacheData[category.name] = movieList
+    });
+
+    // Map to { category. movies } for each category
+    const categories = await Category.find();
+    categories.forEach(category => {
+      const categoryMovies = cacheData[category.name];
+      if (categoryMovies) {
+        movies.push({ 
+          category,
+          movies: categoryMovies
+        })
+      }
+    });
   }
 
   res.status(200).json({
