@@ -4,7 +4,7 @@ import SearchMovieList from '../../components/movieList/SearchMovieList';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import "./navbar.css";
-const movieList = ["Award-Winning", "Crime", "Action", "Documentaries", "Horror", "Sci-Fi", "Romance", "Children & Family", "Anime", "Fantasy"]
+
 
 const Home = () => {
   const [search, setSearch] = useState("");
