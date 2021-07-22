@@ -22,8 +22,8 @@ const SearchMovieList = ({ search }) => {
     return (
         <div className="w-full mt-10">
             {(filteredmovies.length <= 0) ? (
-                <div>
-                    <p>There is no matching movie</p>
+                <div className = "text-white">
+                    <p >There is no matching movie</p>
                 </div>
             ) : (
                 <div>
