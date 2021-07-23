@@ -1,24 +1,17 @@
 import './featured.css'
 
-const Featured = ({ type }) => {
+const Featured = ({ type, movie }) => {
   return (
     <div className="featured relative ">
       <img
-        src="https://images.unsplash.com/photo-1625327207808-69be4e623a11?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2750&q=80"
+        src={movie.thumbnail}
         alt=""
         className="w-full h-full object-cover opacity-80"
       />
       <div className="w-2/5 absolute inset-x-14 bottom-14 flex flex-col text-white">
-        <img
-          src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1"
-          alt=""
-          className="w-5/6 justify-center"
-        />
+        <h1>{movie.title}</h1>
         <span className="my-6 text-xl font-medium drop-shadow-md">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae
-          adipisci repellendus eum quasi illo, velit numquam, maxime tempora
-          sint deleniti, aliquid qui? Facilis, adipisci! Ratione hic repudiandae
-          temporibus eum earum?
+          {movie.description}
         </span>
         <div className="flex items-center">
           <button className="flex items-center bg-gray-50 text-netflix-black cursor-pointer font-medium text-xl rounded-md py-3 px-6">

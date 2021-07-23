@@ -12,7 +12,7 @@ const Home = () => {
   const [category, setCategory] = useState("");
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
-
+  const [highlightedMovie, setHighLightedMovie] = useState([]);
   //Fetch movie from API
   useEffect(() => {
     axios
@@ -20,20 +20,21 @@ const Home = () => {
       .then(res => {
         setMovieList(res.data.data.movies.map((movie) => movie.category.name))
         setMovie(res.data.data.movies.map(item => item.movies))
+        setHighLightedMovie(res.data.data.highlightMovie)
       })
       .catch(err => {
         console.log(err)
       })
     // eslint-disable-next-line
   }, [])
-  // console.log(movies)
+  //console.log('highlight', highlightedMovie)
   // console.log('cate', movies.map((item)=>item.filter(category=> category.category.name==="Dramas")))
 
   const displayMovieList = (search, category) => {
     if (search.length != 0) {
       return (
         <div>
-          <Featured type="movie" />
+          <Featured type="movie" movie = {highlightedMovie}/>
           <SearchMovieList search={search} />
         </div>
       )
@@ -41,7 +42,7 @@ const Home = () => {
     else if (category != "") {
       return (
         <div>
-          <Featured type="movie" />
+          <Featured type="movie" movie = {highlightedMovie}/>
           <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
             <option value="" selected="selected">Genres</option>
             {
@@ -57,7 +58,7 @@ const Home = () => {
     else {
       return (
         <div>
-          <Featured type="movie" />
+          <Featured type="movie" movie = {highlightedMovie}/>
           <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
             <option value="" selected="selected">Genres</option>
             {
@@ -74,7 +75,6 @@ const Home = () => {
           })}
         </div>
       )
-
     }
   }
 
@@ -124,36 +124,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-
       {displayMovieList(search, category)}
-
-      {/* {(search.length <= 0) ? (
-        <div>
-          <Featured type="movie" />
-          <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}> 
-            <option value="" selected="selected">Genres</option>
-            <option value="Action">Action</option>
-            <option value="Adventures">Adventures</option>
-            <option value="Award-Winning Films">Award-Winning Films</option>
-            <option value="Comedies">Comedies</option>
-            <option value="Dramas">Dramas</option>
-            <option value="Crimes & Thrillers">Crimes & Thrillers</option>
-            <option value="Horror">Horror</option>
-            <option value="Only on Netflix">Only on Netflix</option>
-          </select>
-          {console.log(category)}
-          {movieList.map((movieTitle, index) => {
-          return (
-            <MovieList key = {index} title={movieTitle} movie={movies.map((item,index)=>item.filter((category,index)=> category.category.name===movieTitle))}/>
-          )
-          })}
-        </div>
-      ) : (
-        <div>
-          <Featured type="movie" />
-          <SearchMovieList search={search} />
-        </div>
-      )} */}
     </div>
   )
 }
