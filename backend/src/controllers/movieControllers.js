@@ -43,7 +43,8 @@ exports.getMovieByCategory = catchAsync(async (req, res, next) => {
   }
 
   // Find movie by category
-  const movies = await Movie.find({ category }).populate("category");
+  var movies = await Movie.find({ category }).populate("category");
+  movies = populateYoutubeThumbnail(movies);
   res.status(200).json({
     status: "success",
     data: {
@@ -67,7 +68,7 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
 
-function filterMovieByName(req, res, next) {
+async function filterMovieByName(req, res, next) {
   const name = req.query.name;
 
   // Find by name
@@ -86,11 +87,12 @@ function filterMovieByName(req, res, next) {
   });
 }
 
-function getMovieAndHighlight(req, res, next) {
+async function getMovieAndHighlight(req, res, next) {
   var movies = [];
 
   // Find all
-  const allMovies = await Movie.find().populate("category");
+  var allMovies = await Movie.find().populate("category");
+  allMovies = populateYoutubeThumbnail(allMovies);
 
   // Get all movie and group by category
   var cacheData = {};
@@ -113,8 +115,6 @@ function getMovieAndHighlight(req, res, next) {
     }
   });
 
-  // Populate Youtube thumnail
-  movies = populateYoutubeThumbnail(movies);
   res.status(200).json({
     status: "success",
     data: {
