@@ -44,14 +44,11 @@ const Home = () => {
           <Featured type="movie" />
           <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
             <option value="" selected="selected">Genres</option>
-            <option value="Action">Action</option>
-            <option value="Adventures">Adventures</option>
-            <option value="Award-Winning Films">Award-Winning Films</option>
-            <option value="Comedies">Comedies</option>
-            <option value="Dramas">Dramas</option>
-            <option value="Crimes & Thrillers">Crimes & Thrillers</option>
-            <option value="Horror">Horror</option>
-            <option value="Only on Netflix">Only on Netflix</option>
+            {
+              movieList.map(ele => (
+                <option key={ele} >{ele}</option>
+              ))
+            }
           </select>
           <FilteredMovieList category={category} />
         </div>
@@ -63,14 +60,11 @@ const Home = () => {
           <Featured type="movie" />
           <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
             <option value="" selected="selected">Genres</option>
-            <option value="Action">Action</option>
-            <option value="Adventures">Adventures</option>
-            <option value="Award-Winning Films">Award-Winning Films</option>
-            <option value="Comedies">Comedies</option>
-            <option value="Dramas">Dramas</option>
-            <option value="Crimes & Thrillers">Crimes & Thrillers</option>
-            <option value="Horror">Horror</option>
-            <option value="Only on Netflix">Only on Netflix</option>
+            {
+              movieList.map(ele => (
+                <option key={ele} >{ele}</option>
+              ))
+            }
           </select>
           {console.log(category)}
           {movieList.map((movieTitle, index) => {
