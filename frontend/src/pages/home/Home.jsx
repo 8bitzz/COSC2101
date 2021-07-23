@@ -1,6 +1,7 @@
 import Featured from '../../components/featured/Featured'
 import MovieList from '../../components/movieList/MovieList'
 import SearchMovieList from '../../components/movieList/SearchMovieList';
+import FilteredMovieList from '../../components/movieList/FilteredMovieList'
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import "./navbar.css";
@@ -8,8 +9,10 @@ import "./navbar.css";
 
 const Home = () => {
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
+
   //Fetch movie from API
   useEffect(() => {
     axios
@@ -25,6 +28,62 @@ const Home = () => {
   }, [])
   // console.log(movies)
   // console.log('cate', movies.map((item)=>item.filter(category=> category.category.name==="Dramas")))
+
+  const displayMovieList = (search, category) => {
+    if (search.length != 0) {
+      return (
+        <div>
+          <Featured type="movie" />
+          <SearchMovieList search={search} />
+        </div>
+      )
+    }
+    else if (category != "") {
+      return (
+        <div>
+          <Featured type="movie" />
+          <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
+            <option value="" selected="selected">Genres</option>
+            <option value="Action">Action</option>
+            <option value="Adventures">Adventures</option>
+            <option value="Award-Winning Films">Award-Winning Films</option>
+            <option value="Comedies">Comedies</option>
+            <option value="Dramas">Dramas</option>
+            <option value="Crimes & Thrillers">Crimes & Thrillers</option>
+            <option value="Horror">Horror</option>
+            <option value="Only on Netflix">Only on Netflix</option>
+          </select>
+          <FilteredMovieList category={category} />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>
+          <Featured type="movie" />
+          <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
+            <option value="" selected="selected">Genres</option>
+            <option value="Action">Action</option>
+            <option value="Adventures">Adventures</option>
+            <option value="Award-Winning Films">Award-Winning Films</option>
+            <option value="Comedies">Comedies</option>
+            <option value="Dramas">Dramas</option>
+            <option value="Crimes & Thrillers">Crimes & Thrillers</option>
+            <option value="Horror">Horror</option>
+            <option value="Only on Netflix">Only on Netflix</option>
+          </select>
+          {console.log(category)}
+          {movieList.map((movieTitle, index) => {
+            return (
+              <MovieList key={index} title={movieTitle} movie={movies.map((item, index) => item.filter((category, index) => category.category.name === movieTitle))} />
+            )
+          })}
+        </div>
+      )
+
+    }
+  }
+
   return (
     <div className="bg-netflix-black overflow-hidden">
       <div className="navbar w-screen fixed top-0 z-50 text-white">
@@ -71,13 +130,28 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {(search.length <= 0) ? (
+
+      {displayMovieList(search, category)}
+
+      {/* {(search.length <= 0) ? (
         <div>
           <Featured type="movie" />
-           {movieList.map((movieTitle, index) => {
-            return (
-              <MovieList key = {index} title={movieTitle} movie={movies.map((item,index)=>item.filter((category,index)=> category.category.name===movieTitle))}/>
-            )
+          <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}> 
+            <option value="" selected="selected">Genres</option>
+            <option value="Action">Action</option>
+            <option value="Adventures">Adventures</option>
+            <option value="Award-Winning Films">Award-Winning Films</option>
+            <option value="Comedies">Comedies</option>
+            <option value="Dramas">Dramas</option>
+            <option value="Crimes & Thrillers">Crimes & Thrillers</option>
+            <option value="Horror">Horror</option>
+            <option value="Only on Netflix">Only on Netflix</option>
+          </select>
+          {console.log(category)}
+          {movieList.map((movieTitle, index) => {
+          return (
+            <MovieList key = {index} title={movieTitle} movie={movies.map((item,index)=>item.filter((category,index)=> category.category.name===movieTitle))}/>
+          )
           })}
         </div>
       ) : (
@@ -85,8 +159,7 @@ const Home = () => {
           <Featured type="movie" />
           <SearchMovieList search={search} />
         </div>
-
-      )}
+      )} */}
     </div>
   )
 }
