@@ -1,7 +1,7 @@
 const Movie = require("../models/movie");
 const Category = require("../models/category");
 const catchAsync = require("../util/catchAsync");
-const { populateYoutubeThumbnail } = require("../util/utils");
+const { populateYoutubeThumbnail, getRandomInt } = require("../util/utils");
 
 exports.getAllMovie = catchAsync(async (req, res, next) => {
   const name = req.query.name;
@@ -115,9 +115,14 @@ async function getMovieAndHighlight(req, res, next) {
     }
   });
 
+  // Get highlight movie
+  let highlightIndex = getRandomInt(allMovies.length);
+  const highlightMovie = allMovies[highlightIndex];
+
   res.status(200).json({
     status: "success",
     data: {
+      highlightMovie,
       movies,
     },
   });
