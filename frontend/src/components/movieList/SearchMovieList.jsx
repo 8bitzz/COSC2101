@@ -3,8 +3,9 @@ import MovieItem from "../movieItem/MovieItem";
 import axios from 'axios';
 import "./movieList.css";
 
-const SearchMovieList = ({ search }) => {
+const SearchMovieList = ({search}) => {
   const [filteredmovies, setFilteredMovie] = useState([]);
+  
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/v1/movies?name=${search}`)
@@ -15,7 +16,6 @@ const SearchMovieList = ({ search }) => {
       .catch(err => {
         console.log(err)
       })
-    // eslint-disable-next-line
   }, [search])
   const listRef = useRef();
   return (
@@ -26,17 +26,6 @@ const SearchMovieList = ({ search }) => {
         </div>
       ) : (
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
-          {/* {filteredmovies.map((movie, index) => {
-                        return (
-                            <div>
-                                <img
-                                    src={movie.thumbnail}
-                                    alt=""
-                                    className="w-full h-full object-cover rounded"
-                                />
-                            </div>
-                        )
-                    })} */}
           <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-4">
             {filteredmovies.map((movie, index) => {
               return (
