@@ -3,6 +3,7 @@ import MovieList from '../../components/movieList/MovieList'
 import SearchMovieList from '../../components/movieList/SearchMovieList';
 import FilteredMovieList from '../../components/movieList/FilteredMovieList'
 import { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import "./navbar.css";
 
@@ -13,6 +14,18 @@ const Home = () => {
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [highlightedMovie, setHighLightedMovie] = useState([]);
+
+  let history = useHistory();
+
+  function handleChange(value){
+    setSearch(value)
+    if (value === ""){
+      history.push("")
+    }
+    else {
+      history.push(`/search=${value}`)
+    }
+  }
   //Fetch movie from API
   useEffect(() => {
     axios
@@ -31,15 +44,15 @@ const Home = () => {
   // console.log('cate', movies.map((item)=>item.filter(category=> category.category.name==="Dramas")))
 
   const displayMovieList = (search, category) => {
-    if (search.length != 0) {
+    if (search.length !== 0) {
       return (
         <div>
-          <Featured type="movie" movie = {highlightedMovie}/>
+         <br />
           <SearchMovieList search={search} />
         </div>
       )
     }
-    else if (category != "") {
+    else if (category !== "") {
       return (
         <div>
           <Featured type="movie" movie = {highlightedMovie}/>
@@ -97,7 +110,7 @@ const Home = () => {
             <div className="search-bar">
               <div className="growing-search">
                 <div className="input">
-                  <input type="text" name="search" onChange={e => setSearch(e.target.value)} />
+                  <input type="text" name="search" onChange={e => handleChange(e.target.value)} />
                 </div>
                 <div className="submit">
                   <button type="submit" name="go_search">
