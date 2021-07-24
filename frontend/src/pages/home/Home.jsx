@@ -17,7 +17,7 @@ const Home = () => {
 
   let history = useHistory();
 
-  function handleChange(value){
+  function handleSearch(value){
     setSearch(value)
     if (value === ""){
       history.push("")
@@ -26,6 +26,17 @@ const Home = () => {
       history.push(`/search=${value}`)
     }
   }
+
+  function handleChange(value){
+    setCategory(value)
+    if (value === ""){
+      history.push("")
+    }
+    else {
+      history.push(`/search=${value}`)
+    }
+  }
+
   //Fetch movie from API
   useEffect(() => {
     axios
@@ -55,15 +66,6 @@ const Home = () => {
     else if (category !== "") {
       return (
         <div>
-          <Featured type="movie" movie = {highlightedMovie}/>
-          <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
-            <option value="" selected="selected">Genres</option>
-            {
-              movieList.map(ele => (
-                <option key={ele} >{ele}</option>
-              ))
-            }
-          </select>
           <FilteredMovieList category={category} />
         </div>
       )
@@ -72,15 +74,6 @@ const Home = () => {
       return (
         <div>
           <Featured type="movie" movie = {highlightedMovie}/>
-          <select name="category" id="category" class="p-3 ml-10 mt-10 border-2 bg-black border-white text-white" onChange={event => setCategory(event.target.value)}>
-            <option value="" selected="selected">Genres</option>
-            {
-              movieList.map(ele => (
-                <option key={ele} >{ele}</option>
-              ))
-            }
-          </select>
-          {console.log(category)}
           {movieList.map((movieTitle, index) => {
             return (
               <MovieList key={index} title={movieTitle} movie={movies.map((item, index) => item.filter((category, index) => category.category.name === movieTitle))} />
@@ -101,16 +94,20 @@ const Home = () => {
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
               alt=""
             />
-            <span className="mr-4 cursor-pointer">Home</span>
-            <span className="mr-4 cursor-pointer">TV Shows</span>
-            <span className="mr-4 cursor-pointer">Movies</span>
-            <span className="mr-4 cursor-pointer">New & Popular</span>
+            <select name="category" id="category" class="p-3 ml-10 border-2 bg-black border-white text-white" onChange={event => handleChange(event.target.value)}>
+              <option value="" selected="selected">Genres</option>
+              {
+                movieList.map(ele => (
+                  <option key={ele} >{ele}</option>
+                ))
+              }
+            </select>
           </div>
           <div className="flex items-center">
             <div className="search-bar">
               <div className="growing-search">
                 <div className="input">
-                  <input type="text" name="search" onChange={e => handleChange(e.target.value)} />
+                  <input type="text" name="search" onChange={e => handleSearch(e.target.value)} />
                 </div>
                 <div className="submit">
                   <button type="submit" name="go_search">

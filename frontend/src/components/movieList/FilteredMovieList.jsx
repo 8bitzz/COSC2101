@@ -23,7 +23,8 @@ const FilteredMovieList = ({ category }) => {
   console.log(category);
 
   return (
-    <div className="w-full mt-10">
+    <div className="container h-screen w-full mt-40 mx-10">
+      <p className="mb-10 ml-12 text-3xl font-bold text-white">{category}</p>
       {(filteredMovies.length <= 0) ? (
         <div class="text-white">
           <p>There is no movies at this category at the moment</p>
