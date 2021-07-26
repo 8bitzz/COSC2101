@@ -4,10 +4,11 @@ import axios from 'axios';
 import "./movieList.css";
 import { useHistory, useLocation } from "react-router-dom";
 
-const SearchMovieList = ({search}) => {
+const SearchMovieList = ({searchTerm}) => {
   const [filteredmovies, setFilteredMovie] = useState([]);
   let history = useHistory();
-  const term = useLocation().search
+  let term = searchTerm;
+  const search = new URLSearchParams(term).get("term")
 
   useEffect(() => {
     axios
@@ -22,18 +23,19 @@ const SearchMovieList = ({search}) => {
   }, [search])
   const listRef = useRef();
   return (
-    <div className="w-full mt-10">
+    <div className="container h-screen w-full mt-40 mx-10">
+     
       {(filteredmovies.length <= 0) ? (
-        <div className="text-white">
-          <p >There is no matching movie</p>
+        <div class="text-white">
+          <p>There is no movies at this category at the moment</p>
         </div>
       ) : (
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
           <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-4">
             {filteredmovies.map((movie, index) => {
               return (
-                <MovieItem movie={movie} key={movie._id} index={index} />
-              );
+                <MovieItem movie={movie} key={movie.id} index={index}/>
+              )
             })}
           </div>
         </div>

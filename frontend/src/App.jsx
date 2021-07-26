@@ -65,13 +65,12 @@ function App() {
       pathname: "/genre",
       search: params.toString()
     })
-    console.log("hdbhfbehfb", history.location.search)
   }
 
   const putSearchTerm = (value) => {
     const params = new URLSearchParams();
     console.log(value)
-    if (value === "") {
+    if (value === null) {
       history.replace("/search", null)
       return
     }
@@ -142,8 +141,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/genre"><FilteredMovieList location={history.location.search}/></Route>
-            {console.log("Appdfbu", history.location.search)}
-            <Route path="/search" component={SearchMovieList} search = {search}/>
+            <Route path="/search"><SearchMovieList searchTerm = {history.location.search}/></Route>
             <Route path={`/details/:_id`} component={Details} ></Route>
           </Switch>
         
