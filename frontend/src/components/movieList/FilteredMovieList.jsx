@@ -4,11 +4,21 @@ import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 import "./movieList.css";
 
-const FilteredMovieList = ({category}) => {
+const FilteredMovieList = ({location}) => {
+
   let history = useHistory();
-  const genre = useLocation().search
-  //const category = new URLSearchParams(genre).get("term")
+
+  let genre = location
+  const category = new URLSearchParams(genre).get("term")
+  console.log("genre", genre)
+  console.log("category", category)
+
+
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [genreTerm, setGenreTerm] = useState(category || "")
+  console.log("genreTerm", genreTerm)
+  console.log(`http://localhost:4000/api/v1/movies/category?name=${category}`)
+  
   
   useEffect(() => {
     axios
@@ -21,10 +31,11 @@ const FilteredMovieList = ({category}) => {
         console.log(err)
       })
     // eslint-disable-next-line      
-  }, [category])
+  }, [genre])
 
   const listRef = useRef();
-  console.log(category);
+  // console.log(category);
+  // console.log(filteredMovies)
 
   return (
     <div className="container h-screen w-full mt-40 mx-10">

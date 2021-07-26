@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Link
 } from "react-router-dom";
 import Details from "./components/movieList/Details";
 import SearchMovieList from "./components/movieList/SearchMovieList";
@@ -50,9 +51,8 @@ function App() {
 
   const putCategoryTerm = (value) => {
     const params = new URLSearchParams();
-    console.log(value)
+    console.log("putCategoryTerm", value)
     if (value === "") {
-      history.replace("/genre", null)
       return
     }
     if (value) {
@@ -65,6 +65,7 @@ function App() {
       pathname: "/genre",
       search: params.toString()
     })
+    console.log("hdbhfbehfb", history.location.search)
   }
 
   const putSearchTerm = (value) => {
@@ -98,12 +99,12 @@ function App() {
                 alt=""
               />
               <select name="category" id="category" class="p-3 ml-10 border-2 bg-black border-white text-white" onChange={event => handleChange(event)}>
-                <option value="" selected="selected">Genres</option>
-                {
-                  movieList.map(ele => (
-                    <option key={ele} >{ele}</option>
-                  ))
-                }
+                  <option value="" selected="selected">Genres</option>
+                  {
+                    movieList.map(ele => (
+                      <option key={ele} >{ele}</option>
+                    ))
+                  }
               </select>
             </div>
             <div className="flex items-center">
@@ -140,9 +141,10 @@ function App() {
         
           <Switch>
             <Route exact path="/" component={Home}/>
-            <Route path="/genre" component = {FilteredMovieList} category = {category}></Route>
+            <Route path="/genre"><FilteredMovieList location={history.location.search}/></Route>
+            {console.log("Appdfbu", history.location.search)}
             <Route path="/search" component={SearchMovieList} search = {search}/>
-            <Route path={`/details/:_id`} component={Details}></Route>
+            <Route path={`/details/:_id`} component={Details} ></Route>
           </Switch>
         
       </div>
