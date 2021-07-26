@@ -1,0 +1,44 @@
+.movie-wrapper{
+    width: 490px;
+    margin: auto;
+    background-color: $very-dark-grey;
+    box-shadow: 0 0 30px $black;
+}
+
+.movie-wrapper-top {
+  display: flex;
+  padding: 30px;
+  justify-content: space-between;
+  align-items: center;
+  &__title {
+    font-size: 2em;
+  }
+}
+.movie-img-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: $black;
+  &__thumnail {
+    padding: 3px;
+  }
+}
+.movie-details {
+  padding: 30px;
+  &__item {
+    padding: 5px;
+  }
+  &__desc {
+  }
+  &__release-date {
+  }
+  &__genre {
+  }
+  &__duration {
+  }
+  &__price {
+  }
+}
