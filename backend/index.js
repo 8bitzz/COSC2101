@@ -2,7 +2,9 @@ var express = require("express");
 var mongoose = require("mongoose");
 var helmet = require("helmet");
 var cors = require("cors");
-const AppError = require("./src/util/appError")
+let morgan = require('morgan');
+let config = require('config');
+const AppError = require("./src/util/appError");
 require("dotenv").config();
 
 // Import routes
@@ -15,7 +17,7 @@ var app = express();
 var PORT = process.env.PORT;
 
 //MongoDB
-mongoose.connect(process.env.MONGODB_URL, {
+mongoose.connect(config.DBHost, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -23,35 +25,40 @@ mongoose.connect(process.env.MONGODB_URL, {
 });
 
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log("MongoDB is connected")
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.log("MongoDB is connected");
 });
+
+// Omit tests output
+if(config.util.getEnv('NODE_ENV') !== 'test') {
+  app.use(morgan('combined'));
+}
 
 //Middleware
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use((req, res, next) => {
-    console.log(req.url)
-    next();
+  console.log(req.url);
+  next();
 });
 
 // Routes
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/auth", authRoutes);
-app.get('/', (req, res) => {
-  res.send('Hello World')
-})
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 app.all("*", (req, res, next) => {
-    next(new AppError(`Given url ${req.originalUrl} does not exist`, 404));
+  next(new AppError(`Given url ${req.originalUrl} does not exist`, 404));
 });
 
 // Express App initialize
 app.listen(PORT, function () {
-    console.log(`Your server is running on port ${PORT}`);
+  console.log(`Your server is running on port ${PORT}`);
 });
 
 module.exports = app; // for testing

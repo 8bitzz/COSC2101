@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "set NODE_ENV=dev && nodemon index.js",
     "test": "mocha --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "config": "^3.3.6",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
     "dotenv": "^10.0.0",
@@ -22,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2",
     "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.12"
   },
   "devDependencies": {
