@@ -97,7 +97,7 @@ function App() {
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
                 alt=""
               />
-              <select name="category" id="category" class="p-3 ml-10 border-2 bg-black border-white text-white" onChange={event => handleChange(event)}>
+              <select name="category" id="category" className="p-3 ml-10 border-2 bg-black border-white text-white" onChange={event => handleChange(event)}>
                   <option value="" selected="selected">Genres</option>
                   {
                     movieList.map(ele => (
@@ -137,14 +137,12 @@ function App() {
             </div>
           </div>
         </div>
-        
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/genre"><FilteredMovieList location={history.location.search}/></Route>
             <Route path="/search"><SearchMovieList searchTerm = {history.location.search}/></Route>
             <Route path={`/details/:_id`} component={Details} ></Route>
           </Switch>
-        
       </div>
     </Router>
       

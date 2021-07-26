@@ -23,7 +23,7 @@ const SearchMovieList = ({searchTerm}) => {
   }, [search])
   const listRef = useRef();
   return (
-    <div className="container h-screen w-full mt-40 mx-10">
+    <div className="container-fluid h-screen w-full mt-40 mx-10">
      
       {(filteredmovies.length <= 0) ? (
         <div class="text-white">

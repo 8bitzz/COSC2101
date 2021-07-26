@@ -1,8 +1,13 @@
+.container{
+    margin-right: auto;
+    margin-left: auto;
+}
 .movie-wrapper{
     width: 490px;
     margin: auto;
     background-color: $very-dark-grey;
     box-shadow: 0 0 30px $black;
+    
 }
 
 .movie-wrapper-top {
