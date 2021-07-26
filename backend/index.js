@@ -2,6 +2,7 @@ var express = require("express");
 var mongoose = require("mongoose");
 var helmet = require("helmet");
 var cors = require("cors");
+const AppError = require("./src/util/appError")
 require("dotenv").config();
 
 // Import routes
@@ -40,12 +41,17 @@ app.use((req, res, next) => {
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.get('/', (req, res) => {
+  res.send('Hello World')
+})
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Given url ${req.originalUrl} does not exist`, 404));
-  });
+});
 
 // Express App initialize
 app.listen(PORT, function () {
     console.log(`Your server is running on port ${PORT}`);
 });
+
+module.exports = app; // for testing
