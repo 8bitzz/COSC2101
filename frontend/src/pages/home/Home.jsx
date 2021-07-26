@@ -19,22 +19,22 @@ const Home = () => {
 
   function handleSearch(value){
     setSearch(value)
-    if (value === ""){
-      history.push("")
-    }
-    else {
-      history.push(`/search=${value}`)
-    }
+    // if (value === ""){
+    //   history.push("")
+    // }
+    // else {
+    //   history.push(`/search=${value}`)
+    // }
   }
 
   function handleChange(value){
     setCategory(value)
-    if (value === ""){
-      history.push("")
-    }
-    else {
-      history.push(`/search=${value}`)
-    }
+    // if (value === ""){
+    //   history.push("")
+    // }
+    // else {
+    //   history.push(`/search=${value}`)
+    // }
   }
 
   //Fetch movie from API
