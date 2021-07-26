@@ -25,6 +25,20 @@ $ npm install
 $ npm start
 ```
 
+### Backend - Unit Test on local
+1. Change directory to backend folder
+```bash
+$ cd backend
+```
+2. Install all packages
+```bash
+$ npm install
+```
+3. Start testing all unit tests
+```bash
+$ npm test
+```
+
 ### How to connect to MongoDB and preview data
 1. Download Mongo Compass app at https://www.mongodb.com/try/download/compass
 2. Open and connect with mongodb+srv://admin:abcd12345@moviedatabase.s44w8.mongodb.net/netflix

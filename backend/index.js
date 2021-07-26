@@ -27,7 +27,7 @@ mongoose.connect(config.DBHost, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
-  console.log("MongoDB is connected");
+  console.log(`MongoDB is connected at ${config.DBHost}`);
 });
 
 // Omit tests output
@@ -39,10 +39,6 @@ if(config.util.getEnv('NODE_ENV') !== 'test') {
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use((req, res, next) => {
-  console.log(req.url);
-  next();
-});
 
 // Routes
 app.use("/api/v1/categories", categoryRoutes);
