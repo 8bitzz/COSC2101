@@ -27,7 +27,7 @@ const SearchMovieList = ({searchTerm}) => {
      
       {(filteredmovies.length <= 0) ? (
         <div class="text-white">
-          <p>There is no movies at this category at the moment</p>
+          <p>There is no matching movies with provided keyword</p>
         </div>
       ) : (
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
@@ -43,5 +43,6 @@ const SearchMovieList = ({searchTerm}) => {
     </div>
   );
 }
+
 
 export default SearchMovieList
