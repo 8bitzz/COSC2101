@@ -2,10 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import MovieItem from "../movieItem/MovieItem";
 import axios from 'axios';
 import "./movieList.css";
+import { useHistory, useLocation } from "react-router-dom";
 
 const SearchMovieList = ({search}) => {
   const [filteredmovies, setFilteredMovie] = useState([]);
-  
+  let history = useHistory();
+  const term = useLocation().search
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/v1/movies?name=${search}`)
