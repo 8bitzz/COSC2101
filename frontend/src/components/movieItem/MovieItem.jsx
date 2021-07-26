@@ -65,13 +65,14 @@ const MovieItem = ({ movie, index }) => {
                 </svg>
               </div>
               <div>
-                <Link to={`/${movie._id}`}>
+                <Link to={`/Details/${movie._id}`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 border rounded-full p-1"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                   
                   >
                     <path
                       strokeLinecap="round"

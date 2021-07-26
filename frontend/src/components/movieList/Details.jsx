@@ -2,15 +2,17 @@ import React from 'react'
 import "./movieList.css";
 import "./details.css";
 import { useEffect, useState } from "react";
-
 import axios from 'axios';
 
-const url = `http://localhost:4000/api/v1/movies`
-const Details = () => {
+
+export default function Details(props) {
   const [movie, setMovie] = useState([]);
   useEffect(() => {
+    const _id = props.match.params._id;
+    console.log(_id)
+    const url = `http://localhost:4000/api/v1/movies/${_id}`;
     axios
-      .get(url.concat(window.location.pathname))
+      .get(url)
       .then(res => {
         console.log(res)
         setMovie(res.data.data.movie)
@@ -18,8 +20,9 @@ const Details = () => {
       .catch(err => {
         console.log(err)
       })
-  }, [window.location.pathname])
-  
+
+  }, [])
+
   return (
     <div className="bg-netflix-black overflow-hidden text-white">
       <div className="movie-wrapper">
@@ -53,4 +56,4 @@ const Details = () => {
     </div>
   )
 }
-export default Details
+
