@@ -3,9 +3,11 @@ import "./movieList.css";
 import "./details.css";
 import { useEffect, useState } from "react";
 import axios from 'axios';
-
+import { useHistory} from 'react-router-dom'
 
 export default function Details(props) {
+  const history = useHistory();
+
   const [movie, setMovie] = useState([]);
   useEffect(() => {
     const _id = props.match.params._id;
@@ -31,6 +33,7 @@ export default function Details(props) {
             <h1>{movie.title}</h1>
           </div>
         </div>
+        <div onClick={ ()=>history.goBack() }>Back </div>
         <div className="movie-img-wrapper">
           <img src={movie.thumbnail} alt="No movie image found" className="movie-img-wrapper__thumbnail-img" />
         </div>
