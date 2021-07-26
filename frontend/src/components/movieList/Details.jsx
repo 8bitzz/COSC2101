@@ -19,12 +19,14 @@ const Details = () => {
         console.log(err)
       })
   }, [window.location.pathname])
-  console.log(url.concat(window.location.pathname))
+  
   return (
     <div className="bg-netflix-black overflow-hidden text-white">
       <div className="movie-wrapper">
         <div className="movie-wrapper-top">
-          <div className="movie-wrapper__title ">{movie.title}</div>
+          <div className="movie-wrapper__title ">
+            <h1>{movie.title}</h1>
+          </div>
         </div>
         <div className="movie-img-wrapper">
           <img src={movie.thumbnail} alt="No movie image found" className="movie-img-wrapper__thumbnail-img" />
@@ -46,6 +48,7 @@ const Details = () => {
             <b>Price</b>: {movie.price}
           </div>
         </div>
+        <button>Add to cart</button>
       </div>
     </div>
   )
