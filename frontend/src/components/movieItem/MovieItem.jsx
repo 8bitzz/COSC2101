@@ -1,6 +1,6 @@
 import "./movieItem.css";
 import { useState } from "react";
-
+import {BrowserRouter, Link, Route} from 'react-router-dom'
 const MovieItem = ({ movie, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -65,20 +65,22 @@ const MovieItem = ({ movie, index }) => {
                 </svg>
               </div>
               <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 border rounded-full p-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                <Link to={`/${movie._id}`}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 border rounded-full p-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </Link>
               </div>
             </div>
             <div className="itemInfoTop">
