@@ -2,11 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import MovieItem from "../movieItem/MovieItem";
 import axios from 'axios';
 import "./movieList.css";
-import { useHistory, useLocation } from "react-router-dom";
 
 const SearchMovieList = ({searchTerm}) => {
   const [filteredmovies, setFilteredMovie] = useState([]);
-  let history = useHistory();
   let term = searchTerm;
   const search = new URLSearchParams(term).get("term")
 
@@ -26,7 +24,7 @@ const SearchMovieList = ({searchTerm}) => {
     <div className="container-fluid h-screen w-full mt-40 mx-10">
      
       {(filteredmovies.length <= 0) ? (
-        <div class="text-white">
+        <div className="text-white">
           <p>There is no matching movies with provided keyword</p>
         </div>
       ) : (

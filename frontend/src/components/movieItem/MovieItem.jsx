@@ -1,6 +1,6 @@
 import "./movieItem.css";
 import { useState } from "react";
-import {BrowserRouter, Link, Route} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const MovieItem = ({ movie, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (

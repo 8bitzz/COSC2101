@@ -1,23 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import MovieItem from "../movieItem/MovieItem";
 import axios from "axios";
-import { useHistory, useLocation } from "react-router-dom";
 import "./movieList.css";
 
 const FilteredMovieList = ({location}) => {
 
-  let history = useHistory();
-
   let genre = location
   const category = new URLSearchParams(genre).get("term")
-  console.log("genre", genre)
-  console.log("category", category)
-
-
+  // console.log("genre", genre)
+  // console.log("category", category)
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [genreTerm, setGenreTerm] = useState(category || "")
-  console.log("genreTerm", genreTerm)
-  console.log(`http://localhost:4000/api/v1/movies/category?name=${category}`)
+  //const [genreTerm, setGenreTerm] = useState(category || "")
+  // console.log("genreTerm", genreTerm)
+  // console.log(`http://localhost:4000/api/v1/movies/category?name=${category}`)
   
   
   useEffect(() => {
@@ -41,7 +36,7 @@ const FilteredMovieList = ({location}) => {
     <div className="container h-screen w-full mt-40 mx-10">
       <p className="mb-10 ml-12 text-3xl font-bold text-white">{category}</p>
       {(filteredMovies.length <= 0) ? (
-        <div class="text-white">
+        <div className="text-white">
           <p>There is no movies at this category at the moment</p>
         </div>
       ) : (
