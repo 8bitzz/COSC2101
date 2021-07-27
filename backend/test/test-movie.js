@@ -59,14 +59,12 @@ describe("Movie Testing", () => {
       const categoryObj = await Category.create(category);
       newMovie.category._id = categoryObj.id;
       const movieObj = await Movie.create(newMovie);
-      chai
-        .request(server)
-        .get("/api/v1/movies/")
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.data.movies.should.be.a("array");
-          res.body.data.movies.length.should.be.eql(0);
-        });
+      const res = await chai.request(server).get("/api/v1/movies/");
+      res.should.have.status(200);
+      res.body.data.movies.should.be.a("array");
+      res.body.data.movies.length.should.be.eql(1);
+      res.body.data.movies[0].category.name.should.be.eql("Dramas");
+      res.body.data.movies[0].movies[0].title.should.be.eql("Gotham");
     });
   });
 
