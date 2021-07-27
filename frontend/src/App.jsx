@@ -1,12 +1,7 @@
 import Home from "./pages/home/Home";
 import Register from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Details from "./components/movieList/Details";
 import SearchMovieList from "./components/movieList/SearchMovieList";
 import FilteredMovieList from "./components/movieList/FilteredMovieList";
@@ -21,6 +16,7 @@ function App() {
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [isFilled, setIsFilled] = useState(false);
+  const [isSet, setIsSet] = useState(false);
   let history = useHistory();
 
   //Fetch movie from API
@@ -37,6 +33,7 @@ function App() {
     // eslint-disable-next-line
   }, [])
 
+  // Function to handle when search field filled 
   const handleSearch = (event) => {
     setSearch(event.target.value); 
     putSearchTerm(event.target.value);
@@ -49,17 +46,26 @@ function App() {
     }
   }
 
+  // Handle change when genre selected 
   const handleChange = (event) => {
     setCategory(event.target.value);
     putCategoryTerm(event.target.value);
     event.preventDefault();
+    if (event.target.value === "") {
+      isSet(false)
+    }
+    else {
+      setIsSet(true)
+    }
   }
 
+  // Update URL when filter by genre
   const putCategoryTerm = (value) => {
     const params = new URLSearchParams();
     console.log("putCategoryTerm", value)
     if (value === "") {
-      return
+      history.push("")
+      return;
     }
     if (value) {
       params.append("term", value)
@@ -73,6 +79,7 @@ function App() {
     })
   }
 
+  // Update URL when search 
   const putSearchTerm = (value) => {
     const params = new URLSearchParams();
     if (value === "") {
@@ -91,12 +98,22 @@ function App() {
     })
   }
 
-  const setSearchPath = (value) => {
+  const setSearchPath = () => {
     if (isFilled === true) {
       return "/search" 
     }
     else {
-      return  "/" 
+      return "/" 
+    }
+  }
+
+  //Function to set path for Link at Genre selector
+  const setGenrePath = () => {
+    if (isSet === true) {
+      return "/genre" 
+    }
+    else {
+      return "/" 
     }
   }
 
@@ -112,21 +129,23 @@ function App() {
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
                   alt=""
                 />
-                <select name="category" id="category" className="p-3 ml-10 border-2 bg-black border-white text-white" onChange={event => handleChange(event)}>
-                  <option value="" selected="selected">Genres</option>
-                  {
-                    movieList.map(ele => (
-                      <option key={ele} >{ele}</option>
-                    ))
-                  }
-                </select>
+                <Link to={setGenrePath}>
+                  <select name="category" id="category" className="p-3 ml-10 border-2 bg-black border-white text-white" onChange={event => handleChange(event)}>
+                    <option value="" selected="selected">Genres</option>
+                    {
+                      movieList.map(ele => (
+                        <option key={ele} >{ele}</option>
+                      ))
+                    }
+                  </select>
+                </Link>
               </div>
               <div className="flex items-center">
                 <div className="search-bar">
                   <div className="growing-search">
-                      <div className="input">
-                        <input type="text" name="search" onChange={e => handleSearch(e)} />
-                      </div>
+                    <div className="input">
+                      <input type="text" name="search" onChange={e => handleSearch(e)} />
+                    </div>
                     <Link to={setSearchPath}>
                       <div className="ml-10 border-2 bg-black border-white text-white">
                         <button type="submit">
