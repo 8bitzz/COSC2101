@@ -20,7 +20,7 @@ function App() {
   const [category, setCategory] = useState("");
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
-
+  const [isFilled, setIsFilled] = useState(false);
   let history = useHistory();
 
   //Fetch movie from API
@@ -38,9 +38,15 @@ function App() {
   }, [])
 
   const handleSearch = (event) => {
-    setSearch(event.target.value);
+    setSearch(event.target.value); 
     putSearchTerm(event.target.value);
     event.preventDefault();
+    if (event.target.value === "") {
+      setIsFilled(false)
+    }
+    else {
+      setIsFilled(true)
+    }
   }
 
   const handleChange = (event) => {
@@ -69,10 +75,9 @@ function App() {
 
   const putSearchTerm = (value) => {
     const params = new URLSearchParams();
-    console.log(value)
-    if (value === null) {
-      history.replace("/search", null)
-      return
+    if (value === "") {
+      history.push("")
+      return;
     }
     if (value) {
       params.append("term", value)
@@ -85,6 +90,16 @@ function App() {
       search: params.toString()
     })
   }
+
+  const setSearchPath = (value) => {
+    if (isFilled === true) {
+      return "/search" 
+    }
+    else {
+      return  "/" 
+    }
+  }
+
   return (
     <div className="m-0">
       <Router>
@@ -109,18 +124,16 @@ function App() {
               <div className="flex items-center">
                 <div className="search-bar">
                   <div className="growing-search">
-                    <div className="input">
-                      <Link to={{
-                        pathname: "/search"
-                      }}>
+                      <div className="input">
                         <input type="text" name="search" onChange={e => handleSearch(e)} />
-                      </Link>
-                    </div>
-                    <div className="submit">
-                      <button type="submit" name="go_search">
-                        <span className="fa fa-search"></span>
-                      </button>
-                    </div>
+                      </div>
+                    <Link to={setSearchPath}>
+                      <div className="ml-10 border-2 bg-black border-white text-white">
+                        <button type="submit">
+                         Search
+                        </button>
+                      </div>
+                    </Link> 
                   </div>
                 </div>
                 <svg
