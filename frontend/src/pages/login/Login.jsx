@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom";
+import "./login.css";
 
 const LogIn = () => {
   return (
     <div className="login">
-      <div className="top">
-        <div className="wrapper">
-          <img
-            className="logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-            alt=""
-          />
+      <div className="navbar w-screen fixed top-0 z-50 text-white">
+        <div className="h-20 py-3 px-12 flex justify-between items-center text-sm">
+          <div className="flex items-center font-light">
+            <img
+              className="h-6 mr-8 cursor-pointer"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
+              alt=""
+            />
+          </div>
+          <div className="flex items-center">
+            <button className="bg-red-600 rounded-md py-2 px-4">
+              <Link to="/signup">Sign Up</Link>
+            </button>
+          </div>
         </div>
       </div>
       <div className="container">
