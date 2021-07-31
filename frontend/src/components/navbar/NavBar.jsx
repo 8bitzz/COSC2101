@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   // const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
-  const [movies, setMovie] = useState([]);
+  // const [category, setCategory] = useState("");
+  // const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
-  const [isFilled, setIsFilled] = useState(false);
-  const [isSet, setIsSet] = useState(false);
+  // const [isFilled, setIsFilled] = useState(false);
+  // const [isSet, setIsSet] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
@@ -30,8 +30,32 @@ const NavBar = () => {
       search: params.toString()
     })
   }
-  const handleSubmit = (event) => {
+  const handleSearchSubmit = (event) => {
     putSearchParam();
+    event.preventDefault();
+  }
+
+  const putFilterParam = (genre) => {
+    if (genre === "") {
+      return;
+    }
+    const params = new URLSearchParams()
+    if (genre) {
+      params.append("type", genre)
+    } else {
+      params.delete("type")
+    }
+    history.push({
+      pathname: '/genre',
+      search: params.toString()
+    })
+  }
+
+  const handleCategorySelect = (event) => {
+    // setGenre(event.target.value);
+    // console.log(genre);
+    let genre = event.target.value;
+    putFilterParam(genre);
     event.preventDefault();
   }
 
@@ -42,7 +66,7 @@ const NavBar = () => {
       .get(`http://localhost:4000/api/v1/movies`)
       .then((res) => {
         setMovieList(res.data.data.movies.map((movie) => movie.category.name));
-        setMovie(res.data.data.movies.map((item) => item.movies));
+        // setMovie(res.data.data.movies.map((item) => item.movies));
       })
       .catch((err) => {
         console.log(err);
@@ -51,44 +75,44 @@ const NavBar = () => {
   }, []);
 
   // Handle change when genre selected
-  const handleChange = (event) => {
-    setCategory(event.target.value);
-    putCategoryTerm(event.target.value);
-    event.preventDefault();
-    if (event.target.value === "") {
-      isSet(false);
-    } else {
-      setIsSet(true);
-    }
-  };
+  // const handleChange = (event) => {
+  //   setCategory(event.target.value);
+  //   putCategoryTerm(event.target.value);
+  //   event.preventDefault();
+  //   if (event.target.value === "") {
+  //     isSet(false);
+  //   } else {
+  //     setIsSet(true);
+  //   }
+  // };
 
-  // Update URL when filter by genre
-  const putCategoryTerm = (value) => {
-    const params = new URLSearchParams();
-    console.log("putCategoryTerm", value);
-    if (value === "") {
-      history.push("");
-      return;
-    }
-    if (value) {
-      params.append("term", value);
-    } else {
-      params.delete("term");
-    }
-    history.push({
-      pathname: "/genre",
-      search: params.toString(),
-    });
-  };
+  // // Update URL when filter by genre
+  // const putCategoryTerm = (value) => {
+  //   const params = new URLSearchParams();
+  //   console.log("putCategoryTerm", value);
+  //   if (value === "") {
+  //     history.push("");
+  //     return;
+  //   }
+  //   if (value) {
+  //     params.append("term", value);
+  //   } else {
+  //     params.delete("term");
+  //   }
+  //   history.push({
+  //     pathname: "/genre",
+  //     search: params.toString(),
+  //   });
+  // };
 
-  //Function to set path for Link at Genre selector
-  const setGenrePath = () => {
-    if (isSet === true) {
-      return "/genre";
-    } else {
-      return "/";
-    }
-  };
+  // //Function to set path for Link at Genre selector
+  // const setGenrePath = () => {
+  //   if (isSet === true) {
+  //     return "/genre";
+  //   } else {
+  //     return "/";
+  //   }
+  // };
 
   // Function to handle when search field filled
   // const handleSearch = (event) => {
@@ -140,26 +164,27 @@ const NavBar = () => {
               alt=""
             />
           </Link>
-          <Link to={setGenrePath}>
+          {/* <Link to={setGenrePath}> */}
             <select
               name="category"
               id="category"
               className="p-3 ml-10 border-2 bg-black border-white text-white"
-              onChange={(event) => handleChange(event)}
+              // onChange={(event) => handleChange(event)}
+              onChange={handleCategorySelect}
             >
               <option value="" selected="selected">
                 Genres
               </option>
               {movieList.map((ele) => (
-                <option key={ele}>{ele}</option>
+                <option key={ele} value={ele}>{ele}</option>
               ))}
             </select>
-          </Link>
+          {/* </Link> */}
         </div>
         <div className="flex items-center">
           <div className="search-bar">
             <div className="growing-search">
-              <form className="input" onSubmit={handleSubmit}>
+              <form className="input" onSubmit={handleSearchSubmit}>
                 <input
                   type="text"
                   name="search"

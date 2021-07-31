@@ -16,7 +16,7 @@ const FilteredMovieList = ({ location }) => {
   // console.log(`http://localhost:4000/api/v1/movies/category?name=${category}`)
 
   const param = useLocation().search;
-  const category = new URLSearchParams(param).get("term");
+  const category = new URLSearchParams(param).get("type");
   console.log(category);
   const [filteredMovies, setFilteredMovies] = useState([]);
 
@@ -53,7 +53,7 @@ const FilteredMovieList = ({ location }) => {
           >
             <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-4">
               {filteredMovies.map((movie, index) => {
-                return <MovieItem movie={movie} key={movie.id} index={index} />;
+                return <MovieItem movie={movie} key={movie._id} index={index} />;
               })}
             </div>
           </div>
