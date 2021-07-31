@@ -34,10 +34,10 @@ export default function Register() {
         </div>
       </div>
       <div className="container">
-        <h1 className="text-5xl">Unlimited movies, TV shows, and more.</h1>
-        <h2 className="text-3xl my-4">Watch anywhere. Cancel anytime.</h2>
+        <h1 className="text-5xl font-extrabold">Unlimited movies, TV shows, and more.</h1>
+        <h2 className="text-3xl my-4 font-bold">Watch anywhere. Cancel anytime.</h2>
         <p className="text-xl mb-4">
-          Ready to watch? Enter your email to create or restart your membership.
+          Ready to watch? Enter your email to start checking out your cart.
         </p>
         {!email ? (
           <div className="input">
