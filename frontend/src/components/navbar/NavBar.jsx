@@ -172,7 +172,7 @@ const NavBar = () => {
               // onChange={(event) => handleChange(event)}
               onChange={handleCategorySelect}
             >
-              <option value="" selected="selected">
+              <option value="">
                 Genres
               </option>
               {movieList.map((ele) => (
