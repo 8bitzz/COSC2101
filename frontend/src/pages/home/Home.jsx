@@ -2,7 +2,7 @@ import Featured from "../../components/featured/Featured";
 import MovieList from "../../components/movieList/MovieList";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "./navbar.css";
+import NavBar from "../../components/navbar/NavBar";
 
 const Home = () => {
   const [movies, setMovie] = useState([]);
@@ -27,22 +27,25 @@ const Home = () => {
   // console.log('cate', movies.map((item)=>item.filter(category=> category.category.name==="Dramas")))
 
   return (
-    <div className="bg-netflix-black overflow-hidden">
-      {/* {displayMovieList(search, category)} */}
-      <Featured type="movie" movie={highlightedMovie} />
-      {movieList.map((movieTitle, index) => {
-        return (
-          <MovieList
-            key={index}
-            title={movieTitle}
-            movie={movies.map((item, index) =>
-              item.filter(
-                (category, index) => category.category.name === movieTitle
-              )
-            )}
-          />
-        );
-      })}
+    <div>
+      <NavBar />
+      <div className="bg-netflix-black overflow-hidden">
+        {/* {displayMovieList(search, category)} */}
+        <Featured type="movie" movie={highlightedMovie} />
+        {movieList.map((movieTitle, index) => {
+          return (
+            <MovieList
+              key={index}
+              title={movieTitle}
+              movie={movies.map((item, index) =>
+                item.filter(
+                  (category, index) => category.category.name === movieTitle
+                )
+              )}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
