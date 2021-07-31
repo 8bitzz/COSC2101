@@ -91,7 +91,6 @@ const MovieItem = ({ movie, index }) => {
               <span>{movie.publishYear}</span>
             </div>
             <div className="desc">{movie.description}</div>
-            <div className="genre">{movie.genre}</div>
           </div>
         </>
       )}
