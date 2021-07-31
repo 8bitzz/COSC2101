@@ -5,7 +5,7 @@ import "./movieList.css";
 import { useLocation } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
 
-const SearchMovieList = ({ searchTerm }) => {
+const SearchMovieList = () => {
   // const [filteredmovies, setFilteredMovie] = useState([]);
   // let term = searchTerm;
   // const search = new URLSearchParams(term).get("term")
@@ -41,7 +41,7 @@ const SearchMovieList = ({ searchTerm }) => {
             ref={listRef}
           >
             <div className="text-white text-2xl mb-10">
-              <p>Result for: "{search}" </p>
+              <p>Result for "{search}" </p>
             </div>
             <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-4 ">
               {filteredMovies.map((movie, index) => {
