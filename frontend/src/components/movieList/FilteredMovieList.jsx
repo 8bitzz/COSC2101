@@ -30,7 +30,7 @@ const FilteredMovieList = ({ location }) => {
       <div className="bg-netflix-black h-screen w-full mt-24">
         <p className="mb-10 ml-12 text-3xl font-bold text-white">{category}</p>
         {filteredMovies.length <= 0 ? (
-          <div className="text-white">
+          <div className="text-white ml-12">
             <p>There is no movies at this category at the moment</p>
           </div>
         ) : (

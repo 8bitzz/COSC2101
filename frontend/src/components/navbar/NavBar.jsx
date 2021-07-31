@@ -9,6 +9,8 @@ const NavBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
   // Put search term to URL param then push to /search page
   const putSearchParam = (event) => {
     if (searchTerm === "") {
@@ -53,6 +55,12 @@ const NavBar = () => {
     event.preventDefault();
   };
 
+  // Chech if user is scrolling
+  window.onscroll = () => {
+    setIsScrolled(window.pageYOffset === 0 ? false : true);
+    return () => (window.onscroll == null);
+  }
+
   //Fetch movie from API
   useEffect(() => {
     axios
@@ -67,7 +75,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div className="navbar w-screen fixed top-0 z-50 text-white">
+    <div className={isScrolled ? "navbar bg-netflix-black" : "navbar"}>
       <div className="h-20 py-3 px-12 flex justify-between items-center text-sm">
         <div className="flex items-center font-light">
           <Link to="/">
