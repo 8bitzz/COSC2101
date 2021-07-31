@@ -1,8 +1,4 @@
 
-.movie-wrapper{
-   
-    
-}
 
 .trailer-wrapper{
   margin: 0px;
@@ -10,15 +6,7 @@
   overflow: hidden;
 }
 
-.movie-wrapper-top {
-  display: flex;
-  padding: 30px;
-  justify-content: space-between;
-  align-items: center;
-  &__title {
-    font-size: 2em;
-  }
-}
+
 .movie-img-wrapper {
   display: flex;
   flex-wrap: wrap;

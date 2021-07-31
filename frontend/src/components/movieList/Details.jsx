@@ -39,19 +39,15 @@ export default function Details(props) {
       });
     // eslint-disable-next-line
   }, []);
-  let youtubeURL = movie.trailerURL
 
   return (
-    <div className="h-screen w-full mt-40 mx-10 md:object-center" style={{marginLeft:0+'px'}}>
+    <div className="h-screen w-full mt-40 mx-10 md:object-center" style={{marginLeft:0+'px',marginTop:0+'px'}}>
       <div className="bg-netflix-black overflow-hidden text-white md:object-center">
         <div className="movie-wrapper">
-         
-            <body className="trailer-wrapper">
-            <iframe frameBorder="0" onload="resizeIframe(this)" height="100%" width="100%" style={{overflow:"hidden", height: 100+'%', width: 100+'%' }} allowFullScreen src={
-              (movie.trailerURL)?(movie.trailerURL.replace('/watch?v=','/embed/')) : ('')} frameborder="0"></iframe>
-            </body>
-            
-          
+            <div className="trailer-wrapper min-h-full">
+            <iframe height = "450px" frameBorder="0" width="100%" allowFullScreen src={
+              (movie.trailerURL)?(movie.trailerURL.replace('/watch?v=','/embed/').concat("/?vq=hd1080")) : ('')} frameborder="0"></iframe>
+            </div>
           <div className="movie-details">
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
@@ -96,10 +92,10 @@ export default function Details(props) {
         </div>
         <div className="flex flex-row">
           <div>
-            <button onClick={() => history.goBack()} className="p-3 ml-10 border-2 bg-black border-white text-white">Back </button>
+            <button onClick={() => history.goBack()} className="p-3 ml-10 border-2 bg-black hover:bg-gray-500 border-white text-white">Back </button>
           </div>
           <div>
-            <button className="p-3 ml-10 border-2 bg-black border-white text-white">Add to cart</button>
+            <button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white">Add to cart</button>
           </div>
         </div>
       </div>
