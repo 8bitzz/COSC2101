@@ -10,16 +10,18 @@ const MovieList = ({ title, movie }) => {
     }  
   }, [movie])
   
-  
+  const [slideNumber, setSlideNumber] = useState(0);
   const listRef = useRef();
   const handleClick = (direction) => {
     let distance = listRef.current.getBoundingClientRect().x / 16;
     console.log(distance);
-    if (direction === "left") {
+    if (direction === "left" && slideNumber > 0) {
       listRef.current.style.transform = `translateX(${12.25 + distance}rem)`;
+      setSlideNumber(slideNumber - 1);
     }
-    if (direction === "right") {
+    if (direction === "right" && slideNumber < 3) {
       listRef.current.style.transform = `translateX(${-18.25 + distance}rem)`;
+      setSlideNumber(slideNumber + 1);
     } 
   };
   
