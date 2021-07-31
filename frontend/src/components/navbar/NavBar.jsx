@@ -1,17 +1,40 @@
 import "./navbar.css";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [isFilled, setIsFilled] = useState(false);
   const [isSet, setIsSet] = useState(false);
-  let history = useHistory();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const history = useHistory();
+  
+  const putSearchParam = (event) => {
+    if (searchTerm === "") {
+      return;
+    }
+    const params = new URLSearchParams()
+    if (searchTerm) {
+      params.append("term", searchTerm)
+    } else {
+      params.delete("term")
+    }
+    history.push({
+      pathname: '/search',
+      search: params.toString()
+    })
+  }
+  const handleSubmit = (event) => {
+    putSearchParam();
+    event.preventDefault();
+  }
+
 
   //Fetch movie from API
   useEffect(() => {
@@ -26,18 +49,6 @@ const NavBar = () => {
       });
     // eslint-disable-next-line
   }, []);
-
-  // Function to handle when search field filled
-  const handleSearch = (event) => {
-    setSearch(event.target.value);
-    putSearchTerm(event.target.value);
-    event.preventDefault();
-    if (event.target.value === "") {
-      setIsFilled(false);
-    } else {
-      setIsFilled(true);
-    }
-  };
 
   // Handle change when genre selected
   const handleChange = (event) => {
@@ -70,32 +81,6 @@ const NavBar = () => {
     });
   };
 
-  // Update URL when search
-  const putSearchTerm = (value) => {
-    const params = new URLSearchParams();
-    if (value === "") {
-      history.push("");
-      return;
-    }
-    if (value) {
-      params.append("term", value);
-    } else {
-      params.delete("term");
-    }
-    history.push({
-      pathname: "/search",
-      search: params.toString(),
-    });
-  };
-
-  const setSearchPath = () => {
-    if (isFilled === true) {
-      return "/search";
-    } else {
-      return "/";
-    }
-  };
-
   //Function to set path for Link at Genre selector
   const setGenrePath = () => {
     if (isSet === true) {
@@ -104,6 +89,45 @@ const NavBar = () => {
       return "/";
     }
   };
+
+  // Function to handle when search field filled
+  // const handleSearch = (event) => {
+  //   setSearch(event.target.value);
+  //   putSearchTerm(event.target.value);
+  //   event.preventDefault();
+  //   if (event.target.value === "") {
+  //     setIsFilled(false);
+  //   } else {
+  //     setIsFilled(true);
+  //   }
+  // };
+
+  // Update URL when search
+  // const putSearchTerm = (value) => {
+  //   const params = new URLSearchParams();
+  //   if (value === "") {
+  //     history.push("");
+  //     return;
+  //   }
+  //   if (value) {
+  //     params.append("term", value);
+  //   } else {
+  //     params.delete("term");
+  //   }
+  //   history.push({
+  //     pathname: "/search",
+  //     search: params.toString(),
+  //   });
+  // };
+
+  // const setSearchPath = () => {
+  //   if (isFilled === true) {
+  //     return "/search";
+  //   } else {
+  //     return "/";
+  //   }
+  // };
+
 
   return (
     <div className="navbar w-screen fixed top-0 z-50 text-white">
@@ -135,18 +159,19 @@ const NavBar = () => {
         <div className="flex items-center">
           <div className="search-bar">
             <div className="growing-search">
-              <div className="input">
+              <form className="input" onSubmit={handleSubmit}>
                 <input
                   type="text"
                   name="search"
-                  onChange={(e) => handleSearch(e)}
+                  // onChange={(e) => handleSearch(e)}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
-              </div>
-              <Link to={setSearchPath}>
-                <div className="ml-10 border-2 bg-black border-white text-white">
-                  <button type="submit">Search</button>
-                </div>
-              </Link>
+              </form>
+              {/* <Link to={setSearchPath}> */}
+                {/* <div className="ml-10 border-2 bg-black border-white text-white">
+                  <button type="button" onClick={handleSubmit}>Search</button>
+                </div> */}
+              {/* </Link> */}
             </div>
           </div>
           <svg
