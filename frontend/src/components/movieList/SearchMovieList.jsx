@@ -6,13 +6,8 @@ import { useLocation } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
 
 const SearchMovieList = () => {
-  // const [filteredmovies, setFilteredMovie] = useState([]);
-  // let term = searchTerm;
-  // const search = new URLSearchParams(term).get("term")
-
   const param = useLocation().search;
   const search = new URLSearchParams(param).get("term");
-  console.log(search);
   const [filteredMovies, setFilteredMovies] = useState([]);
 
   useEffect(() => {
