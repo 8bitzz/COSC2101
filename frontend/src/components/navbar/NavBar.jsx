@@ -55,7 +55,7 @@ const NavBar = () => {
     event.preventDefault();
   };
 
-  // Chech if user is scrolling
+  // Chech if user is scrolling to change color of navbar
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll == null);

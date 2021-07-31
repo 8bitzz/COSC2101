@@ -9,7 +9,7 @@ const Featured = ({ type, movie }) => {
         className="w-full h-full object-cover opacity-80"
       />
       <div className="w-2/5 absolute inset-x-14 bottom-14 flex flex-col text-white">
-        <h1>{movie.title}</h1>
+        <h1 className="text-5xl font-extrabold">{movie.title}</h1>
         <span className="my-6 text-xl font-medium drop-shadow-md">
           {movie.description}
         </span>
