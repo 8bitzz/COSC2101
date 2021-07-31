@@ -5,10 +5,9 @@
 }
 
 .trailer-wrapper{
-  width: 490px;
-  margin: auto;
-  background-color: $very-dark-grey;
-  box-shadow: 0 0 30px $black;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
 }
 
 .movie-wrapper-top {

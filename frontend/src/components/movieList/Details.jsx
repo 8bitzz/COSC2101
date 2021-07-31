@@ -42,13 +42,16 @@ export default function Details(props) {
   let youtubeURL = movie.trailerURL
 
   return (
-    <div className="h-screen w-full mt-40 mx-10 md:object-center">
+    <div className="h-screen w-full mt-40 mx-10 md:object-center" style={{marginLeft:0+'px'}}>
       <div className="bg-netflix-black overflow-hidden text-white md:object-center">
         <div className="movie-wrapper">
-          <div className="trailer-wrapper">
-            <iframe width="420" height="315" frameBorder="0" allowFullScreen src={
+         
+            <body className="trailer-wrapper">
+            <iframe frameBorder="0" onload="resizeIframe(this)" height="100%" width="100%" style={{overflow:"hidden", height: 100+'%', width: 100+'%' }} allowFullScreen src={
               (movie.trailerURL)?(movie.trailerURL.replace('/watch?v=','/embed/')) : ('')} frameborder="0"></iframe>
-          </div>
+            </body>
+            
+          
           <div className="movie-details">
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
