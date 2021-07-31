@@ -1,27 +1,14 @@
-.container{
-    margin-right: auto;
-    margin-left: auto;
-}
-.movie-wrapper{
-    width: 490px;
-    margin: auto;
-    background-color: $very-dark-grey;
-    box-shadow: 0 0 30px $black;
-    
+
+
+.trailer-wrapper{
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
 }
 
-.movie-wrapper-top {
-  display: flex;
-  padding: 30px;
-  justify-content: space-between;
-  align-items: center;
-  &__title {
-    font-size: 2em;
-  }
-}
+
 .movie-img-wrapper {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
   padding-top: 15px;
@@ -39,6 +26,7 @@
   &__desc {
   }
   &__release-date {
+    padding-bottom: 30px
   }
   &__genre {
   }
