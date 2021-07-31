@@ -6,52 +6,60 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [movieList, setMovieList] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
-  
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Put search term to URL param then push to /search page
   const putSearchParam = (event) => {
     if (searchTerm === "") {
       return;
     }
-    const params = new URLSearchParams()
+    const params = new URLSearchParams();
     if (searchTerm) {
-      params.append("term", searchTerm)
+      params.append("term", searchTerm);
     } else {
-      params.delete("term")
+      params.delete("term");
     }
     history.push({
-      pathname: '/search',
-      search: params.toString()
-    })
-  }
+      pathname: "/search",
+      search: params.toString(),
+    });
+  };
   const handleSearchSubmit = (event) => {
     putSearchParam();
     event.preventDefault();
-  }
+  };
 
+  // Put genre to URL param then push to /genre page
   const putFilterParam = (genre) => {
     if (genre === "") {
       return;
     }
-    const params = new URLSearchParams()
+    const params = new URLSearchParams();
     if (genre) {
-      params.append("type", genre)
+      params.append("type", genre);
     } else {
-      params.delete("type")
+      params.delete("type");
     }
     history.push({
-      pathname: '/genre',
-      search: params.toString()
-    })
-  }
+      pathname: "/genre",
+      search: params.toString(),
+    });
+  };
 
   const handleCategorySelect = (event) => {
     let genre = event.target.value;
     putFilterParam(genre);
     event.preventDefault();
-  }
+  };
 
+  // Chech if user is scrolling to change color of navbar
+  window.onscroll = () => {
+    setIsScrolled(window.pageYOffset === 0 ? false : true);
+    return () => (window.onscroll == null);
+  }
 
   //Fetch movie from API
   useEffect(() => {
@@ -66,9 +74,8 @@ const NavBar = () => {
     // eslint-disable-next-line
   }, []);
 
-
   return (
-    <div className="navbar w-screen fixed top-0 z-50 text-white">
+    <div className={isScrolled ? "navbar bg-netflix-black" : "navbar"}>
       <div className="h-20 py-3 px-12 flex justify-between items-center text-sm">
         <div className="flex items-center font-light">
           <Link to="/">
@@ -78,35 +85,48 @@ const NavBar = () => {
               alt=""
             />
           </Link>
-
-            <select
-              name="category"
-              id="category"
-              className="p-3 ml-10 border-2 bg-black border-white text-white"
-
-              onChange={handleCategorySelect}
-            >
-              <option value="">
-                Genres
+          <select
+            name="category"
+            id="category"
+            className="p-3 ml-10 border-2 bg-black border-white text-white"
+            onChange={handleCategorySelect}
+          >
+            <option value="">Genres</option>
+            {movieList.map((ele) => (
+              <option key={ele} value={ele}>
+                {ele}
               </option>
-              {movieList.map((ele) => (
-                <option key={ele} value={ele}>{ele}</option>
-              ))}
-            </select>
-
+            ))}
+          </select>
         </div>
-        <div className="flex items-center">
-          <div className="search-bar">
-            <div className="growing-search">
-              <form className="input" onSubmit={handleSearchSubmit}>
-                <input
-                  type="text"
-                  name="search"
-                  // onChange={(e) => handleSearch(e)}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+        <div className=" flex items-center">
+          <div className=" bg-netflix-black rounded-md my-auto opacity-80 p-2 mr-4 ">
+            <form
+              className=" bg-netflix-black flex items-center"
+              onSubmit={handleSearchSubmit}
+            >
+              <input
+                type="text"
+                name="search"
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-netflix-black text-gray-400 focus:outline-none "
+                placeholder="Search movie"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
-              </form>
-            </div>
+              </svg>
+            </form>
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"

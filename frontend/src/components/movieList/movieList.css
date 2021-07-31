@@ -23,7 +23,9 @@
 }
 
 #item:hover > img {
+  width: 100%;
   height: 140px;
+  object-fit: cover;
 }
 
 #item:hover .itemInfo {

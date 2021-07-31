@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 .navbar {
+  width: 100%;
+  color: white;
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  z-index: 999;
   background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
 }
 
@@ -10,7 +16,7 @@
   padding: 10px 50px;
 }
 .growing-search {
-	padding: 5px 5px 5px 7px;
+	padding: 0px 10px;
 	border-radius: 5px;
 	background: #fff;
 }
