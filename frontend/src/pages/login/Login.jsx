@@ -1,16 +1,44 @@
 import { Link } from "react-router-dom";
 import "./login.css";
 import { useRef, useState } from "react";
-
+import { isEmail } from "validator";
+import AuthService from "../../services/auth.service";
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [message, setMessage] = useState("");
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const handleSubmit = () => {
-    // Consume authen API
+  const handleSubmit = (e, props) => {
+    e.preventDefault();
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    if (email.trim().length === 0 || email.trim().length === 0) {
+      if (email.trim().length === 0) {
+        alert('Username must not be empty')
+      }
+      else if (password.trim().length === 0) {
+        alert('Password must not be empty')
+      }
+      return;
+    }
+    AuthService.login(email, password).then(
+      () => {
+        props.history.push("/");
+        window.location.reload();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+        setMessage(resMessage);
+      }
+    );
+    console.log(email, password)
   };
 
   return (
