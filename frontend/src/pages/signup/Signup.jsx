@@ -1,36 +1,24 @@
-import React, { useRef, useState, Component } from "react";
+import { useRef, useState } from "react";
 import "./signup.css";
 import { Link } from "react-router-dom";
 import AuthContext from "../../service/auth-context.js"
+export default function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
-export default class Register extends Component {
-  static contextType = AuthContext;
-  constructor(props) {
-    super(props)
-    this.state = {
-      users: [],
-      email: "",
-      password: "",
-      username: ""
-    }
-  }
-  handleChange(e) {
-    var obj = {}
-    obj[e.target.name] = e.target.value
-    this.setState(obj)
-  }
-  save(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.email.trim().length === 0 || this.state.password.trim().length === 0) {
-      if (this.state.email.trim().length === 0) {
+       if (email.trim().length === 0 || password.trim().length === 0) {
+      if (email.trim().length === 0) {
         alert('Email must not be empty')
       }
-      else if (this.state.password.trim().length === 0) {
+      else if (password.trim().length === 0) {
         alert('Password must not be empty')
       }
       return;
     }
-    const token = this.context.token
+    const token = AuthContext.token
     var url = 'http://localhost:4000/api/v1/auth/register'
     fetch(url, {
       method: 'post',
@@ -39,7 +27,7 @@ export default class Register extends Component {
         'Authorization': 'Bearer ' + token,
         'Accept': 'application/json'
       },
-      body: JSON.stringify({ email: this.state.email, password: this.state.password, username: this.state.username })
+      body: JSON.stringify({ email: email, password: password, username: username })
     })
       .then(res => {
         if (res.status === 409) {
@@ -49,10 +37,9 @@ export default class Register extends Component {
           alert('User added!')
         }
       })
-  }
-  render() {
-    return (
-      <div className="register">
+  };
+  return (
+    <div className="register">
         <div className="navbar w-screen fixed top-0 z-50 text-white">
           <div className="h-20 py-3 px-12 flex justify-between items-center text-sm">
             <div className="flex items-center font-light">
@@ -79,18 +66,17 @@ export default class Register extends Component {
           </p>
           <form className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-80" action="post">
             <h1 className="text-xl font-semibold text-center">Sign Up</h1>
-            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="username" name="username" value={this.state.username} placeholder="Username" onChange={this.handleChange.bind(this)} />
-            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="email" name="email" value={this.state.email} placeholder="Email" onChange={this.handleChange.bind(this)} />
-            <input type="password" className="h-12 rounded-md pl-2 text-gray-600" id="password" name="password" value={this.state.password} placeholder="Password" onChange={this.handleChange.bind(this)} />
+            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="username" name="username" value={username} placeholder="Username" onChange={e=>setUsername(e.target.value)} />
+            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="email" name="email" value={email} placeholder="Email" onChange={e=>setEmail(e.target.value)} />
+            <input type="password" className="h-12 rounded-md pl-2 text-gray-600" id="password" name="password" value={password} placeholder="Password" onChange={e=>setPassword(e.target.value)}/>
             <button
               className=" bg-red-600 rounded-md py-2 px-4 "
-              onClick={this.save.bind(this)}
+              onClick={handleSubmit}
             >
               Register
             </button>
           </form>
         </div>
       </div>
-    );
-  }
+  );
 }
