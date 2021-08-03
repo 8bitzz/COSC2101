@@ -77,21 +77,20 @@ export default class Register extends Component {
           <p className="text-xl mb-4">
             Ready to watch? Enter your email to start checking out your cart.
           </p>
-          <input className="w-4/5 border-none p-3 text-gray-600" type="text" id="username" name="username" value={this.state.username} placeholder="Username" onChange={this.handleChange.bind(this)} />
-          <br />
-          <input className="w-4/5 border-none p-3 text-gray-600" type="text" id="email" name="email" value={this.state.email} placeholder="Email" onChange={this.handleChange.bind(this)} />
-          <br />
-          <input type="password" className="w-4/5 border-none p-3 text-gray-600" id="password" name="password" value={this.state.password} placeholder="Password" onChange={this.handleChange.bind(this)} />
-          <br />
-          <button
-            className=" bg-red-600 py-2 px-4 "
-            onClick={this.save.bind(this)}
-          >
-            Register
-          </button>
+          <form className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-80" action="post">
+            <h1 className="text-xl font-semibold text-center">Sign Up</h1>
+            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="username" name="username" value={this.state.username} placeholder="Username" onChange={this.handleChange.bind(this)} />
+            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="email" name="email" value={this.state.email} placeholder="Email" onChange={this.handleChange.bind(this)} />
+            <input type="password" className="h-12 rounded-md pl-2 text-gray-600" id="password" name="password" value={this.state.password} placeholder="Password" onChange={this.handleChange.bind(this)} />
+            <button
+              className=" bg-red-600 rounded-md py-2 px-4 "
+              onClick={this.save.bind(this)}
+            >
+              Register
+            </button>
+          </form>
         </div>
       </div>
     );
   }
-
 }
