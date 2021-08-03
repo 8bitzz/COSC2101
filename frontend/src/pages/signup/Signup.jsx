@@ -18,7 +18,7 @@ export default function Register() {
       }
       return;
     }
-    const token = AuthContext.token
+    const token = AuthContext.accessToken
     var url = 'http://localhost:4000/api/v1/auth/register'
     fetch(url, {
       method: 'post',
