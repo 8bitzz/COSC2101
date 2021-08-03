@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import "./login.css";
 import { useRef, useState } from "react";
-import { isEmail } from "validator";
-import AuthService from "../../services/auth.service";
+
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,21 +22,6 @@ const LogIn = () => {
       }
       return;
     }
-    AuthService.login(email, password).then(
-      () => {
-        props.history.push("/");
-        window.location.reload();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-            error.message ||
-            error.toString();
-        setMessage(resMessage);
-      }
-    );
     console.log(email, password)
   };
 
