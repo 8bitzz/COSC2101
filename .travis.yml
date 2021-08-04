@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "stable"
+cache: npm
+matrix:
+  fast_finish: true
+  include:
+    - env: Javascript
+      before_script:
+        - cd backend
+        - npm install
+      script:
+        - npm test
+    - env: TypeScript
+      before_script:
+        - cd backend
+        - npm install
+        - npm start
+        - cd ..
+        - cd frontend
+        - npm install
+      script:
+        - npm test
