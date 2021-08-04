@@ -8,7 +8,7 @@ const Home = () => {
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [highlightedMovie, setHighLightedMovie] = useState([]);
-
+  
   //Fetch movie from API
   useEffect(() => {
     axios
