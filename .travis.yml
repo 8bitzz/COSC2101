@@ -15,7 +15,7 @@ matrix:
       before_script:
         - cd backend
         - npm install
-        - npm start
+        - npm start &
         - cd ..
         - cd frontend
         - npm install
