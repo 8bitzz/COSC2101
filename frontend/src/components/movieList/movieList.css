@@ -11,6 +11,7 @@
   transform: translateX(0rem);
   transition: all 1s ease;
 }
+
 #item:hover {
   width: 325px;
   height: 300px;

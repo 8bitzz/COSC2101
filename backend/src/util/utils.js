@@ -1,5 +1,6 @@
 const getYouTubeID = require("get-youtube-id");
 
+// Helper function to generate Youtube Thumbnail in high quality
 exports.populateYoutubeThumbnail = (movies) => {
   var newMovies = []
   for (let i = 0; i < movies.length; i++) {
