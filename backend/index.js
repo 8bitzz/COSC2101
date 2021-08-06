@@ -4,6 +4,7 @@ var helmet = require("helmet");
 var cors = require("cors");
 let morgan = require('morgan');
 let config = require('config');
+const path = require('path');
 const AppError = require("./src/util/appError");
 require("dotenv").config();
 
@@ -14,7 +15,7 @@ const authRoutes = require("./src/routes/authRoutes");
 
 // App config
 var app = express();
-var PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
 
 //MongoDB
 mongoose.connect(config.DBHost, {
@@ -40,17 +41,14 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+// Serve web app
+const buildPath = path.join(__dirname, '..', 'frontend', 'build');
+app.use(express.static(buildPath));
+
 // Routes
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/auth", authRoutes);
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.all("*", (req, res, next) => {
-  next(new AppError(`Given url ${req.originalUrl} does not exist`, 404));
-});
 
 // Express App initialize
 app.listen(PORT, function () {

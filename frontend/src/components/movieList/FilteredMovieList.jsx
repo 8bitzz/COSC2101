@@ -4,6 +4,7 @@ import axios from "axios";
 import "./movieList.css";
 import { useLocation } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
+import { BASE_API_URL } from '../../utils/constants';
 
 const FilteredMovieList = ({ location }) => {
   //Set category param from current search URL
@@ -16,7 +17,7 @@ const FilteredMovieList = ({ location }) => {
   //Fetch data according to the category
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/v1/movies/category?name=${category}`)
+      .get(`${BASE_API_URL}/api/v1/movies/category?name=${category}`)
       .then((res) => {
         console.log(res);
         setFilteredMovies(res.data.data.movies);

@@ -8,7 +8,7 @@ $ cd frontend
 ```
 2. Start the server at http://localhost:3000
 ```bash
-$ npm start
+$ npm run dev
 ```
 
 ### Backend
@@ -22,7 +22,7 @@ $ npm install
 ```
 3. Start the server at http://localhost:4000
 ```bash
-$ npm start
+$ npm run dev
 ```
 
 ### Backend - Unit Test on local
