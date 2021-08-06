@@ -37,7 +37,11 @@ if(config.util.getEnv('NODE_ENV') !== 'test') {
 }
 
 //Middleware
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(cors());
 app.use(express.json());
 
