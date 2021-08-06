@@ -9,6 +9,7 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //Check if email and password are filled
        if (email.trim().length === 0 || password.trim().length === 0) {
       if (email.trim().length === 0) {
         alert('Email must not be empty')
@@ -18,7 +19,8 @@ export default function Register() {
       }
       return;
     }
-    const token = AuthContext.accessToken
+    //Consume auth API
+    const token = AuthContext.accessToken //Get token from AuthContext
     var url = 'http://localhost:4000/api/v1/auth/register'
     fetch(url, {
       method: 'post',

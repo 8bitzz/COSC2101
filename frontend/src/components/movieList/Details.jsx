@@ -12,6 +12,7 @@ export default function Details(props) {
   const [category, setCategory] = useState([]);
   var gerne = '';
 
+  //Get the _id of the movie from props and fectch API to get data of the movie
   useEffect(() => {
     const _id = props.match.params._id;
     console.log(_id)
@@ -27,6 +28,8 @@ export default function Details(props) {
       })
   }, [])
 
+  //Fetch the categories list in categories API to compare with the value of gerne
+  //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/v1/categories`)

@@ -17,8 +17,10 @@ export default class LogIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    //Get the current value of email and password
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
+    //Check if email and password are filled
     if (email.trim().length === 0 || email.trim().length === 0) {
       if (email.trim().length === 0) {
         alert('Username must not be empty')
@@ -29,6 +31,7 @@ export default class LogIn extends Component {
       return;
     }
     console.log(email, password)
+    //Consume auth API
     fetch('http://localhost:4000/api/v1/auth/login', {
       method: 'POST',
       body: JSON.stringify({

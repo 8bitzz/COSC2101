@@ -14,9 +14,9 @@ const Home = () => {
     axios
       .get(`http://localhost:4000/api/v1/movies`)
       .then((res) => {
-        setMovieList(res.data.data.movies.map((movie) => movie.category.name));
-        setMovie(res.data.data.movies.map((item) => item.movies));
-        setHighLightedMovie(res.data.data.highlightMovie);
+        setMovieList(res.data.data.movies.map((movie) => movie.category.name)); //Get all available categories
+        setMovie(res.data.data.movies.map((item) => item.movies)); //Get all movies
+        setHighLightedMovie(res.data.data.highlightMovie); //Get featured movie
       })
       .catch((err) => {
         console.log(err);
