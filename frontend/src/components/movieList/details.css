@@ -1,0 +1,37 @@
+
+
+.trailer-wrapper{
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+}
+
+
+.movie-img-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: $black;
+  &__thumnail {
+    padding: 3px;
+  }
+}
+.movie-details {
+  padding: 30px;
+  &__item {
+    padding: 5px;
+  }
+  &__desc {
+  }
+  &__release-date {
+    padding-bottom: 30px
+  }
+  &__genre {
+  }
+  &__duration {
+  }
+  &__price {
+  }
+}
