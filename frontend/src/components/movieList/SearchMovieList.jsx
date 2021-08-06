@@ -6,10 +6,13 @@ import { useLocation } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
 
 const SearchMovieList = () => {
+  //Get the param from search URL
   const param = useLocation().search;
+  //Set param to search keyword
   const search = new URLSearchParams(param).get("term");
   const [filteredMovies, setFilteredMovies] = useState([]);
 
+  //Fetch data according to search keyword
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/v1/movies?name=${search}`)

@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 
 const MovieList = ({ title, movie }) => {
   const [newArr, setNewArr] = useState([]);
+  //For each matching movies from Home, add into a new movie list.
   useEffect(()=>{
     for (let i=0; i< movie.length; i++) { 
       if (movie[i].length !== 0 )  setNewArr(movie[i])

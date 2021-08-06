@@ -6,12 +6,14 @@ import { useLocation } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
 
 const FilteredMovieList = ({ location }) => {
-
+  //Set category param from current search URL
   const param = useLocation().search;
+  //Set param to category
   const category = new URLSearchParams(param).get("type");
   console.log(category);
   const [filteredMovies, setFilteredMovies] = useState([]);
 
+  //Fetch data according to the category
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/v1/movies/category?name=${category}`)

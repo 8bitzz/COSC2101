@@ -9,13 +9,16 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import React, { Fragment} from "react";
 
 export default class App extends React.Component {
+  //Set state for accessToken and _id
   state = {
 		accessToken: null,
 		_id: null
 	}
+  //Login function to set current state of accessToken and _id
 	login = (accessToken, _id, tokenExpiration) => {
 		this.setState({ accessToken: accessToken, _id: _id })
 	}
+  //Logout function to return the null value of accessToken and _id
 	logout = () => {
 		this.setState({ accessToken: null, _id: null })
 	}
