@@ -3,6 +3,7 @@ import MovieList from "../../components/movieList/MovieList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBar from "../../components/navbar/NavBar";
+import { BASE_API_URL } from '../../utils/constants';
 
 const Home = () => {
   const [movies, setMovie] = useState([]);
@@ -12,7 +13,7 @@ const Home = () => {
   //Fetch movie from API
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/v1/movies`)
+      .get(`${BASE_API_URL}/api/v1/movies`)
       .then((res) => {
         setMovieList(res.data.data.movies.map((movie) => movie.category.name)); //Get all available categories
         setMovie(res.data.data.movies.map((item) => item.movies)); //Get all movies

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import NavBar from '../navbar/NavBar';
+import { BASE_API_URL } from '../../utils/constants';
 export default function Details(props) {
   const history = useHistory();
 
@@ -16,7 +17,7 @@ export default function Details(props) {
   useEffect(() => {
     const _id = props.match.params._id;
     console.log(_id)
-    const url = `http://localhost:4000/api/v1/movies/${_id}`;
+    const url = `${BASE_API_URL}/api/v1/movies/${_id}`;
     axios
       .get(url)
       .then(res => {

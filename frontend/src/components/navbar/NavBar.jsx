@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AuthContext from "../../service/auth-context";
+import { BASE_API_URL } from '../../utils/constants';
 
 const NavBar = (props) => {
 
@@ -71,7 +72,7 @@ const NavBar = (props) => {
   //Fetch movie from API
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/v1/movies`)
+      .get(`${BASE_API_URL}/api/v1/movies`)
       .then((res) => {
         setMovieList(res.data.data.movies.map((movie) => movie.category.name));
       })
