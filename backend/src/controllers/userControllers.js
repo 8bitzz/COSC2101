@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const catchAsync = require("../util/catchAsync")
 
+// Async function to register new user
 const registerUser = catchAsync(async (req, res, next) => {
   if (!req.body.email || !req.body.password ) {
     return res.status(401).json("Missing email or password field");
@@ -19,6 +20,7 @@ const registerUser = catchAsync(async (req, res, next) => {
     return res.status(401).json("Email has been registered");
   }
 
+  // Create new user object from request body, hashing password with AES before saving to db
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -28,6 +30,7 @@ const registerUser = catchAsync(async (req, res, next) => {
     ).toString(),
   });
 
+  // Try saving user in MongoDB and throw error 500 if error
   try {
     const user = await newUser.save();
     res.status(201).json(user);
@@ -36,20 +39,24 @@ const registerUser = catchAsync(async (req, res, next) => {
   }
 });
 
+// Async function to login user
 const loginUser = catchAsync(async (req, res, next) => {
   try {
+    // Return error 401 if missing requestion body
     if (!req.body.email || !req.body.password ) {
       return res.status(401).json("Missing email or password field");
     }
-    // Check if there is any account registered with the email address
+    // Check if there is any account registered with the email address 
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return res.status(401).json("Can not find any user with that email address");
     }
 
-    // Check if password matched
+    // Check if password is matched with registered password or not
+    // Use CryptoJS to decrypt the original password
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+    // Compare original password with the password from request body
     if (originalPassword !== req.body.password) {
        return res.status(401).json("Incorrect password");
     } 
@@ -60,7 +67,7 @@ const loginUser = catchAsync(async (req, res, next) => {
       { expiresIn: "5d" }
     );
 
-    // Extract password from response
+    // Extract password from response body
     const { password, ...userInfo } = user._doc;
 
     // Return accessToken in response

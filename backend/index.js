@@ -17,7 +17,7 @@ const authRoutes = require("./src/routes/authRoutes");
 var app = express();
 const PORT = process.env.PORT || 4000;
 
-//MongoDB
+//MongoDB connect
 mongoose.connect(config.DBHost, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

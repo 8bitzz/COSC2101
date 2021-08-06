@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { registerUser, loginUser } = require("../controllers/userControllers");
 const { check } = require("express-validator");
 
-// REGISTER
+// Endpoint to register user
 router.post(
   "/register",
   check("email", "Incorrect email format").isEmail(),
@@ -10,7 +10,7 @@ router.post(
   registerUser
 );
 
-// LOGIN
+// Endpoint to login user
 router.post("/login", loginUser);
 
 module.exports = router;
