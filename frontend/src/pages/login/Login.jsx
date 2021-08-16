@@ -30,7 +30,6 @@ export default class LogIn extends Component {
       }
       return;
     }
-    console.log(email, password)
     //Consume auth API
     fetch('http://localhost:4000/api/v1/auth/login', {
       method: 'POST',
