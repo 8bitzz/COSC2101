@@ -17,10 +17,12 @@ export default class App extends React.Component {
   //Login function to set current state of accessToken and _id
 	login = (accessToken, _id, tokenExpiration) => {
 		this.setState({ accessToken: accessToken, _id: _id })
+    localStorage.setItem('accessToken', this.state.accessToken)
 	}
   //Logout function to return the null value of accessToken and _id
 	logout = () => {
 		this.setState({ accessToken: null, _id: null })
+    localStorage.removeItem('accessToken')
 	}
   render() {
     return (
