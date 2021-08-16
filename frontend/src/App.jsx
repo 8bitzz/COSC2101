@@ -41,6 +41,7 @@ export default class App extends React.Component {
                   <Route path="/genre"><FilteredMovieList /></Route>
                   <Route path="/search"><SearchMovieList /></Route>
                   <Route path={`/details/:_id`} component={Details} ></Route>
+                  {localStorage.getItem('accessToken') && <Redirect from='/signup' to='/' exact />}
                   <Route path="/signup" component={Signup} ></Route>
                   {localStorage.getItem('accessToken') && <Redirect from='/login' to='/' exact />}
                   <Route path="/login" component={Login} ></Route>
