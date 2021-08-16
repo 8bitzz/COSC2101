@@ -53,7 +53,6 @@ export default class LogIn extends Component {
       .then(res => {
         if (res.accessToken) {
           this.context.login(res.accessToken, res._id, res.tokenExpiration)
-          localStorage.setItem('accessToken', res.accessToken)
         }
       })
       .catch(err => {
