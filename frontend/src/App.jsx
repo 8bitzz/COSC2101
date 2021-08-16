@@ -17,10 +17,12 @@ export default class App extends React.Component {
   //Login function to set current state of accessToken and _id
 	login = (accessToken, _id, tokenExpiration) => {
 		this.setState({ accessToken: accessToken, _id: _id })
+    localStorage.setItem('accessToken', this.state.accessToken)
 	}
   //Logout function to return the null value of accessToken and _id
 	logout = () => {
 		this.setState({ accessToken: null, _id: null })
+    localStorage.removeItem('accessToken')
 	}
   render() {
     return (
@@ -39,8 +41,9 @@ export default class App extends React.Component {
                   <Route path="/genre"><FilteredMovieList /></Route>
                   <Route path="/search"><SearchMovieList /></Route>
                   <Route path={`/details/:_id`} component={Details} ></Route>
+                  {localStorage.getItem('accessToken') && <Redirect from='/signup' to='/' exact />}
                   <Route path="/signup" component={Signup} ></Route>
-                  {this.state.accessToken && <Redirect from='/login' to='/' exact />}
+                  {localStorage.getItem('accessToken') && <Redirect from='/login' to='/' exact />}
                   <Route path="/login" component={Login} ></Route>
                 </Switch>
               </div>
