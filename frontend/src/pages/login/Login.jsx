@@ -58,7 +58,6 @@ export default class LogIn extends Component {
       .catch(err => {
         console.log(err)
     })
-    
   };
   render(){
     return (
