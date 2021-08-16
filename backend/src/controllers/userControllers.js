@@ -3,6 +3,7 @@ const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const catchAsync = require("../util/catchAsync")
+const { promisify } = require("util");
 
 // Async function to register new user
 const registerUser = catchAsync(async (req, res, next) => {
@@ -106,7 +107,7 @@ const isAuthenticated = catchAsync(async (req, res, next) => {
   }
 
   // Decode and get user from mongoDB
-  const decodedToken = await promisify(jwt.verify)(token, process.env.SECRET);
+  const decodedToken = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
   const user = await User.findById(decodedToken.id);
   req.user = user;
 
