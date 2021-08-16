@@ -3,6 +3,7 @@ const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const catchAsync = require("../util/catchAsync")
+const { promisify } = require("util");
 
 // Async function to register new user
 const registerUser = catchAsync(async (req, res, next) => {
@@ -88,7 +89,34 @@ const loginUser = catchAsync(async (req, res, next) => {
   }
 });
 
+// Get the JWT token and check the authentication
+const isAuthenticated = catchAsync(async (req, res, next) => {
+  let token;
+
+  // Get the authorization header
+  const authHeader = req.headers.authorization;
+
+  // Parse the token
+  if (authHeader && authHeader.startsWith("Bearer")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  // Return 401 status code if the autorization header is absent
+  if (!token) {
+    return res.status(401).json("Invalid user authorization");
+  }
+
+  // Decode and get user from mongoDB
+  const decodedToken = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
+  const user = await User.findById(decodedToken.id);
+  req.user = user;
+
+  // Pass it to next middlewares
+  next();
+});
+
 module.exports = {
   registerUser,
   loginUser,
+  isAuthenticated
 };

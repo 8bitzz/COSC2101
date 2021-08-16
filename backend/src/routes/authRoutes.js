@@ -18,5 +18,4 @@ router.post(
 
 // Endpoint to login user
 router.post("/login", loginUser);
-
 module.exports = router;
