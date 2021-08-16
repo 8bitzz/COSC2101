@@ -22,6 +22,18 @@ exports.createCart = catchAsync(async (req, res, next) => {
   // Get movie id param
   const movieID = req.query.movie_id;
 
+  // Check if this cart is already created
+  const carts = await Cart.find({ createdBy: req.user.id, movie: movieID });
+  if (carts.length > 0) {
+    const cart = carts[0];
+    return res.status(200).json({
+      status: "success",
+      data: {
+        cart,
+      },
+    });
+  }
+
   // Create a cart
   const cart = await Cart.create({
     createdBy: req.user.id,

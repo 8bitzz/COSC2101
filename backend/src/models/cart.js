@@ -4,6 +4,7 @@ const cartSchema = new mongoose.Schema({
   movie: {
     type: mongoose.Types.ObjectId,
     ref: "Movie",
+    unique: true,
     required: [true, "A cart must be linked to a movie"],
   },
   createdBy: {
