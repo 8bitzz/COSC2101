@@ -33,7 +33,18 @@ const registerUser = catchAsync(async (req, res, next) => {
   // Try saving user in MongoDB and throw error 500 if error
   try {
     const user = await newUser.save();
-    res.status(201).json(user);
+
+    // Generate JWT accessToken
+    const accessToken = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin },
+      process.env.SECRET_KEY,
+      { expiresIn: "5d" }
+    );
+
+    // Extract password from response body
+    const { password, ...userInfo } = user._doc;
+
+    res.status(201).json({ ...userInfo, accessToken });
   } catch (err) {
     res.status(500).json(err);
   }
