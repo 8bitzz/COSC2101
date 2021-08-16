@@ -42,7 +42,7 @@ export default class App extends React.Component {
                   <Route path="/search"><SearchMovieList /></Route>
                   <Route path={`/details/:_id`} component={Details} ></Route>
                   <Route path="/signup" component={Signup} ></Route>
-                  {this.state.accessToken && <Redirect from='/login' to='/' exact />}
+                  {localStorage.getItem('accessToken') && <Redirect from='/login' to='/' exact />}
                   <Route path="/login" component={Login} ></Route>
                 </Switch>
               </div>
