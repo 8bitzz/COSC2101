@@ -6,7 +6,13 @@ const { check } = require("express-validator");
 router.post(
   "/register",
   check("email", "Incorrect email format").isEmail(),
-  check("password", "Password must be 8+ chars long.").isLength({ min: 8 }),
+  check("password")
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long')
+    .matches(/\d/)
+    .withMessage("Password must contain a number")
+    .matches(/[A-Z]/)
+    .withMessage("Password must contain an Uppercase"),
   registerUser
 );
 
