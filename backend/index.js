@@ -5,7 +5,6 @@ var cors = require("cors");
 let morgan = require('morgan');
 let config = require('config');
 const path = require('path');
-const AppError = require("./src/util/appError");
 require("dotenv").config();
 
 // Import routes
