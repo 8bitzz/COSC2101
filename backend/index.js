@@ -12,6 +12,7 @@ require("dotenv").config();
 const categoryRoutes = require("./src/routes/categoryRoutes");
 const movieRoutes = require("./src/routes/movieRoutes");
 const authRoutes = require("./src/routes/authRoutes");
+const cartRoutes = require("./src/routes/cartRoutes");
 
 // App config
 var app = express();
@@ -53,6 +54,7 @@ app.use(express.static(buildPath));
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/carts", cartRoutes);
 
 // Express App initialize
 app.listen(PORT, function () {
