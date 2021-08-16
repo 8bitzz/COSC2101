@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import NavBar from '../navbar/NavBar';
 import { BASE_API_URL } from '../../utils/constants';
+import AuthContext from '../../service/auth-context';
+
 export default function Details(props) {
   const history = useHistory();
 
@@ -16,7 +18,6 @@ export default function Details(props) {
   //Get the _id of the movie from props and fectch API to get data of the movie
   useEffect(() => {
     const _id = props.match.params._id;
-    console.log(_id)
     const url = `${BASE_API_URL}/api/v1/movies/${_id}`;
     axios
       .get(url)
@@ -28,6 +29,27 @@ export default function Details(props) {
         console.log(err)
       })
   }, [])
+
+  const handleCart = (e) => {
+    const movie_id = props.match.params._id;
+    var url = `${BASE_API_URL}/api/v1/carts?movie_id=${movie_id}`
+    fetch(url, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+      },
+      movie: movie_id, 
+      createdBy: localStorage.getItem('_id')})
+      .then(res => {
+        if (res.status === 409) {
+          throw new Error('Movie already existed'),
+          alert('Movie is already existed')
+        } else {
+          alert('Movie added to cart')
+        }
+      })
+  }
 
   //Fetch the categories list in categories API to compare with the value of gerne
   //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
@@ -100,7 +122,7 @@ export default function Details(props) {
                   <button onClick={() => history.goBack()} className="p-3 ml-10 border-2 bg-black hover:bg-gray-500 border-white text-white">Back </button>
                 </div>
                 <div>
-                  <button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white">Add to cart</button>
+                  <button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white" onClick={handleCart}>Add to cart</button>
                 </div>
               </div>
             </div>
