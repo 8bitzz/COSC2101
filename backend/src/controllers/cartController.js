@@ -1,12 +1,11 @@
 const Cart = require("../models/cart");
 const catchAsync = require("../util/catchAsync");
 
-// Async function to get all cart from a logged user
+// Async function to get all cart items from a logged user
 exports.getAllCart = catchAsync(async (req, res, next) => {
   // Get all cart by this user
   const carts = await Cart.find({ createdBy: req.user.id })
     .populate("movie")
-    .populate("createdBy");
 
   // Return data
   res.status(200).json({
@@ -17,7 +16,7 @@ exports.getAllCart = catchAsync(async (req, res, next) => {
   });
 });
 
-// Async function to create a new cart
+// Async function to create a new cart item
 exports.createCart = catchAsync(async (req, res, next) => {
   // Get movie id param
   const movieID = req.query.movie_id;
@@ -34,13 +33,13 @@ exports.createCart = catchAsync(async (req, res, next) => {
     });
   }
 
-  // Create a cart
+  // Create a cart item
   const cart = await Cart.create({
     createdBy: req.user.id,
     movie: movieID,
   });
 
-  // If could not create a cart => error
+  // If could not create a cart item => error
   if (!cart) {
     return res.status(500).json({
       status: "error",
