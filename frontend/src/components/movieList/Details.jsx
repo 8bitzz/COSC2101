@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import NavBar from '../navbar/NavBar';
 import { BASE_API_URL } from '../../utils/constants';
 import AuthContext from '../../service/auth-context';
+import mongoose from 'mongoose'
 
 export default function Details(props) {
   const history = useHistory();
@@ -31,26 +32,27 @@ export default function Details(props) {
   }, [])
 
   const handleCart = (e) => {
+    e.preventDefault();
+    var mongodb = require('mongodb');
     const movie_id = props.match.params._id;
     var url = `${BASE_API_URL}/api/v1/carts?movie_id=${movie_id}`
-    fetch(url, {
-      method: 'post',
+    const data = {
+      movie:movie_id, 
+      createdBy:localStorage.getItem('_id') 
+    }
+    console.log(data)
+    let axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-      },
-      movie: movie_id, 
-      createdBy: localStorage.getItem('_id')})
+      }
+    };
+    axios.post(url, data, axiosConfig)
       .then(res => {
-        if (res.status === 409) {
-          throw new Error('Movie already existed'),
-          alert('Movie is already existed')
-        } else {
-          alert('Movie added to cart')
-        }
+        console.log(res);
+        console.log(res.data);
       })
   }
-
   //Fetch the categories list in categories API to compare with the value of gerne
   //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
   useEffect(() => {
