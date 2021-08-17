@@ -94,7 +94,7 @@ function NavBar(props) {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [cartItem]);
 
   return (
     <AuthContext.Consumer>
