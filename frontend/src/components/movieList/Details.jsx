@@ -124,7 +124,9 @@ export default function Details(props) {
                   <button onClick={() => history.goBack()} className="p-3 ml-10 border-2 bg-black hover:bg-gray-500 border-white text-white">Back </button>
                 </div>
                 <div>
-                  <button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white" onClick={handleCart}>Add to cart</button>
+                  {localStorage.getItem('accessToken')?
+                  (<button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white" onClick={handleCart}>Add to cart</button>):
+                  (<button className="p-3 ml-10 border-2   border-white text-white" data-toggle="tooltip" data-placement="top" title="Login to add to cart" disabled>Add to cart</button>)}
                 </div>
               </div>
             </div>

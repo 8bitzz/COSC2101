@@ -153,7 +153,7 @@ function NavBar(props) {
                     </svg>
                   </form>
                 </div>
-                <button className="py-4 px-1 relative border-2 border-transparent  rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Cart" style={{marginRight:'2px'}}>
+                {localStorage.getItem('accessToken') && <button className="py-4 px-1 relative border-2 border-transparent  rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Cart" style={{ marginRight: '2px' }}>
                   <svg xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 mr-4 cursor-pointer"
                     fill="none"
@@ -169,7 +169,8 @@ function NavBar(props) {
                       {count}
                     </div>
                   </span>
-                </button>
+                </button>}
+
                 {!localStorage.getItem('accessToken') &&
                   <button className="bg-red-600 rounded-md py-2 px-4">
                     <Link to="/login">Sign In</Link>
