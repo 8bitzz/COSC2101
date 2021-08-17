@@ -6,8 +6,6 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import NavBar from '../navbar/NavBar';
 import { BASE_API_URL } from '../../utils/constants';
-import AuthContext from '../../service/auth-context';
-import mongoose from 'mongoose'
 
 export default function Details(props) {
   const history = useHistory();
@@ -33,7 +31,6 @@ export default function Details(props) {
 
   const handleCart = (e) => {
     e.preventDefault();
-    var mongodb = require('mongodb');
     const movie_id = props.match.params._id;
     var url = `${BASE_API_URL}/api/v1/carts?movie_id=${movie_id}`
     const data = {
@@ -52,7 +49,11 @@ export default function Details(props) {
         console.log(res);
         console.log(res.data);
       })
-  }
+  };
+
+  const handleOnSubmit = () => {
+    history.push(`/login`);
+  };
   //Fetch the categories list in categories API to compare with the value of gerne
   //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
   useEffect(() => {
@@ -126,7 +127,7 @@ export default function Details(props) {
                 <div>
                   {localStorage.getItem('accessToken')?
                   (<button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white" onClick={handleCart}>Add to cart</button>):
-                  (<button className="p-3 ml-10 border-2   border-white text-white" data-toggle="tooltip" data-placement="top" title="Login to add to cart" disabled>Add to cart</button>)}
+                  (<button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white" onClick={handleOnSubmit}>Add to cart</button>)}
                 </div>
               </div>
             </div>

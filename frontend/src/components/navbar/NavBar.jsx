@@ -81,7 +81,8 @@ function NavBar(props) {
 
   //Fetch cart from API
   useEffect(() => {
-    axios
+    if(localStorage.getItem('accessToken')){
+      axios
       .get(`${BASE_API_URL}/api/v1/carts`, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
@@ -94,6 +95,10 @@ function NavBar(props) {
       .catch((err) => {
         console.log(err);
       });
+    }
+    else{
+      return;
+    } 
   },[cartItem]);
 
   return (
