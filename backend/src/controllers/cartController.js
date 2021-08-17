@@ -4,8 +4,7 @@ const catchAsync = require("../util/catchAsync");
 // Async function to get all cart items from a logged user
 exports.getAllCart = catchAsync(async (req, res, next) => {
   // Get all cart by this user
-  const carts = await Cart.find({ createdBy: req.user.id })
-    .populate("movie")
+  const carts = await Cart.find({ createdBy: req.user.id }).populate("movie");
 
   // Return data
   res.status(200).json({
@@ -53,5 +52,35 @@ exports.createCart = catchAsync(async (req, res, next) => {
     data: {
       cart,
     },
+  });
+});
+
+// Async function to delete a  cart item
+exports.deleteCartItem = catchAsync(async (req, res, next) => {
+  // Get movie id param
+  let movieID = req.query.movie_id;
+
+  // Return error if missing movie id
+  if (!movieID) {
+    return res.status(400).json({ error: "Movie ID is missing in params!" });
+  }
+
+  // Find cart item and delete
+  let deleteMovie = await Cart.findOneAndDelete({
+    createdBy: req.user.id,
+    movie: movieID,
+  }).exec();
+
+  // Return error if can not find movie and delete
+  if (!deleteMovie) {
+    return res
+      .status(400)
+      .json({ message: "Movie is not avaialble to delete!" });
+  }
+
+  // Return success if remove item from cart successfully
+  res.json({
+    message: "Movie has been removed successfully from cart!",
+    data: deleteMovie,
   });
 });
