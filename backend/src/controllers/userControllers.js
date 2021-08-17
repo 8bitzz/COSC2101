@@ -39,7 +39,7 @@ const registerUser = catchAsync(async (req, res, next) => {
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
       process.env.SECRET_KEY,
-      { expiresIn: "5d" }
+      { expiresIn: "100d" }
     );
 
     // Extract password from response body
@@ -76,7 +76,7 @@ const loginUser = catchAsync(async (req, res, next) => {
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
       process.env.SECRET_KEY,
-      { expiresIn: "5d" }
+      { expiresIn: "100d" }
     );
 
     // Extract password from response body
