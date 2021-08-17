@@ -1,9 +1,34 @@
 import "./movieItem.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import axios from 'axios';
 const MovieItem = ({ movie, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const history = useHistory();
+  const handleCart = (e) => {
+    e.preventDefault();
+    var url = `http://localhost:4000/api/v1/carts?movie_id=${movie._id}`
+    const data = {
+      movie: movie._id,
+      createdBy: localStorage.getItem('_id')
+    }
 
+    let axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    };
+    axios.post(url, data, axiosConfig)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  };
+
+  const handleOnSubmit = () => {
+    history.push(`/login`);
+  };
   const hoverItem = (
     <div
       className="hoverItem bg-netflix-black"
@@ -22,12 +47,15 @@ const MovieItem = ({ movie, index }) => {
             <span>{movie.title}</span>
           </div>
           <div className="flex justify-between text-white items-center">
-            <svg
+            {localStorage.getItem("accessToken")?(
+            <button onClick ={handleCart}>
+              <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 border rounded-full p-1 mr-2"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+
             >
               <path
                 strokeLinecap="round"
@@ -36,6 +64,25 @@ const MovieItem = ({ movie, index }) => {
                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"
               />
             </svg>
+            </button>
+            ):(<button onClick={handleOnSubmit}>
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 border rounded-full p-1 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+            </button>)}
+            
             <Link to={`/details/${movie._id}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -63,6 +110,7 @@ const MovieItem = ({ movie, index }) => {
       </div>
     </div>
   );
+  
 
   return (
     <div>
