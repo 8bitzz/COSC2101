@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import NavBar from '../navbar/NavBar';
 import { BASE_API_URL } from '../../utils/constants';
+
 export default function Details(props) {
   const history = useHistory();
 
@@ -16,7 +17,6 @@ export default function Details(props) {
   //Get the _id of the movie from props and fectch API to get data of the movie
   useEffect(() => {
     const _id = props.match.params._id;
-    console.log(_id)
     const url = `${BASE_API_URL}/api/v1/movies/${_id}`;
     axios
       .get(url)
@@ -29,6 +29,31 @@ export default function Details(props) {
       })
   }, [])
 
+  const handleCart = (e) => {
+    e.preventDefault();
+    const movie_id = props.match.params._id;
+    var url = `${BASE_API_URL}/api/v1/carts?movie_id=${movie_id}`
+    const data = {
+      movie:movie_id, 
+      createdBy:localStorage.getItem('_id') 
+    }
+    console.log(data)
+    let axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    };
+    axios.post(url, data, axiosConfig)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  };
+
+  const handleOnSubmit = () => {
+    history.push(`/login`);
+  };
   //Fetch the categories list in categories API to compare with the value of gerne
   //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
   useEffect(() => {
@@ -100,7 +125,9 @@ export default function Details(props) {
                   <button onClick={() => history.goBack()} className="p-3 ml-10 border-2 bg-black hover:bg-gray-500 border-white text-white">Back </button>
                 </div>
                 <div>
-                  <button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white">Add to cart</button>
+                  {localStorage.getItem('accessToken')?
+                  (<button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white" onClick={handleCart}>Add to cart</button>):
+                  (<button className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white" onClick={handleOnSubmit}>Add to cart</button>)}
                 </div>
               </div>
             </div>
