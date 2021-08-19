@@ -45,10 +45,6 @@ export default function Details(props) {
       }
     };
     axios.post(url, data, axiosConfig)
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
   };
 
   const handleOnSubmit = () => {

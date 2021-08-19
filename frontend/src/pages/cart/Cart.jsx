@@ -11,17 +11,17 @@ const Cart = () => {
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       axios
-      .get(`${BASE_API_URL}/api/v1/carts`, {
-        headers: {
-          "Authorization": "Bearer " + localStorage.getItem("accessToken")
-        }
-      })
-      .then((res) => {
-        setCartItem(res.data.data.carts);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .get(`${BASE_API_URL}/api/v1/carts`, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken")
+          }
+        })
+        .then((res) => {
+          setCartItem(res.data.data.carts);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     else {
       return;
@@ -39,12 +39,12 @@ const Cart = () => {
 
   return (
     <div className="bg-netflix-black h-screen w-full mt-24 text-white object-center">
-      <NavBar/>
+      <NavBar />
       <h1 className="text-white text-3xl font-semibold text-center my-6">Cart Details</h1>
       <div className="mx-96">
-        <div 
+        <div
           className="border-white border-2 border-opacity-75 rounded-md text-center overflow-auto"
-          style={{height: "30rem"}}
+          style={{ height: "30rem" }}
         >
           {cartItem.map((item, index) => (
             <div>
@@ -62,8 +62,14 @@ const Cart = () => {
                   <p>{item.movie.duration}</p>
                 </div>
                 <div className=" font-semibold relative p-4 text-right">
-                  <p>{item.movie.price}</p>
-                  <button className="absolute bottom-4 right-1">
+                  <p>${item.movie.price}</p>
+                  <button className="absolute bottom-4 right-1" onClick={() => {
+                    var url = `${BASE_API_URL}/api/v1/carts?movie_id=${item.movie._id}`
+                    const headers = {
+                      'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+                    };
+                    axios.delete(url, { headers });
+                  }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6 border rounded-full p-1 mr-2"
@@ -81,16 +87,16 @@ const Cart = () => {
                   </button>
                 </div>
               </div>
-              <hr className="my-1 border-opacity-50"/>
+              <hr className="my-1 border-opacity-50" />
             </div>
           ))}
         </div>
         <div className="py-6">
-          <p className="px-4 text-lg font-semibold">Subtotal<span style={{float: "right"}}>{getTotalPrice()}</span></p>
+          <p className="px-4 text-lg font-semibold">Subtotal<span style={{ float: "right" }}>${getTotalPrice()}</span></p>
         </div>
-        <button 
+        <button
           className="py-1.5 px-3 border-white border-2 border-opacity-75 rounded-md text-white"
-          style={{width: "24%", marginLeft: "38%", marginRight: "38%"}}
+          style={{ width: "24%", marginLeft: "38%", marginRight: "38%" }}
         >
           Checkout
         </button>

@@ -48,6 +48,7 @@ export default class App extends React.Component {
                   <Route path="/signup" component={Signup} ></Route>
                   {localStorage.getItem('accessToken') && <Redirect from='/login' to='/' exact />}
                   <Route path="/login" component={Login} ></Route>
+                  {!localStorage.getItem('accessToken') && <Redirect from='/cart' to='/' exact />}
                   <Route path="/cart" component={Cart}></Route>
                 </Switch>
               </div>
