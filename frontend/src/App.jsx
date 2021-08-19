@@ -7,6 +7,7 @@ import FilteredMovieList from "./components/movieList/FilteredMovieList";
 import AuthContext from './service/auth-context.js'
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import React, { Fragment} from "react";
+import Cart from "./pages/cart/Cart";
 
 export default class App extends React.Component {
   //Set state for accessToken and _id
@@ -47,6 +48,7 @@ export default class App extends React.Component {
                   <Route path="/signup" component={Signup} ></Route>
                   {localStorage.getItem('accessToken') && <Redirect from='/login' to='/' exact />}
                   <Route path="/login" component={Login} ></Route>
+                  <Route path="/cart" component={Cart}></Route>
                 </Switch>
               </div>
             </AuthContext.Provider>
