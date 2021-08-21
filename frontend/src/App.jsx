@@ -38,7 +38,7 @@ export default class App extends React.Component {
               login: this.login,
               logout: this.logout
             }} >
-              <div className="bg-netflix-black overflow-hidden">
+              <div className="bg-netflix-black">
                 <Switch>
                   <Route exact path="/" component={Home} />
                   <Route path="/genre"><FilteredMovieList /></Route>

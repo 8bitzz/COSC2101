@@ -172,8 +172,8 @@ function NavBar(props) {
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
                       </path>
                     </svg>
-                    <span class="absolute inset-0 object-right-top -mr-6">
-                      <div class="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
+                    <span className="absolute inset-0 object-right-top -mr-6">
+                      <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
                         {count}
                       </div>
                     </span>
