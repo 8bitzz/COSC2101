@@ -2,9 +2,10 @@ import "./movieItem.css";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
-const MovieItem = ({ movie, index }) => {
+const MovieItem = ({ funct, movie, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const history = useHistory();
+
   const handleCart = (e) => {
     e.preventDefault();
     var url = `http://localhost:4000/api/v1/carts?movie_id=${movie._id}`
@@ -20,11 +21,13 @@ const MovieItem = ({ movie, index }) => {
       }
     };
     axios.post(url, data, axiosConfig)
+    funct()
   };
 
   const handleOnSubmit = () => {
     history.push(`/login`);
   };
+
   const hoverItem = (
     <div
       className="hoverItem bg-netflix-black"
@@ -107,7 +110,6 @@ const MovieItem = ({ movie, index }) => {
     </div>
   );
   
-
   return (
     <div>
       {isHovered ? hoverItem : null}
@@ -126,7 +128,5 @@ const MovieItem = ({ movie, index }) => {
     </div>
   );
 };
-
-
 
 export default MovieItem;

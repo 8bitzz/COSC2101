@@ -6,7 +6,8 @@ import { BASE_API_URL } from "../../utils/constants"
 
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
-
+  const [count, setCount] = useState(0);
+  const [value, setValue] = useState(0);
   // Fetch movie from cart
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
@@ -18,6 +19,8 @@ const Cart = () => {
         })
         .then((res) => {
           setCartItem(res.data.data.carts);
+          setCount(res.data.data.carts.length)
+          setValue(res.data.data.carts.length)
         })
         .catch((err) => {
           console.log(err);
@@ -26,7 +29,7 @@ const Cart = () => {
     else {
       return;
     }
-  }, [cartItem])
+  }, [value])
 
   const getTotalPrice = () => {
     var total = 0;
@@ -39,7 +42,7 @@ const Cart = () => {
 
   return (
     <div className="bg-netflix-black bg-cover w-full py-24 text-white" style={{minHeight: "100vh"}}>
-      <NavBar />
+      <NavBar count={count}/>
       <div className="w-full">
         <h1 className="text-white text-3xl font-semibold text-center my-6">Cart Details</h1>
         <div style={{marginLeft: "25%", marginRight:"25%"}}>
@@ -76,6 +79,7 @@ const Cart = () => {
                               'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
                             };
                             axios.delete(url, { headers });
+                            setValue(0)
                           }}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

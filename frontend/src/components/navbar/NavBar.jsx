@@ -99,7 +99,7 @@ function NavBar(props) {
     else{
       return;
     } 
-  },[cartItem]);
+  },[props.count]);
 
   return (
     <AuthContext.Consumer>
@@ -174,7 +174,7 @@ function NavBar(props) {
                     </svg>
                     <span className="absolute inset-0 object-right-top -mr-6">
                       <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
-                        {count}
+                        {props.count}
                       </div>
                     </span>
                   </button>
