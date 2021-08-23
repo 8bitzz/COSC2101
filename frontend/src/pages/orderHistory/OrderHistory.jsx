@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { BASE_API_URL } from "../../utils/constants";
 import { useHistory } from "react-router-dom";
 
-const fetcher = (url, token) =>
+const orderFetcher = (url, token) =>
   axios
     .get(url, {
       headers: { Authorization: `Bearer ${token}` },
@@ -16,9 +16,14 @@ const fetcher = (url, token) =>
 const OrderHistory = () => {
   const history = useHistory();
   const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    history.push("/login");
+  }
+
   const { data, error } = useSWR(
-    [`${BASE_API_URL}/api/v1/carts`, token],
-    fetcher
+    [`${BASE_API_URL}/api/v1/orders`, token],
+    orderFetcher
   );
 
   if (!data) {
@@ -52,12 +57,54 @@ const OrderHistory = () => {
   }
 
   return (
-    <div className="bg-netflix-black  w-full h-full pt-24 text-white">
-      <NavBar count={data.carts.length} />
-      <div className="h-screen w-full m-0">
-        <h1 className="text-white text-3xl font-semibold text-center my-6">
-          Order History
-        </h1>
+    <div className="bg-netflix-black w-full h-full pt-24 text-white">
+      <NavBar />
+      <div className="h-screen w-full m-0 px-12">
+        <div className="">
+          <h1 className="text-white text-3xl font-semibold my-6">
+            Order History
+          </h1>
+          <h2 className="text-gray-100 text-base my-6">
+            {" "}
+            Check the status of recent orders and your shipping status.
+          </h2>
+        </div>
+        <div className="mt-8">
+          <div className="flow-root lg:w-5/12">
+            <ul role="list" className="-my-6 divide-y divide-gray-900">
+              {data.orders[0].movies.map((movie) => (
+                <li key={movie._id} className="py-6 flex">
+                  <div className="flex-shrink-0 w-60 h-36 border-0 border-gray-200 rounded-md overflow-hidden">
+                    <img
+                      src={movie.thumbnail}
+                      alt={movie.title}
+                      className="w-full h-full object-center object-cover"
+                    />
+                  </div>
+
+                  <div className="ml-4 flex-1 flex flex-col">
+                    <div>
+                      <div className="flex justify-between text-xl font-bold text-gray-50">
+                        <h3>
+                          <a href={movie.trailerURL}>{movie.title}</a>
+                        </h3>
+                        <p className="ml-4 text-xl">$ {movie.price}</p>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between text-sm">
+                      <div className="flex items-center my-2">
+                        <span>{movie.duration}</span>
+                        <span className="limit">{movie.duration}</span>
+                        <span>{movie.publishYear}</span>
+                      </div>
+                      <div className="desc">{movie.description}</div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
