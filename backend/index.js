@@ -12,6 +12,7 @@ const categoryRoutes = require("./src/routes/categoryRoutes");
 const movieRoutes = require("./src/routes/movieRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const cartRoutes = require("./src/routes/cartRoutes");
+const orderRoutes = require("./src/routes/orderRoutes");
 
 // App config
 var app = express();
@@ -54,6 +55,7 @@ app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/carts", cartRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 // Express App initialize
 app.listen(PORT, function () {
