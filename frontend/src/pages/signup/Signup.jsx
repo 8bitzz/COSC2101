@@ -9,16 +9,6 @@ export default function Register() {
   const [message, setMessage] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    //Check if email and password are filled
-       if (email.trim().length === 0 || password.trim().length === 0) {
-      if (email.trim().length === 0) {
-        alert('Email must not be empty')
-      }
-      else if (password.trim().length === 0) {
-        alert('Password must not be empty')
-      }
-      return;
-    }
     //Consume auth API
     const token = AuthContext.accessToken //Get token from AuthContext
     var url = 'http://localhost:4000/api/v1/auth/register'
@@ -33,9 +23,9 @@ export default function Register() {
     })
       .then(res => {
         if (res.status === 401){
-          if (email.trim().length === 0 || email.trim().length === 0) {
+          if (email.trim().length === 0 || password.trim().length === 0 || username === 0) {
             throw new Error('Failed!'),
-            setMessage("Missing email or password field")
+            setMessage("Missing email/password/username")
           }
           else {
             if (email.trim().length !== 0) {
