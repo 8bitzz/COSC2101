@@ -2,7 +2,7 @@ import "./movieList.css";
 import MovieItem from "../movieItem/MovieItem";
 import { useRef, useState, useEffect } from "react";
 
-const MovieList = ({ title, movie }) => {
+const MovieList = ({ funct, title, movie }) => {
   const [newArr, setNewArr] = useState([]);
   //For each matching movies from Home, add into a new movie list.
   useEffect(()=>{
@@ -52,7 +52,7 @@ const MovieList = ({ title, movie }) => {
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
           {newArr.map((movie, index) => {
             return (
-              <MovieItem movie={movie} key={movie._id} index={index} />
+              <MovieItem funct={funct} movie={movie} key={movie._id} index={index} />
             );
           })}
         </div>
