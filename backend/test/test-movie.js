@@ -138,4 +138,20 @@ describe("Movie Testing", () => {
       res.body.data.movies[1].title.should.be.eql("Die hard");
     });
   });
+
+  describe("/GET all movie by ID", () => {
+    it("Able to fetch a movie by given ID", async () => {
+      // Create few drama movies
+      const categoryObj = await Category.create(category);
+      var newMovie_1 = { ...movie };
+      newMovie_1.category._id = categoryObj.id;
+      const movieObj_1 = await Movie.create(newMovie_1);
+
+      const res = await chai
+        .request(server)
+        .get(`/api/v1/movies/${movieObj_1._id}`);
+      res.should.have.status(200);
+      res.body.data.movie.title.should.be.eql("Gotham");
+    });
+  });
 });
