@@ -21,15 +21,7 @@ export default class LogIn extends Component {
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
     //Check if email and password are filled
-    if (email.trim().length === 0 || email.trim().length === 0) {
-      if (email.trim().length === 0) {
-        alert('Username must not be empty')
-      }
-      else if (password.trim().length === 0) {
-        alert('Password must not be empty')
-      }
-      return;
-    }
+   
     //Consume auth API
     fetch('http://localhost:4000/api/v1/auth/login', {
       method: 'POST',
@@ -43,9 +35,21 @@ export default class LogIn extends Component {
       }
     })
       .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Failed!'),
-          this.setState({message: "Wrong username or password"})
+        if (res.status === 401){
+          if (email.trim().length === 0 || email.trim().length === 0) {
+            if (email.trim().length === 0) {
+              throw new Error('Failed!'),
+              this.setState({message: "Email can not be empty"})
+            }
+            if (password.trim().length === 0) {
+              throw new Error('Failed!'),
+              this.setState({message: "Password can not be empty"})
+            }
+            return;
+          }
+          else {
+            this.setState({message: "Cannot log in due to invalid email or password"})
+          }
         }
         return res.json()
       })
@@ -82,6 +86,7 @@ export default class LogIn extends Component {
         <div className="container">
           <form className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-80">
             <h1 className="text-xl font-semibold text-center">Sign In</h1>
+            <span style={{color: "red"}}>{this.state.message}</span>
             <input
               className="h-12 rounded-md pl-2 text-gray-600"
               type="email"
