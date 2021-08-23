@@ -48,14 +48,14 @@ var movie_2 = {
   casts: "Bruce Willis, Alan Rickman, Bonnie Bedelia and more",
 };
 
-describe("Movie Testing", () => {
+describe("Movie Endpoint Testing", () => {
   beforeEach(async () => {
     // Before each test we empty the database
     await Movie.remove();
     await Category.remove();
   });
 
-  describe("/GET movies", () => {
+  describe("Test get All Movie", () => {
     it("Able to GET all movies (No data)", (done) => {
       chai
         .request(server)
@@ -67,9 +67,7 @@ describe("Movie Testing", () => {
           done();
         });
     });
-  });
 
-  describe("/GET movies", () => {
     it("Able to GET all movies (Has data)", async () => {
       // Create 1 movie
       var newMovie = {...movie};
@@ -85,7 +83,7 @@ describe("Movie Testing", () => {
     });
   });
 
-  describe("/POST movies", () => {
+  describe("Test Create a movie", () => {
     it("Able to create a movie with all requires fields", (done) => {
       chai
         .request(server)
@@ -98,9 +96,7 @@ describe("Movie Testing", () => {
           done();
         });
     });
-  });
 
-  describe("/POST movies", () => {
     it("Unable to create a movie when missing the Price field", (done) => {
       // Delete price field
       var newMovie = { ...movie };
@@ -117,7 +113,8 @@ describe("Movie Testing", () => {
     });
   });
 
-  describe("/GET all movie by category", () => {
+
+  describe("Test get all movie by category", () => {
     it("Able to fetch all movies of Drama Category", async () => {
       // Create few drama movie
       const categoryObj = await Category.create(category);
@@ -139,7 +136,7 @@ describe("Movie Testing", () => {
     });
   });
 
-  describe("/GET all movie by ID", () => {
+  describe("Test get all movie by movie ID", () => {
     it("Able to fetch a movie by given ID", async () => {
       // Create few drama movies
       const categoryObj = await Category.create(category);

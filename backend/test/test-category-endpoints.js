@@ -7,16 +7,15 @@ let chaiHttp = require("chai-http");
 let server = require("..");
 let should = chai.should();
 chai.use(chaiHttp);
-const Movie = require("../src/models/movie");
 const Category = require("../src/models/category");
 
-describe("Category Testing", () => {
+describe("Category Endpoint Testing", () => {
   beforeEach(async () => {
     // Before each test we empty the database
     await Category.remove();
   });
 
-  describe("/GET categories", () => {
+  describe("Test get all categories", () => {
     it("Able to get all categories", async () => {
       // Create sample categories
       const categoryObj_1 = await Category.create({
@@ -40,7 +39,7 @@ describe("Category Testing", () => {
     });
   });
 
-  describe("/POST categories", () => {
+  describe("Test create a category", () => {
     it("Able to create a category", async () => {
       // Create sample categories
       const res = await chai
