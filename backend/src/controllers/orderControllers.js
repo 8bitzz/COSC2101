@@ -6,7 +6,7 @@ const validators = require("credit-card-validate");
 // Async function to get all cart items from a logged user
 exports.getAllOrders = catchAsync(async (req, res, next) => {
   // Get all cart by this user
-  const orders = await Order.find({ createdBy: req.user.id }).populate("movie");
+  const orders = await Order.find({ createdBy: req.user.id }).populate("movies");
 
   // Return data
   res.status(200).json({
@@ -45,7 +45,7 @@ exports.createNewOrder = catchAsync(async (req, res, next) => {
 
   // Create a order item
   const movies = carts.map((item) => item.movie);
-  const total = movies.reduce((a, b) => a.price + b.price, 0);
+  const total = movies.map((item) => item.price).reduce(function(acc, val) { return acc + val; }, 0)
   const order = await Order.create({
     createdBy: req.user.id,
     amount: total,
