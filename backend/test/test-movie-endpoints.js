@@ -56,7 +56,7 @@ describe("Movie Testing", () => {
   });
 
   describe("/GET movies", () => {
-    it("it should GET all movies (No data)", (done) => {
+    it("Able to GET all movies (No data)", (done) => {
       chai
         .request(server)
         .get("/api/v1/movies/")
@@ -70,7 +70,7 @@ describe("Movie Testing", () => {
   });
 
   describe("/GET movies", () => {
-    it("it should GET all movies (Has data)", async () => {
+    it("Able to GET all movies (Has data)", async () => {
       // Create 1 movie
       var newMovie = {...movie};
       const categoryObj = await Category.create(category);
@@ -86,7 +86,7 @@ describe("Movie Testing", () => {
   });
 
   describe("/POST movies", () => {
-    it("it should create a movie with all requires fields", (done) => {
+    it("Able to create a movie with all requires fields", (done) => {
       chai
         .request(server)
         .post("/api/v1/movies/")
@@ -101,7 +101,7 @@ describe("Movie Testing", () => {
   });
 
   describe("/POST movies", () => {
-    it("it should not create a movie when missing the Price field", (done) => {
+    it("Unable to create a movie when missing the Price field", (done) => {
       // Delete price field
       var newMovie = { ...movie };
       delete newMovie["price"];
