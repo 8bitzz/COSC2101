@@ -6,7 +6,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-
+  const [message, setMessage] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     //Check if email and password are filled
@@ -32,12 +32,19 @@ export default function Register() {
       body: JSON.stringify({ email: email, password: password, username: username })
     })
       .then(res => {
-        if (res.status === 409) {
-          throw new Error('Email already existed'),
-          alert('Email already existed')
-        } else {
-          alert('User added!')
+        if (res.status === 401){
+          if (email.trim().length === 0 || email.trim().length === 0) {
+            throw new Error('Failed!'),
+            setMessage("Missing email or password field")
+          }
+          else {
+            if (email.trim().length !== 0) {
+              throw new Error('Failed!'),
+              setMessage("Email has been registered")
+            }
+          }
         }
+        return res.json()
       })
   };
   return (
@@ -68,6 +75,7 @@ export default function Register() {
           </p>
           <form className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-80" action="post">
             <h1 className="text-xl font-semibold text-center">Sign Up</h1>
+            <span style={{color: "red"}}>{message}</span>
             <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="username" name="username" value={username} placeholder="Username" onChange={e=>setUsername(e.target.value)} />
             <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="email" name="email" value={email} placeholder="Email" onChange={e=>setEmail(e.target.value)} />
             <input type="password" className="h-12 rounded-md pl-2 text-gray-600" id="password" name="password" value={password} placeholder="Password" onChange={e=>setPassword(e.target.value)}/>

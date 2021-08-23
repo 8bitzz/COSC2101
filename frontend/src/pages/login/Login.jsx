@@ -37,15 +37,8 @@ export default class LogIn extends Component {
       .then(res => {
         if (res.status === 401){
           if (email.trim().length === 0 || email.trim().length === 0) {
-            if (email.trim().length === 0) {
               throw new Error('Failed!'),
-              this.setState({message: "Email can not be empty"})
-            }
-            if (password.trim().length === 0) {
-              throw new Error('Failed!'),
-              this.setState({message: "Password can not be empty"})
-            }
-            return;
+              this.setState({message: "Missing email or password field"})
           }
           else {
             this.setState({message: "Cannot log in due to invalid email or password"})
