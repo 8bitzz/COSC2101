@@ -8,6 +8,7 @@ import AuthContext from './service/auth-context.js'
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import React, { Fragment} from "react";
 import Cart from "./pages/cart/Cart";
+import OrderHistory from "./pages/orderHistory/OrderHistory";
 
 export default class App extends React.Component {
   //Set state for accessToken and _id
@@ -50,6 +51,7 @@ export default class App extends React.Component {
                   <Route path="/login" component={Login} ></Route>
                   {!localStorage.getItem('accessToken') && <Redirect from='/cart' to='/' exact />}
                   <Route path="/cart" component={Cart}></Route>
+                  <Route path="/user/order" component={OrderHistory}></Route>
                 </Switch>
               </div>
             </AuthContext.Provider>
