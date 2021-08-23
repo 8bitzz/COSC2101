@@ -39,4 +39,18 @@ describe("Category Testing", () => {
       res.body.data.categories[2].name.should.be.eql("Horror");
     });
   });
+
+  describe("/POST categories", () => {
+    it("Able to create a category", async () => {
+      // Create sample categories
+      const res = await chai
+        .request(server)
+        .post("/api/v1/categories/")
+        .send({
+          name: "Dramas",
+        })
+      res.should.have.status(201);
+      res.body.data.category.name.should.be.eql("Dramas");
+    });
+  });
 });
