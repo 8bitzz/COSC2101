@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getAllOrders,
   createNewOrder
-} = require("../controllers/orderController");
+} = require("../controllers/orderControllers");
 const { isAuthenticated } = require("../controllers/userControllers");
 
 // Endpoint to get all cart from a loggin user
