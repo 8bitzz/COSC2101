@@ -13,6 +13,7 @@ const Category = require("../src/models/category");
 var category = {
   name: "Dramas",
 };
+
 var movie = {
   title: "Gotham",
   description:
@@ -29,6 +30,22 @@ var movie = {
   images: [],
   casts:
     "Ben McKenzie, Donal Logue, Jada Pinkett Smith, David Mazouz, Sean Pertwee, Camren Bicondova",
+};
+
+var movie_2 = {
+  title: "Die hard",
+  description:
+    "NYPD cop John McClane's plan to reconcile with his wife is interrupted...",
+  duration: "2h 12m",
+  publishYear: "1998",
+  price: 10.9,
+  category: {
+    _id: "60f7fed473c33425420f7135",
+  },
+  thumbnail:
+    "https://occ-0-395-58.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP...",
+  trailerURL: "https://www.youtube.com/watch?v=jaJuwKCmJbY",
+  casts: "Bruce Willis, Alan Rickman, Bonnie Bedelia and more",
 };
 
 describe("Movie Testing", () => {
@@ -55,7 +72,7 @@ describe("Movie Testing", () => {
   describe("/GET movies", () => {
     it("it should GET all movies (Has data)", async () => {
       // Create 1 movie
-      var newMovie = movie;
+      var newMovie = {...movie};
       const categoryObj = await Category.create(category);
       newMovie.category._id = categoryObj.id;
       const movieObj = await Movie.create(newMovie);
@@ -69,7 +86,7 @@ describe("Movie Testing", () => {
   });
 
   describe("/POST movies", () => {
-    it("it should POST a movie with all requires fields", (done) => {
+    it("it should create a movie with all requires fields", (done) => {
       chai
         .request(server)
         .post("/api/v1/movies/")
@@ -84,9 +101,9 @@ describe("Movie Testing", () => {
   });
 
   describe("/POST movies", () => {
-    it("it should not POST a movie when missing the Price field", (done) => {
+    it("it should not create a movie when missing the Price field", (done) => {
       // Delete price field
-      var newMovie = movie;
+      var newMovie = { ...movie };
       delete newMovie["price"];
 
       chai
@@ -97,6 +114,28 @@ describe("Movie Testing", () => {
           res.should.have.status(500);
           done();
         });
+    });
+  });
+
+  describe("/GET all movie by category", () => {
+    it("Able to fetch all movies of Drama Category", async () => {
+      // Create few drama movie
+      const categoryObj = await Category.create(category);
+      var newMovie_1 = { ...movie };
+      newMovie_1.category._id = categoryObj.id;
+      const movieObj_1 = await Movie.create(newMovie_1);
+      var newMovie_2 = { ...movie_2 };
+      newMovie_2.category._id = categoryObj.id;
+      const movieObj_2 = await Movie.create(newMovie_2);
+
+      const res = await chai
+        .request(server)
+        .get(`/api/v1/movies/category?name=Dramas`);
+      res.should.have.status(200);
+      res.body.data.movies.should.be.a("array");
+      res.body.data.movies.length.should.be.eql(2);
+      res.body.data.movies[0].title.should.be.eql("Gotham");
+      res.body.data.movies[1].title.should.be.eql("Die hard");
     });
   });
 });
