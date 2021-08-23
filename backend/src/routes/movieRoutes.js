@@ -19,5 +19,4 @@ router.post("/", createNewMovie);
 // Endpoint to get a movie by a given ID
 router.get("/:id", getMovieByID);
 
-
 module.exports = router;
