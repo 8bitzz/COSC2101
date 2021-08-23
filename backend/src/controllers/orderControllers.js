@@ -60,6 +60,8 @@ exports.createNewOrder = catchAsync(async (req, res, next) => {
     });
   }
 
+  // Ater creaing a order succesfully, we remove all items in user cart
+  await Cart.deleteMany({ createdBy: req.user.id })
   res.status(200).json({
     status: "success",
     data: {
