@@ -21,7 +21,11 @@ export default class LogIn extends Component {
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
     //Check if email and password are filled
-
+    var regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (!email.match(regex)){
+      this.setState({message: "Invalid email"})
+      return;
+    }
     //Consume auth API
     fetch("http://localhost:4000/api/v1/auth/login", {
       method: "POST",
@@ -50,8 +54,8 @@ export default class LogIn extends Component {
                 message: "Invalid email or password",
               }))
             );
-          } 
-          
+            
+          }
           else if (password.trim().length !== 0) {
             throw (
               (new Error("Failed!"),
