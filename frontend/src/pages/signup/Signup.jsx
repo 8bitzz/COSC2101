@@ -53,7 +53,11 @@ export default function Register() {
             }
           }
         } else {
-          alert("User added!");
+          setMessage("");
+          var ask = window.confirm("User added!");
+          if (ask){
+            window.location.href = "http://localhost:3000/"
+          }
         }
         return res.json();
       });
