@@ -5,10 +5,7 @@ import OrderItem from "./OrderItem";
 const OrderCard = ({ order }) => {
   return (
     <>
-      <div
-        className="mt-12 py-8 px-6 order-box w-full sm:w-full md:w-full lg:w-6/12"
-        key={order._id}
-      >
+      <div className="mt-12 py-8 px-6 order-box w-full sm:w-full md:w-full lg:w-6/12">
         <div className="flex flex-col">
           <div className="flex flex-row justify-start items-center mb-6">
             <svg
@@ -25,7 +22,7 @@ const OrderCard = ({ order }) => {
                 d="M5 13l4 4L19 7"
               />
             </svg>
-            <h1>Order has been placed successfully!</h1>
+            <h1>Your items have been ordered successfully!</h1>
           </div>
           <div className="flex flex-row justify-between mb-10">
             <div>
@@ -40,7 +37,7 @@ const OrderCard = ({ order }) => {
               <h1 className="text-lg font-medium text-gray-200">
                 Total amount
               </h1>
-              <h2 className="font-extrabold text-gray-300 text-right">$ {order.amount}</h2>
+              <h2 className="font-extrabold text-red-500 text-right">$ {order.amount}</h2>
             </div>
           </div>
           <div className="flow-root">

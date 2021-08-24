@@ -54,7 +54,7 @@ const OrderHistory = () => {
             ) : (
               <h2 className="text-gray-100 text-base my-6">
                 {" "}
-                Check the status of recent orders and your shipping status.
+                Recent orders that have been placed.
               </h2>
             )}
           </div>
