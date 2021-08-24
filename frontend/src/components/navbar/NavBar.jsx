@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AuthContext from "../../service/auth-context";
-import { BASE_API_URL } from '../../utils/constants';
+import { BASE_API_URL } from "../../utils/constants";
+import UserDropdown from "../userDropdown/UserDropdown";
 
 function NavBar(props) {
-
   const [movieList, setMovieList] = useState([]);
   const [count, setCount] = useState(0);
   const [cartItem, setCartItem] = useState([]);
@@ -63,8 +63,8 @@ function NavBar(props) {
   // Chech if user is scrolling to change color of navbar
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
-    return () => (window.onscroll == null);
-  }
+    return () => window.onscroll == null;
+  };
 
   //Fetch movie from API
   useEffect(() => {
@@ -81,25 +81,24 @@ function NavBar(props) {
 
   //Fetch cart from API
   useEffect(() => {
-    if(localStorage.getItem('accessToken')){
+    if (localStorage.getItem("accessToken")) {
       axios
-      .get(`${BASE_API_URL}/api/v1/carts`, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-        }
-      })
-      .then((res) => {
-        setCartItem(res.data.data.carts)
-        setCount(res.data.data.carts.length)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-    else{
+        .get(`${BASE_API_URL}/api/v1/carts`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        })
+        .then((res) => {
+          setCartItem(res.data.data.carts);
+          setCount(res.data.data.carts.length);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
       return;
-    } 
-  },[props.count]);
+    }
+  }, [props.count]);
 
   return (
     <AuthContext.Consumer>
@@ -158,44 +157,53 @@ function NavBar(props) {
                     </svg>
                   </form>
                 </div>
-                {localStorage.getItem('accessToken') && 
-                <Link to="/cart">
-                  <button className="py-4 px-1 relative border-2 border-transparent  rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Cart" style={{ marginRight: '2px' }}>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 mr-4 cursor-pointer"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor">
-                      <path strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                      </path>
-                    </svg>
-                    <span className="absolute inset-0 object-right-top -mr-6">
-                      <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
-                        {props.count}
-                      </div>
-                    </span>
-                  </button>
-                </Link>
-                }
+                {localStorage.getItem("accessToken") && (
+                  <Link to="/cart">
+                    <button
+                      className="py-4 px-1 relative border-2 border-transparent  rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out"
+                      aria-label="Cart"
+                      style={{ marginRight: "2px" }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6  cursor-pointer"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                        ></path>
+                      </svg>
+                      <span className="absolute inset-0 object-right-top -mr-6">
+                        <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
+                          {props.count}
+                        </div>
+                      </span>
+                    </button>
+                  </Link>
+                )}
 
-                {!localStorage.getItem('accessToken') &&
+                {!localStorage.getItem("accessToken") && (
                   <button className="bg-red-600 rounded-md py-2 px-4">
                     <Link to="/login">Sign In</Link>
                   </button>
-                }
-                {localStorage.getItem('accessToken') && <button className="bg-red-600 rounded-md py-2 px-4" onClick={context.logout}>
-                  Log Out
-                </button>}
+                )}
+                {localStorage.getItem("accessToken") && (
+                  <>
+                    <UserDropdown handleLogout={context.logout}/>
+                  </>
+                )}
               </div>
             </div>
           </div>
-        )
+        );
       }}
     </AuthContext.Consumer>
   );
-};
+}
 
 export default NavBar;

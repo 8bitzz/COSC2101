@@ -39,7 +39,7 @@ const OrderCard = ({ order }) => {
               <h1 className="text-lg font-medium text-gray-200">
                 Total amount
               </h1>
-              <h2 className="font-extrabold text-gray-300">$ {order.amount}</h2>
+              <h2 className="font-extrabold text-gray-300 text-right">$ {order.amount}</h2>
             </div>
           </div>
           <div className="flow-root">
