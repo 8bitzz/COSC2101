@@ -68,7 +68,7 @@ export default function Details(props) {
   return (
     <div>
       <NavBar />
-      <div className=" w-full mt-40 mx-10" style={{ marginLeft: 0 + 'px', marginTop: 0 + 'px' }}>
+      <div className="h-screen w-full mt-40 mx-10" style={{ marginLeft: 0 + 'px', marginTop: 0 + 'px' }}>
         <div className="bg-netflix-black overflow-hidden text-white md:object-center">
           <div className="movie-wrapper">
             <div className="trailer-wrapper min-h-full pt-100">
