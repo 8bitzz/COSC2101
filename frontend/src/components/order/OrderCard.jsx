@@ -1,4 +1,5 @@
 import React from "react";
+import DateFormatter from "../../utils/DateFormatter";
 import OrderItem from "./OrderItem";
 
 const OrderCard = ({ order }) => {
@@ -33,7 +34,7 @@ const OrderCard = ({ order }) => {
             </div>
             <div>
               <h1 className="text-lg font-medium text-gray-200">Date placed</h1>
-              <h2 className="text-gray-400">{order.createdAt}</h2>
+              <h2 className="text-gray-400">{DateFormatter(order.createdAt)}</h2>
             </div>
             <div>
               <h1 className="text-lg font-medium text-gray-200">
