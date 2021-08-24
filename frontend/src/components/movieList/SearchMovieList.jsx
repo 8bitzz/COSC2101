@@ -29,7 +29,7 @@ const SearchMovieList = () => {
   }, [search]);
 
   function updateValue() {
-    return setValue(0);
+    return setValue(-1);
   }
 
   useEffect(() => {

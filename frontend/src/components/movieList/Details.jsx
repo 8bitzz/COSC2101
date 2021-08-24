@@ -12,6 +12,8 @@ export default function Details(props) {
 
   const [movie, setMovie] = useState([]);
   const [category, setCategory] = useState([]);
+  const [count, setCount] = useState(0);
+  const [value, setValue] = useState(0);
   var gerne = '';
 
   //Get the _id of the movie from props and fectch API to get data of the movie
@@ -45,11 +47,13 @@ export default function Details(props) {
       }
     };
     axios.post(url, data, axiosConfig)
+    updateValue();
   };
 
   const handleOnSubmit = () => {
     history.push(`/login`);
   };
+  
   //Fetch the categories list in categories API to compare with the value of gerne
   //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
   useEffect(() => {
@@ -65,9 +69,34 @@ export default function Details(props) {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      axios
+        .get(`${BASE_API_URL}/api/v1/carts`, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("accessToken")
+          }
+        })
+        .then((res) => {
+          setCount(res.data.data.carts.length)
+          setValue(res.data.data.carts.length)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    else {
+      return;
+    }
+  }, [value])
+
+  function updateValue() {
+    return setValue(-1);
+  }
+
   return (
     <div>
-      <NavBar />
+      <NavBar count={count}/>
       <div className=" w-full mt-40 mx-10" style={{ marginLeft: 0 + 'px', marginTop: 0 + 'px' }}>
         <div className="bg-netflix-black overflow-hidden text-white md:object-center">
           <div className="movie-wrapper">

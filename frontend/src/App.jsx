@@ -8,6 +8,7 @@ import AuthContext from './service/auth-context.js'
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import React, { Fragment} from "react";
 import Cart from "./pages/cart/Cart";
+import Checkout from "./pages/cart/Checkout";
 
 export default class App extends React.Component {
   //Set state for accessToken and _id
@@ -15,18 +16,21 @@ export default class App extends React.Component {
 		accessToken: null,
 		_id: null
 	}
+  
   //Login function to set current state of accessToken and _id
 	login = (accessToken, _id, tokenExpiration) => {
 		this.setState({ accessToken: accessToken, _id: _id })
     localStorage.setItem('accessToken', this.state.accessToken)
     localStorage.setItem('_id', this.state._id)
 	}
+
   //Logout function to return the null value of accessToken and _id
 	logout = () => {
 		this.setState({ accessToken: null, _id: null })
     localStorage.removeItem('accessToken')
     localStorage.removeItem('_id')
 	}
+
   render() {
     return (
       <div className="m-0">
@@ -50,6 +54,8 @@ export default class App extends React.Component {
                   <Route path="/login" component={Login} ></Route>
                   {!localStorage.getItem('accessToken') && <Redirect from='/cart' to='/' exact />}
                   <Route path="/cart" component={Cart}></Route>
+                  {!localStorage.getItem("accessToken") && <Redirect from="/checkout" to="/" exact/>}
+                  <Route path="/checkout" component={Checkout}></Route>
                 </Switch>
               </div>
             </AuthContext.Provider>
