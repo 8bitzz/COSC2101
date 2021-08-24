@@ -10,12 +10,15 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //Consume auth API
+    if (username.trim().length === 0){
+      setMessage("Missing username")
+    }
     const token = AuthContext.accessToken; //Get token from AuthContext
     var email_regex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     if (!email.match(email_regex)) {
-      setMessage("Invalid email");
+      setMessage("Please input a valid email");
     } else if (!password.match(/(?=.*\d)(?=.*[A-Z]).{6,}/)) {
       setMessage(
         "Password must be at least 6 characters long, must contain a number, must contain an uppercase"
@@ -38,21 +41,21 @@ export default function Register() {
         if (res.status === 401) {
           if (
             email.trim().length === 0 ||
-            password.trim().length === 0 ||
-            username === 0
+            password.trim().length === 0
           ) {
             throw (
               (new Error("Failed!"),
-              setMessage("Missing email/password/username"))
+              setMessage("Please input a valid email/password"))
             );
           } else {
             if (email.trim().length !== 0) {
+
               throw (
                 (new Error("Failed!"), setMessage("Email has been registered"))
               );
             }
           }
-        } else {
+        } else if(res.status === 200 || res.status === 201) {
           setMessage("");
           var ask = window.confirm("User added!");
           if (ask){
@@ -107,6 +110,7 @@ export default function Register() {
             value={username}
             placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
           <input
             className="h-12 rounded-md pl-2 text-gray-600"
@@ -116,6 +120,7 @@ export default function Register() {
             value={email}
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
             type="password"
@@ -125,6 +130,7 @@ export default function Register() {
             value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <button
             className=" bg-red-600 rounded-md py-2 px-4 "
