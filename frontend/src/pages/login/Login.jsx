@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./login.css";
-import { Component, useRef, useState } from "react";
+import { Component } from "react";
 import AuthContext from "../../service/auth-context.js";
 import React from "react";
 export default class LogIn extends Component {
@@ -31,7 +31,7 @@ export default class LogIn extends Component {
       return;
     }
     var regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
     if (!email.match(regex)) {
       this.setState({ message: "Invalid email" });
       return;
@@ -128,9 +128,9 @@ export default class LogIn extends Component {
               This page is protected by Google reCAPTCHA to ensure you're not a
               bot.{" "}
               <b>
-                <a className="z-10 cursor-pointer">Learn more</a>
+                <p className="z-10 cursor-pointer">Learn more</p>
               </b>
-              .
+              
             </small>
           </form>
         </div>
