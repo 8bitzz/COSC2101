@@ -35,7 +35,16 @@ export default class App extends React.Component {
   handleItemRemove = (id) => {
     console.log("Item removed");
     console.log(id);
-    this.setState({count: this.state.count - 1});
+    // this.setState({count: this.state.count - 1});
+    const token = localStorage.getItem("accessToken");
+    axios
+    .delete(`${BASE_API_URL}/api/v1/carts?movie_id=${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => this.setState({count: this.state.count - 1}))
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   handleItemAdd = (id) => {

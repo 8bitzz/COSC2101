@@ -41,6 +41,14 @@ const Cart = () => {
     return total.toFixed(2);
   };
 
+  const filterCartItems = removedItem => {
+    const newCartItems = cartItem.filter(
+      item => item.movie._id !== removedItem.movie._id
+    );
+
+    setCartItem(newCartItems);
+  }
+
   return (
     <AuthContext.Consumer>
       {(context) => {
@@ -108,6 +116,7 @@ const Cart = () => {
                                 // }}
                                 onClick={() => {
                                   handleItemRemove(item.movie._id);
+                                  filterCartItems(item);
                                 }}
                               >
                                 <svg
