@@ -10,6 +10,7 @@ export default class LogIn extends Component {
     super(props);
     this.state = {
       message: "",
+      disabled: false,
     };
     this.emailEl = React.createRef();
     this.passwordEl = React.createRef();
@@ -21,50 +22,45 @@ export default class LogIn extends Component {
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
     //Check if email and password are filled
-    var regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!email.match(regex)){
-      this.setState({message: "Invalid email"})
+    if (email.trim().length === 0 || password.trim().length === 0) {
+      if (email.trim().length === 0) {
+        this.setState({ message: "Email must not be empty" });
+      } else if (password.trim().length === 0) {
+        this.setState({ message: "Password must not be empty" });
+      }
       return;
     }
+    var regex =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (!email.match(regex)) {
+      this.setState({ message: "Invalid email" });
+      return;
+    }
+    if (this.state.disabled) {
+      return;
+    }
+    this.setState({ disabled: true });
+    var url = "http://localhost:4000/api/v1/auth/login";
     //Consume auth API
-    fetch("http://localhost:4000/api/v1/auth/login", {
+    fetch(url, {
       method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }) 
     })
       .then((res) => {
-        if (res.status === 401) {
-          if (email.trim().length === 0 || email.trim().length === 0) {
-            throw (
-              (new Error("Failed!"),
-              this.setState({ message: "Missing email or password field" }))
-            );
-          }
-
-          else if (email.trim().length !== 0) {
-            throw (
-              (new Error("Failed!"),
-              this.setState({
-                message: "Invalid email or password",
-              }))
-            );
-            
-          }
-          else if (password.trim().length !== 0) {
-            throw (
-              (new Error("Failed!"),
-              this.setState({ message: "Invalid email or password" }))
-            );
-          }
-          return;
+        if (res.status !== 200 && res.status !== 201) {
+          throw (
+            (new Error("Failed!"),
+            this.setState({ message: "Wrong username or password" }),
+            this.setState({disabled: false}))
+          );
         }
-
         return res.json();
       })
       .then((res) => {
@@ -117,7 +113,7 @@ export default class LogIn extends Component {
               className="bg-red-600 rounded-md py-2 px-4"
               onClick={this.handleSubmit}
             >
-              Sign In
+              {this.state.disabled ? "Sending your request" : "Sign In"}
             </button>
             <span>
               New to Netflix?{" "}

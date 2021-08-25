@@ -65,7 +65,7 @@ export default function Register() {
             );
           } else if (res.status === 200 || res.status === 201){
             setMessage("");
-            var ask = window.confirm("User added! \n Click Confirm to go back to Homepage");
+            var ask = window.confirm("User added! \nClick OK to go back to Homepage");
             if (ask) {
               window.location.href = "http://localhost:3000/";
             }
