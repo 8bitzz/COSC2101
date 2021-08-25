@@ -61,6 +61,9 @@ export default class LogIn extends Component {
             this.setState({disabled: false}))
           );
         }
+        else if (res.status === 200 || res.status === 201){
+          window.location.href = "http://localhost:3000/";
+        }
         return res.json();
       })
       .then((res) => {
