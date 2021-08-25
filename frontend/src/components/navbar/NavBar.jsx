@@ -9,8 +9,8 @@ import UserDropdown from "../userDropdown/UserDropdown";
 
 function NavBar(props) {
   const [movieList, setMovieList] = useState([]);
-  const [count, setCount] = useState(0);
-  const [cartItem, setCartItem] = useState([]);
+  const [setCount] = useState(0);
+  const [setCartItem] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
 
@@ -98,7 +98,7 @@ function NavBar(props) {
     } else {
       return;
     }
-  }, [props.count]);
+  }, [props.count, setCartItem, setCount]);
 
   return (
     <AuthContext.Consumer>
