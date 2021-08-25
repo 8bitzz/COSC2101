@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "./signup.css";
 import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 import AuthContext from "../../service/auth-context.js";
 export default function Register() {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -67,7 +69,7 @@ export default function Register() {
             setMessage("");
             var ask = window.confirm("User added! \nClick OK to go back to Homepage");
             if (ask) {
-              window.location.href = "http://localhost:3000/";
+              history.push('/login')
             }
           }
         })
@@ -106,12 +108,13 @@ export default function Register() {
         <p className="text-xl mb-4">
           Ready to watch? Enter your email to start checking out your cart.
         </p>
+        
         <form
-          className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-80"
+          className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-100"
           action="post"
         >
           <h1 className="text-xl font-semibold text-center">Sign Up</h1>
-          <span style={{ color: "red" }}>{message}</span>
+         
           <input
             className="h-12 rounded-md pl-2 text-gray-600"
             type="text"
@@ -149,6 +152,9 @@ export default function Register() {
             {disable?'Signing up...':'Register'}
           </button>
         </form>
+        <div style = {{border:"100px"}}>
+            <p style={{ color: "red" }}>{message}</p>
+          </div>
       </div>
     </div>
   );
