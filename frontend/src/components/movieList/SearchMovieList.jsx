@@ -12,8 +12,8 @@ const SearchMovieList = () => {
   //Set param to search keyword
   const search = new URLSearchParams(param).get("term");
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [count, setCount] = useState(0);
-  const [value, setValue] = useState(0);
+  // const [count, setCount] = useState(0);
+  // const [value, setValue] = useState(0);
 
   //Fetch data according to search keyword
   useEffect(() => {
@@ -29,34 +29,35 @@ const SearchMovieList = () => {
   }, [search]);
 
   function updateValue() {
-    return setValue(-1);
+    // return setValue(0);
   }
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      axios
-        .get(`${BASE_API_URL}/api/v1/carts`, {
-          headers: {
-            "Authorization": "Bearer " + localStorage.getItem("accessToken")
-          }
-        })
-        .then((res) => {
-          setCount(res.data.data.carts.length)
-          setValue(res.data.data.carts.length)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    else {
-      return;
-    }
-  }, [value])
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) {
+  //     axios
+  //       .get(`${BASE_API_URL}/api/v1/carts`, {
+  //         headers: {
+  //           "Authorization": "Bearer " + localStorage.getItem("accessToken")
+  //         }
+  //       })
+  //       .then((res) => {
+  //         setCount(res.data.data.carts.length)
+  //         setValue(res.data.data.carts.length)
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  //   else {
+  //     return;
+  //   }
+  // }, [value])
 
   const listRef = useRef();
   return (
     <div className="bg-netflix-black bg-cover w-full py-24 text-white" style={{minHeight: "100vh"}}>
-      <NavBar count={count}/>
+      {/* <NavBar count={count}/> */}
+      <NavBar />
       <div className="mb-10 text-2xl font-bold text-white">
         <p>Result for "{search}" </p>
       </div>

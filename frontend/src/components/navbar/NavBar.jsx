@@ -9,8 +9,8 @@ import UserDropdown from "../userDropdown/UserDropdown";
 
 function NavBar(props) {
   const [movieList, setMovieList] = useState([]);
-  const [count, setCount] = useState(0);
-  const [cartItem, setCartItem] = useState([]);
+  // const [count, setCount] = useState(0);
+  // const [cartItem, setCartItem] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
 
@@ -80,25 +80,25 @@ function NavBar(props) {
   }, []);
 
   //Fetch cart from API
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      axios
-        .get(`${BASE_API_URL}/api/v1/carts`, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          },
-        })
-        .then((res) => {
-          setCartItem(res.data.data.carts);
-          setCount(res.data.data.carts.length);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      return;
-    }
-  }, [props.count]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) {
+  //     axios
+  //       .get(`${BASE_API_URL}/api/v1/carts`, {
+  //         headers: {
+  //           Authorization: "Bearer " + localStorage.getItem("accessToken"),
+  //         },
+  //       })
+  //       .then((res) => {
+  //         setCartItem(res.data.data.carts);
+  //         setCount(res.data.data.carts.length);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     return;
+  //   }
+  // }, [props.count]);
 
   return (
     <AuthContext.Consumer>
@@ -180,7 +180,8 @@ function NavBar(props) {
                       </svg>
                       <span className="absolute inset-0 object-right-top -mr-6">
                         <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
-                          {props.count}
+                          {/* {props.count} */}
+                          {context.count}
                         </div>
                       </span>
                     </button>
