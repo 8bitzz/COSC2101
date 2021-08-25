@@ -40,22 +40,22 @@ export default class App extends React.Component {
   handleItemRemove = (id) => {
     console.log("Item removed");
     console.log(id);
-    // this.setState({count: this.state.count - 1});
     const token = localStorage.getItem("accessToken");
     axios
       .delete(`${BASE_API_URL}/api/v1/carts?movie_id=${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => this.setState({ count: this.state.count - 1 }))
+      .then((res) => {
+        if (res.status === 200) {
+          this.setState({ count: this.state.count - 1 });
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
   };
 
   handleItemAdd = (id) => {
-    console.log("Item added");
-    console.log(id);
-    // this.setState({ count: this.state.count + 1 });
     const token = localStorage.getItem("accessToken");
     const userID = localStorage.getItem("_id");
     const data = {
@@ -69,6 +69,8 @@ export default class App extends React.Component {
       .then((res) => {
         if (res.status !== 200) {
           this.setState({ count: this.state.count + 1 });
+          console.log("Item added");
+          console.log(id);
         }
       })
       .catch((err) => {
@@ -89,7 +91,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.count);
     return (
       <div className="m-0">
         <Router>
