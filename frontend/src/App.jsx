@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import React, { Fragment} from "react";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/cart/Checkout";
+import OrderHistory from "./pages/orderHistory/OrderHistory";
 
 export default class App extends React.Component {
   //Set state for accessToken and _id
@@ -56,6 +57,7 @@ export default class App extends React.Component {
                   <Route path="/cart" component={Cart}></Route>
                   {!localStorage.getItem("accessToken") && <Redirect from="/checkout" to="/" exact/>}
                   <Route path="/checkout" component={Checkout}></Route>
+                  <Route path="/user/order" component={OrderHistory}></Route>
                 </Switch>
               </div>
             </AuthContext.Provider>
