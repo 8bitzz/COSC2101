@@ -66,7 +66,11 @@ export default class App extends React.Component {
       .post(`${BASE_API_URL}/api/v1/carts?movie_id=${id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => this.setState({ count: this.state.count + 1 }))
+      .then((res) => {
+        if (res.status !== 200) {
+          this.setState({ count: this.state.count + 1 });
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
