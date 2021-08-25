@@ -55,7 +55,7 @@ export default function Register() {
               (new Error("Email already existed"),
               setMessage("Email has been registered"))
             );
-          } else {
+          } else if (res.status === 200 || res.status === 201){
             setMessage("");
             var ask = window.confirm("User added!");
             if (ask) {
