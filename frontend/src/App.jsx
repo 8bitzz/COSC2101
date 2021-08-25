@@ -32,6 +32,18 @@ export default class App extends React.Component {
     localStorage.removeItem('_id')
 	}
 
+  handleItemRemove = (id) => {
+    console.log("Item removed");
+    console.log(id);
+    this.setState({count: this.state.count - 1});
+  }
+
+  handleItemAdd = (id) => {
+    console.log("Item added");
+    console.log(id);
+    this.setState({count: this.state.count + 1});
+  }
+
   componentDidMount() {
     const token = localStorage.getItem("accessToken");
     axios
@@ -55,7 +67,9 @@ export default class App extends React.Component {
               _id: this.state._id,
               count: this.state.count,
               login: this.login,
-              logout: this.logout
+              logout: this.logout,
+              handleItemRemove: this.handleItemRemove,
+              handleItemAdd: this.handleItemAdd
             }} >
               <div className="bg-netflix-black">
                 <Switch>

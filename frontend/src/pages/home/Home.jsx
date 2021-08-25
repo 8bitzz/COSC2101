@@ -9,8 +9,8 @@ const Home = () => {
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [highlightedMovie, setHighLightedMovie] = useState([]);
-  const [count, setCount] = useState(0);
-  const [value, setValue] = useState(0);
+  // const [count, setCount] = useState(0);
+  // const [value, setValue] = useState(0);
   
   //Fetch movie from API
   useEffect(() => {
