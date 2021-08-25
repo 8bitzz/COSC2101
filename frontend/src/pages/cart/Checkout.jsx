@@ -157,13 +157,13 @@ const Checkout = () => {
             </div>
 
             {/* Submit button behaviours */}
-            <div>
+            <div className="text-center">
               {/* Show Submit button if no error */}
               {!meta.error &&
                 <input 
                   type="submit" 
                   value="Pay now" 
-                  className="mt-4 py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white bg-netflix-black"
+                  className="min-w-max mt-4 py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white bg-netflix-black"
                   style={{ width: "24%", margin: "auto"}}
                 />
               }

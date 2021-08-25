@@ -9,7 +9,7 @@ const Cart = () => {
   const [cartItem, setCartItem] = useState([]);   // State to store the list of movies
   const [count, setCount] = useState(0);          // State to count the number of movies
   const [value, setValue] = useState(0);          // Value to trigger fetch function 
-  
+
   // Fetch movie from cart when Value state change 
   useEffect(() => {
     // Only fetch if user is logged in
