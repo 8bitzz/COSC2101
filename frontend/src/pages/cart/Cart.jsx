@@ -134,11 +134,11 @@ const Cart = () => {
           </div>
 
           {/* Checkout button links to Checkout page */}
-          <div className="mb-10 ">
+          <div className="mb-10 text-center">
             <Link to="/checkout">
               <button
                 className="py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white"
-                style={{ width: "24%", marginLeft: "38%", marginRight: "38%" }}
+                style={{ width: "24%"}}
               >
                 Checkout
               </button>  

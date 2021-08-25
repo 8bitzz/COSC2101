@@ -20,5 +20,9 @@
     "url": "https://github.com/NghiaTranUIT/COSC2101/issues"
   },
   "homepage": "https://github.com/NghiaTranUIT/COSC2101#readme",
-  "dependencies": {}
+  "dependencies": {
+    "react-payment-inputs": "^1.1.8",
+    "styled-components": "^5.3.0"
+  },
+  "devDependencies": {}
 }
