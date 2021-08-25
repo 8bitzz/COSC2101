@@ -9,12 +9,15 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import React, { Fragment} from "react";
 import Cart from "./pages/cart/Cart";
 import OrderHistory from "./pages/orderHistory/OrderHistory";
+import { BASE_API_URL } from "./utils/constants";
+import axios from "axios";
 
 export default class App extends React.Component {
   //Set state for accessToken and _id
   state = {
 		accessToken: null,
-		_id: null
+		_id: null,
+    count: 0
 	}
   //Login function to set current state of accessToken and _id
 	login = (accessToken, _id, tokenExpiration) => {
@@ -28,7 +31,21 @@ export default class App extends React.Component {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('_id')
 	}
+
+  componentDidMount() {
+    const token = localStorage.getItem("accessToken");
+    axios
+    .get(`${BASE_API_URL}/api/v1/carts`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => this.setState({count: res.data.data.carts.length}))
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   render() {
+    console.log(this.state.count)
     return (
       <div className="m-0">
         <Router>
@@ -36,6 +53,7 @@ export default class App extends React.Component {
             <AuthContext.Provider value={{
               accessToken: this.state.accessToken,
               _id: this.state._id,
+              count: this.state.count,
               login: this.login,
               logout: this.logout
             }} >

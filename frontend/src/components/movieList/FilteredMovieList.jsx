@@ -13,8 +13,8 @@ const FilteredMovieList = ({ location }) => {
   const category = new URLSearchParams(param).get("type");
   console.log(category);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [count, setCount] = useState(0);
-  const [value, setValue] = useState(0);
+  // const [count, setCount] = useState(0);
+  // const [value, setValue] = useState(0);
 
   //Fetch data according to the category
   useEffect(() => {
@@ -29,34 +29,35 @@ const FilteredMovieList = ({ location }) => {
       });
   }, [category]);
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      axios
-        .get(`${BASE_API_URL}/api/v1/carts`, {
-          headers: {
-            "Authorization": "Bearer " + localStorage.getItem("accessToken")
-          }
-        })
-        .then((res) => {
-          setCount(res.data.data.carts.length)
-          setValue(res.data.data.carts.length)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    else {
-      return;
-    }
-  }, [value])
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) {
+  //     axios
+  //       .get(`${BASE_API_URL}/api/v1/carts`, {
+  //         headers: {
+  //           "Authorization": "Bearer " + localStorage.getItem("accessToken")
+  //         }
+  //       })
+  //       .then((res) => {
+  //         setCount(res.data.data.carts.length)
+  //         setValue(res.data.data.carts.length)
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  //   else {
+  //     return;
+  //   }
+  // }, [value])
 
   function updateValue() {
-    return setValue(0);
+    // return setValue(0);
   }
 
   return (
     <div className="bg-netflix-black bg-cover w-full py-24 text-white" style={{minHeight: "100vh"}}>
-      <NavBar count={count}/>
+      {/* <NavBar count={count}/> */}
+      <NavBar />
       <p className="my-10 ml-12 text-3xl font-bold text-white">{category}</p>
       <div className=" flex bg-netflix-black h-screen w-full">
         {filteredMovies.length <= 0 ? (
