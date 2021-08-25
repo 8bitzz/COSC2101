@@ -67,30 +67,30 @@ export default function Details(props) {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      axios
-        .get(`${BASE_API_URL}/api/v1/carts`, {
-          headers: {
-            "Authorization": "Bearer " + localStorage.getItem("accessToken")
-          }
-        })
-        .then((res) => {
-          setCount(res.data.data.carts.length)
-          setValue(res.data.data.carts.length)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    else {
-      return;
-    }
-  }, [value])
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) {
+  //     axios
+  //       .get(`${BASE_API_URL}/api/v1/carts`, {
+  //         headers: {
+  //           "Authorization": "Bearer " + localStorage.getItem("accessToken")
+  //         }
+  //       })
+  //       .then((res) => {
+  //         setCount(res.data.data.carts.length)
+  //         setValue(res.data.data.carts.length)
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  //   else {
+  //     return;
+  //   }
+  // }, [value])
 
-  function updateValue() {
-    return setValue(-1);
-  }
+  // function updateValue() {
+  //   return setValue(-1);
+  // }
 
   return (
     <AuthContext.Consumer>
