@@ -113,7 +113,7 @@ export default class LogIn extends Component {
               className="bg-red-600 rounded-md py-2 px-4"
               onClick={this.handleSubmit}
             >
-              {this.state.disabled ? "Sending your request" : "Sign In"}
+              {this.state.disabled ? "Logging in..." : "Sign In"}
             </button>
             <span>
               New to Netflix?{" "}

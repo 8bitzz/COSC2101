@@ -146,7 +146,7 @@ export default function Register() {
             className=" bg-red-600 rounded-md py-2 px-4 "
             onClick={handleSubmit}
           >
-            {disable?'Sending your request':'Register'}
+            {disable?'Signing up...':'Register'}
           </button>
         </form>
       </div>
