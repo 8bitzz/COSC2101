@@ -7,9 +7,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
+  const [disable, setDisable] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //Consume auth API
     if (
       email.trim().length === 0 ||
       password.trim().length === 0 ||
@@ -30,11 +30,18 @@ export default function Register() {
 
     if (!email.match(email_regex)) {
       setMessage("Please input a valid email");
+      setDisable(false)
     } else if (!password.match(/(?=.*\d)(?=.*[A-Z]).{6,}/)) {
       setMessage(
         "Password must be at least 6 characters long, must contain a number, must contain an uppercase"
       );
+      setDisable(false)
     } else {
+      if(disable){
+        return;
+      }
+      setDisable(true);
+      //Consume auth API
       var url = "http://localhost:4000/api/v1/auth/register";
       await fetch(url, {
         method: "post",
@@ -53,11 +60,12 @@ export default function Register() {
           if (res.status === 401) {
             throw (
               (new Error("Email already existed"),
-              setMessage("Email has been registered"))
+              setMessage("Email has been registered")),
+              setDisable(false)
             );
           } else if (res.status === 200 || res.status === 201){
             setMessage("");
-            var ask = window.confirm("User added!");
+            var ask = window.confirm("User added! \n Click Confirm to go back to Homepage");
             if (ask) {
               window.location.href = "http://localhost:3000/";
             }
@@ -138,7 +146,7 @@ export default function Register() {
             className=" bg-red-600 rounded-md py-2 px-4 "
             onClick={handleSubmit}
           >
-            Register
+            {disable?'Sending your request':'Register'}
           </button>
         </form>
       </div>
