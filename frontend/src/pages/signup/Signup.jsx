@@ -7,11 +7,22 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //Consume auth API
-    if (username.trim().length === 0){
-      setMessage("Missing username")
+    if (
+      email.trim().length === 0 ||
+      password.trim().length === 0 ||
+      username.trim().length === 0
+    ) {
+      if (username.trim().length === 0) {
+        setMessage("Username must not be empty");
+      } else if (email.trim().length === 0) {
+        setMessage("Email must not be empty");
+      } else if (password.trim().length === 0) {
+        setMessage("Password must not be empty");
+      }
+      return;
     }
     const token = AuthContext.accessToken; //Get token from AuthContext
     var email_regex =
@@ -25,7 +36,7 @@ export default function Register() {
       );
     } else {
       var url = "http://localhost:4000/api/v1/auth/register";
-      fetch(url, {
+      await fetch(url, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -33,37 +44,28 @@ export default function Register() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          email: email,
-          password: password,
           username: username,
+          password: password,
+          email: email,
         }),
-      }).then((res) => {
-        if (res.status === 401) {
-          if (
-            email.trim().length === 0 ||
-            password.trim().length === 0
-          ) {
+      })
+        .then((res) => {
+          if (res.status === 401) {
             throw (
-              (new Error("Failed!"),
-              setMessage("Please input a valid email/password"))
+              (new Error("Email already existed"),
+              setMessage("Email has been registered"))
             );
-          } else {
-            if (email.trim().length !== 0) {
-
-              throw (
-                (new Error("Failed!"), setMessage("Email has been registered"))
-              );
+          } else if (res.status === 200 || res.status === 201){
+            setMessage("");
+            var ask = window.confirm("User added!");
+            if (ask) {
+              window.location.href = "http://localhost:3000/";
             }
           }
-        } else if(res.status === 200 || res.status === 201) {
-          setMessage("");
-          var ask = window.confirm("User added!");
-          if (ask){
-            window.location.href = "http://localhost:3000/"
-          }
-        }
-        return res.json();
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   return (
