@@ -67,7 +67,7 @@ export default function Register() {
             );
           } else if (res.status === 200 || res.status === 201){
             setMessage("");
-            var ask = window.confirm("User added! \nClick OK to go back to Homepage");
+            var ask = window.confirm("User added! \nClick OK to go back to Log in page");
             if (ask) {
               history.push('/login')
             }
@@ -108,7 +108,6 @@ export default function Register() {
         <p className="text-xl mb-4">
           Ready to watch? Enter your email to start checking out your cart.
         </p>
-        
         <form
           className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-100"
           action="post"
