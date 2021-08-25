@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "./signup.css";
 import { Link } from "react-router-dom";
 import AuthContext from "../../service/auth-context.js";
@@ -26,7 +26,7 @@ export default function Register() {
     }
     const token = AuthContext.accessToken; //Get token from AuthContext
     var email_regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
 
     if (!email.match(email_regex)) {
       setMessage("Please input a valid email");
@@ -58,10 +58,10 @@ export default function Register() {
       })
         .then((res) => {
           if (res.status === 401) {
+            setMessage("Email has been registered")
+            setDisable(false)
             throw (
-              (new Error("Email already existed"),
-              setMessage("Email has been registered")),
-              setDisable(false)
+              (new Error("Email already existed"))
             );
           } else if (res.status === 200 || res.status === 201){
             setMessage("");
