@@ -4,9 +4,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_API_URL } from "../../utils/constants";
 import AuthContext from "../../service/auth-context";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
+  let history = useHistory();
   // const [count, setCount] = useState(0);
   // const [value, setValue] = useState(0);
   // Fetch movie from cart
@@ -52,6 +55,15 @@ const Cart = () => {
     );
 
     setCartItem(newCartItems);
+  }
+
+  const redirectToHome = () => {
+    alert(
+      "Your cart is empty!\n" +
+      "Want to browse for something?"
+    )
+    history.push("/")
+    return;
   }
 
   return (
@@ -109,16 +121,6 @@ const Cart = () => {
                               <p>${item.movie.price.toFixed(2)}</p>
                               <button
                                 className="absolute bottom-4 right-1"
-                                // onClick={() => {
-                                //   var url = `${BASE_API_URL}/api/v1/carts?movie_id=${item.movie._id}`;
-                                //   const headers = {
-                                //     Authorization:
-                                //       "Bearer " +
-                                //       localStorage.getItem("accessToken"),
-                                //   };
-                                //   axios.delete(url, { headers });
-                                //   // setValue(0)
-                                // }}
                                 onClick={() => {
                                   handleItemRemove(item.movie._id);
                                   filterCartItems(item);
@@ -154,16 +156,35 @@ const Cart = () => {
                   </p>
                 </div>
                 <div className="mb-10 ">
-                  <button
-                    className="py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white"
-                    style={{
-                      width: "24%",
-                      marginLeft: "38%",
-                      marginRight: "38%",
-                    }}
-                  >
-                    Checkout
-                  </button>
+                  {(cartItem.length !== 0) && (
+                    <Link to="/checkout">
+                      <button
+                        className="py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white"
+                        style={{
+                          width: "24%",
+                          marginLeft: "38%",
+                          marginRight: "38%",
+                        }}
+                      >
+                        Checkout
+                      </button>
+                    </Link>
+                  )}
+
+                  {(cartItem.length === 0) && (
+                    <button
+                      className="py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white"
+                      style={{
+                        width: "24%",
+                        marginLeft: "38%",
+                        marginRight: "38%",
+                      }}
+                      onClick={redirectToHome}
+                    >
+                      Checkout
+                    </button>
+                  )}    
+                  
                 </div>
               </div>
             </div>

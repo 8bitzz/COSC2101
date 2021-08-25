@@ -41,15 +41,6 @@ const Checkout = () => {
 
   // Function to handle payment form submit
   const handleSubmit = (e) => {
-    // Display a notice and redirect to renting page if cart is empty
-    if (cartItem.length === 0) {
-      alert(
-        "Your cart is empty!\n" +
-        "Want to browse for something?"
-      )
-      history.push("/")
-      return;
-    }
     // If no error, send input data to backend and redirect to Homepage
     if (!meta.error) {
       e.preventDefault();
@@ -59,10 +50,7 @@ const Checkout = () => {
           number: cardNumber.replace(/\s+/g, ''),
           expiredDate: formatDate(expDate),
           cvc: cvc.replace(/\s+/g, '')
-        },
-        createdBy: localStorage.getItem("_id"),
-        amount: getTotalPrice(),
-        movies: cartItem
+        }
       }
       let axiosConfig = { // Configuration for axios 
         headers: {
@@ -70,7 +58,10 @@ const Checkout = () => {
           'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
         } 
       }
-      axios.post(url, data, axiosConfig)  // POST method 
+      // POST method
+      axios.post(url, data, axiosConfig)
+           .then((res) => console.log(res))
+           .catch((err) => console.log(err))
       history.push("/") // Redirect to Homepage 
       alert("Thank you! Please enjoy your movies!") //Display notice
       return;
