@@ -10,8 +10,7 @@ import { useHistory } from "react-router-dom";
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
   let history = useHistory();
-  // const [count, setCount] = useState(0);
-  // const [value, setValue] = useState(0);
+
   // Fetch movie from cart
   useEffect(() => {
     // Only fetch if user is logged in
@@ -26,8 +25,6 @@ const Cart = () => {
         // Store data into states
         .then((res) => {
           setCartItem(res.data.data.carts);
-          // setCount(res.data.data.carts.length)
-          // setValue(res.data.data.carts.length)
         })
         // Log error if exists one 
         .catch((err) => {
@@ -36,7 +33,6 @@ const Cart = () => {
     } else {
       return;
     }
-    // }, [value])
   }, []);
 
   // Function to calculate total price of all movies in Cart 
@@ -75,7 +71,6 @@ const Cart = () => {
             className="bg-netflix-black bg-cover w-full py-24 text-white"
             style={{ minHeight: "100vh" }}
           >
-            {/* <NavBar count={count}/> */}
             <NavBar />
             <div className="w-full">
               <h1 className="text-white text-3xl font-semibold text-center my-6">

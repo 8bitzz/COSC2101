@@ -11,7 +11,6 @@ const Checkout = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [expDate, setExpDate] = useState("");
   const [cvc, setCvc] = useState("");
-  const [count, setCount] = useState(0);
   const [cartItem, setCartItem] = useState([]);
   const { meta, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
   let history = useHistory();
@@ -29,7 +28,6 @@ const Checkout = () => {
         // Store data in states
         .then((res) => {
           setCartItem(res.data.data.carts);
-          setCount(res.data.data.carts.length);
         })
         .catch((err) => {
           console.log(err);
@@ -110,7 +108,7 @@ const Checkout = () => {
         return(
           <div className="bg-netflix-black bg-cover w-full py-24 text-white" style={{ minHeight: "100vh" }}>
             {/* Navbar */}
-            <NavBar count={count}/>
+            <NavBar/>
             {/* Page title */}
             <h1 className="text-white text-3xl font-semibold text-center my-6">Checkout</h1>
             {/* Page content */}
