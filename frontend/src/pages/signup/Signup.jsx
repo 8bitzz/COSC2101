@@ -76,10 +76,35 @@ export default class Register extends Component {
           } else if (res.status === 200 || res.status === 201) {
             this.setState({ message: "" });
             var ask = window.confirm(
-              "User added! \nClick OK to go back to Log in page"
+              "User added! \nClick OK to go back to Homepage"
             );
             if (ask) {
-              window.location.href = "http://localhost:3000/";
+              var url1 = "http://localhost:4000/api/v1/auth/login";
+              fetch(url1, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({
+                  email: this.state.email,
+                  password: this.state.password,
+                }) 
+              })
+              .then((res) => {
+                if (res.status === 200 || res.status === 201){
+                  window.location.href = "http://localhost:3000/";
+                }
+                return res.json();
+              })
+              .then((res) => {
+                if (res.accessToken) {
+                  this.context.login(res.accessToken, res._id, res.tokenExpiration);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
             }
           }
         })
