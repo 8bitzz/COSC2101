@@ -117,7 +117,7 @@ function NavBar(props) {
                 <select
                   name="category"
                   id="category"
-                  className="p-3 ml-10 border-2 bg-black border-white text-white"
+                  className="bg-netflix-black rounded-md my-auto opacity-80 p-2 mr-4"
                   onChange={handleCategorySelect}
                 >
                   <option value="">Genres</option>

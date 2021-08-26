@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import React, { Fragment } from "react";
 import Cart from "./pages/cart/Cart";
+import Checkout from "./pages/cart/Checkout";
 import OrderHistory from "./pages/orderHistory/OrderHistory";
 import { BASE_API_URL } from "./utils/constants";
 import axios from "axios";
@@ -24,12 +25,14 @@ export default class App extends React.Component {
     _id: null,
     count: 0,
   };
+
   //Login function to set current state of accessToken and _id
   login = (accessToken, _id, tokenExpiration) => {
     this.setState({ accessToken: accessToken, _id: _id });
     localStorage.setItem("accessToken", this.state.accessToken);
     localStorage.setItem("_id", this.state._id);
   };
+
   //Logout function to return the null value of accessToken and _id
   logout = () => {
     this.setState({ accessToken: null, _id: null });
@@ -54,6 +57,11 @@ export default class App extends React.Component {
         console.log(err);
       });
   };
+
+  handleItemClear = () => {
+    console.log("cart reset");
+    this.setState({count: 0});
+  }
 
   handleItemAdd = (id) => {
     const token = localStorage.getItem("accessToken");
@@ -104,6 +112,7 @@ export default class App extends React.Component {
                 logout: this.logout,
                 handleItemRemove: this.handleItemRemove,
                 handleItemAdd: this.handleItemAdd,
+                handleItemClear: this.handleItemClear
               }}
             >
               <div className="bg-netflix-black">
@@ -128,6 +137,8 @@ export default class App extends React.Component {
                     <Redirect from="/cart" to="/" exact />
                   )}
                   <Route path="/cart" component={Cart}></Route>
+                  {!localStorage.getItem("accessToken") && <Redirect from="/checkout" to="/" exact/>}
+                  <Route path="/checkout" component={Checkout}></Route>
                   <Route path="/user/order" component={OrderHistory}></Route>
                 </Switch>
               </div>

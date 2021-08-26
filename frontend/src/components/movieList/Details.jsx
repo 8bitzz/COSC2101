@@ -51,6 +51,7 @@ export default function Details(props) {
   const handleOnSubmit = () => {
     history.push(`/login`);
   };
+  
   //Fetch the categories list in categories API to compare with the value of gerne
   //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
   useEffect(() => {
@@ -65,6 +66,31 @@ export default function Details(props) {
       });
     // eslint-disable-next-line
   }, []);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) {
+  //     axios
+  //       .get(`${BASE_API_URL}/api/v1/carts`, {
+  //         headers: {
+  //           "Authorization": "Bearer " + localStorage.getItem("accessToken")
+  //         }
+  //       })
+  //       .then((res) => {
+  //         setCount(res.data.data.carts.length)
+  //         setValue(res.data.data.carts.length)
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  //   else {
+  //     return;
+  //   }
+  // }, [value])
+
+  // function updateValue() {
+  //   return setValue(-1);
+  // }
 
   return (
     <AuthContext.Consumer>
