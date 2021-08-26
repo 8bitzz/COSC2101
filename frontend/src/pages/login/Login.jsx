@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./login.css";
-import { Component, useRef, useState } from "react";
+import { Component } from "react";
 import AuthContext from "../../service/auth-context.js";
 import React from "react";
 export default class LogIn extends Component {
@@ -10,6 +10,7 @@ export default class LogIn extends Component {
     super(props);
     this.state = {
       message: "",
+      disabled: false,
     };
     this.emailEl = React.createRef();
     this.passwordEl = React.createRef();
@@ -21,50 +22,48 @@ export default class LogIn extends Component {
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
     //Check if email and password are filled
-    var regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!email.match(regex)){
-      this.setState({message: "Invalid email"})
+    if (email.trim().length === 0 || password.trim().length === 0) {
+      if (email.trim().length === 0) {
+        this.setState({ message: "Email must not be empty" });
+      } else if (password.trim().length === 0) {
+        this.setState({ message: "Password must not be empty" });
+      }
       return;
     }
+    var regex =
+    /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+    if (!email.match(regex)) {
+      this.setState({ message: "Invalid email" });
+      return;
+    }
+    if (this.state.disabled) {
+      return;
+    }
+    this.setState({ disabled: true });
+    var url = "http://localhost:4000/api/v1/auth/login";
     //Consume auth API
-    fetch("http://localhost:4000/api/v1/auth/login", {
+    fetch(url, {
       method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }) 
     })
       .then((res) => {
-        if (res.status === 401) {
-          if (email.trim().length === 0 || email.trim().length === 0) {
-            throw (
-              (new Error("Failed!"),
-              this.setState({ message: "Missing email or password field" }))
-            );
-          }
-
-          else if (email.trim().length !== 0) {
-            throw (
-              (new Error("Failed!"),
-              this.setState({
-                message: "Invalid email or password",
-              }))
-            );
-            
-          }
-          else if (password.trim().length !== 0) {
-            throw (
-              (new Error("Failed!"),
-              this.setState({ message: "Invalid email or password" }))
-            );
-          }
-          return;
+        if (res.status !== 200 && res.status !== 201) {
+          throw (
+            (new Error("Failed!"),
+            this.setState({ message: "Wrong username or password" }),
+            this.setState({disabled: false}))
+          );
         }
-
+        else if (res.status === 200 || res.status === 201){
+          window.location.href = "http://localhost:3000/";
+        }
         return res.json();
       })
       .then((res) => {
@@ -117,7 +116,7 @@ export default class LogIn extends Component {
               className="bg-red-600 rounded-md py-2 px-4"
               onClick={this.handleSubmit}
             >
-              Sign In
+              {this.state.disabled ? "Logging in..." : "Sign In"}
             </button>
             <span>
               New to Netflix?{" "}
@@ -129,9 +128,9 @@ export default class LogIn extends Component {
               This page is protected by Google reCAPTCHA to ensure you're not a
               bot.{" "}
               <b>
-                <a className="z-10 cursor-pointer">Learn more</a>
+                <p className="z-10 cursor-pointer">Learn more</p>
               </b>
-              .
+              
             </small>
           </form>
         </div>
