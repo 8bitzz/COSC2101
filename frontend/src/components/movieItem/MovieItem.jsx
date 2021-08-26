@@ -1,7 +1,6 @@
 import "./movieItem.css";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
 import AuthContext from "../../service/auth-context";
 
 const MovieItem = ({ funct, movie, index }) => {

@@ -1,6 +1,5 @@
 import "./featured.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../service/auth-context";
 

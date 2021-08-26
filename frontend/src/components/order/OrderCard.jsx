@@ -41,7 +41,7 @@ const OrderCard = ({ order }) => {
             </div>
           </div>
           <div className="flow-root">
-            <ul role="list" className="-my-6">
+            <ul className="-my-6">
               {order.movies.map((item) => (
                 <OrderItem key={item._id} movie={item} />
               ))}
