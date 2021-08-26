@@ -12,7 +12,6 @@ export default class Register extends Component {
       email: "",
       password: "",
       username: "",
-      disable: false,
     };
   }
   handleChange(e) {
