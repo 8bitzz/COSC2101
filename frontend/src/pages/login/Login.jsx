@@ -57,7 +57,7 @@ export default class LogIn extends Component {
         if (res.status !== 200 && res.status !== 201) {
           throw (
             (new Error("Failed!"),
-            this.setState({ message: "Wrong username or password" }),
+            this.setState({ message: "Wrong email or password" }),
             this.setState({disabled: false}))
           );
         }

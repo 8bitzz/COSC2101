@@ -28,25 +28,7 @@ export default function Details(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  // const handleCart = (e) => {
-  //   e.preventDefault();
-  //   const movie_id = props.match.params._id;
-  //   var url = `${BASE_API_URL}/api/v1/carts?movie_id=${movie_id}`;
-  //   const data = {
-  //     movie: movie_id,
-  //     createdBy: localStorage.getItem("_id"),
-  //   };
-  //   console.log(data);
-  //   let axiosConfig = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + localStorage.getItem("accessToken"),
-  //     },
-  //   };
-  //   axios.post(url, data, axiosConfig);
-  // };
+  }, [props.match.params._id]);
 
   const handleOnSubmit = () => {
     history.push(`/login`);
@@ -66,32 +48,6 @@ export default function Details(props) {
       });
     // eslint-disable-next-line
   }, []);
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken")) {
-  //     axios
-  //       .get(`${BASE_API_URL}/api/v1/carts`, {
-  //         headers: {
-  //           "Authorization": "Bearer " + localStorage.getItem("accessToken")
-  //         }
-  //       })
-  //       .then((res) => {
-  //         setCount(res.data.data.carts.length)
-  //         setValue(res.data.data.carts.length)
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  //   else {
-  //     return;
-  //   }
-  // }, [value])
-
-  // function updateValue() {
-  //   return setValue(-1);
-  // }
-
   return (
     <AuthContext.Consumer>
       {(context) => {
@@ -108,7 +64,7 @@ export default function Details(props) {
                   <div className="trailer-wrapper min-h-full pt-100">
                     <iframe
                       height="550px"
-                      frameBorder="0"
+                      title = "trailer"
                       width="100%"
                       allowFullScreen
                       src={
@@ -147,13 +103,12 @@ export default function Details(props) {
                         </div>
                         <div className="movie-details__item movie-details__gerne">
                           {category.map((category) => {
-                            {
-                              movie.category === category._id ? (
-                                <div>{(gerne = category.name)}</div>
-                              ) : (
-                                <div></div>
-                              );
-                            }
+                            return movie.category === category._id ? (
+                              <div>{(gerne = category.name)}</div>
+                            ) : (
+                              <div></div>
+                            );
+                            
                           })}
                           <b className="font-light">Gerne</b>: {gerne}
                         </div>
