@@ -37,7 +37,7 @@ const OrderCard = ({ order }) => {
               <h1 className="text-lg font-medium text-gray-200">
                 Total amount
               </h1>
-              <h2 className="font-extrabold text-red-500 text-right">$ {order.amount}</h2>
+              <h2 className="font-extrabold text-red-500 text-right">$ {order.amount.toFixed(2)}</h2>
             </div>
           </div>
           <div className="flow-root">
