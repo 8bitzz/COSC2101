@@ -4,6 +4,7 @@ import AuthContext from "../../service/auth-context.js";
 import { Component } from "react";
 export default class Register extends Component {
   static contextType = AuthContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -14,11 +15,13 @@ export default class Register extends Component {
       username: "",
     };
   }
+
   handleChange(e) {
     var obj = {};
     obj[e.target.name] = e.target.value;
     this.setState(obj);
   }
+
   handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -35,19 +38,22 @@ export default class Register extends Component {
       }
       return;
     }
+
     const token = this.context.token;
     var email_regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
 
     if (!this.state.email.match(email_regex)) {
       this.setState({ message: "Please input a valid email" });
       this.setState({ disabled: false });
-    } else if (!this.state.password.match(/(?=.*\d)(?=.*[A-Z]).{6,}/)) {
+    } 
+    else if (!this.state.password.match(/(?=.*\d)(?=.*[A-Z]).{6,}/)) {
       this.setState({
         message:
           "Password must be at least 6 characters long, must contain a number, must contain an uppercase",
       });
       this.setState({ disabled: false });
-    } else {
+    } 
+    else {
       if (this.state.disabled) {
         return;
       }
@@ -112,6 +118,7 @@ export default class Register extends Component {
         });
     }
   };
+
   render() {
     return (
       <div className="register">

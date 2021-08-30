@@ -17,33 +17,36 @@ import Checkout from "./pages/cart/Checkout";
 import OrderHistory from "./pages/orderHistory/OrderHistory";
 import { BASE_API_URL } from "./utils/constants";
 import axios from "axios";
+import { formatCardDate } from "./utils/DateFormatter";
 
 export default class App extends React.Component {
-  //Set state for accessToken and _id
+  // Set state for accessToken and _id
   state = {
     accessToken: null,
     _id: null,
     count: 0,
   };
 
-  //Login function to set current state of accessToken and _id
+  // Login function to set current state of accessToken and _id
   login = (accessToken, _id, tokenExpiration) => {
     this.setState({ accessToken: accessToken, _id: _id });
     localStorage.setItem("accessToken", this.state.accessToken);
     localStorage.setItem("_id", this.state._id);
   };
 
-  //Logout function to return the null value of accessToken and _id
+  // Logout function to return the null value of accessToken and _id
   logout = () => {
     this.setState({ accessToken: null, _id: null });
     localStorage.removeItem("accessToken");
     localStorage.removeItem("_id");
   };
 
+  // Handle cart item count when remove
   handleItemRemove = (id) => {
     console.log("Item removed");
     console.log(id);
     const token = localStorage.getItem("accessToken");
+    // DELETE method and update count state 
     axios
       .delete(`${BASE_API_URL}/api/v1/carts?movie_id=${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -58,11 +61,41 @@ export default class App extends React.Component {
       });
   };
 
-  handleItemClear = () => {
-    console.log("cart reset");
-    this.setState({count: 0});
+  // Handle cart item count when reset cart
+  handleItemClear = (e, cardNumber, expDate, cvc) => {
+    e.preventDefault();
+    // Prepare fetch url, data and configuration
+    const url = `${BASE_API_URL}/api/v1/orders`;
+    const data = {
+      creditCard: {
+        number: cardNumber.replace(/\s+/g, ''),
+        expiredDate: formatCardDate(expDate),
+        cvc: cvc.replace(/\s+/g, '')
+      }
+    };
+    let axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+      }
+    };
+    // Fetch backend with POST method 
+    axios
+      .post(url, data, axiosConfig)
+      .then((res) => {
+        console.log(res);
+        this.setState({count: 0});
+        alert("Thank you! Please enjoy your movies!") //Display notice
+        console.log("Reset cart")
+        window.history.pushState({},"", "/");
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+    // Alert and redirect to Homepage 
+    
   }
 
+  // Handle cart item count when adding an item 
   handleItemAdd = (id) => {
     const token = localStorage.getItem("accessToken");
     const userID = localStorage.getItem("_id");
@@ -70,6 +103,7 @@ export default class App extends React.Component {
       movie: id,
       createdBy: userID,
     };
+    // POST method and update count state 
     axios
       .post(`${BASE_API_URL}/api/v1/carts?movie_id=${id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -86,6 +120,7 @@ export default class App extends React.Component {
       });
   };
 
+  // Fetch database when component mount
   componentDidMount() {
     const token = localStorage.getItem("accessToken");
     axios

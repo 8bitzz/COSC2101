@@ -45,14 +45,15 @@ const Cart = () => {
     return total.toFixed(2);
   };
 
+  // Exclude removed item from the Cart
   const filterCartItems = removedItem => {
     const newCartItems = cartItem.filter(
       item => item.movie._id !== removedItem.movie._id
     );
-
     setCartItem(newCartItems);
   }
 
+  // Redirect to Home
   const redirectToHome = () => {
     alert(
       "Your cart is empty!\n" +
@@ -81,7 +82,9 @@ const Cart = () => {
                   className="relative min-w-min h-full border-white border-2 border-opacity-75 rounded-md text-center overflow-auto"
                   style={{ height: "40rem" }}
                 >
+                  {/* Cart content */}
                   {cartItem.length === 0 ? (
+                    // Message when cart is empty 
                     <div className="relative h-full">
                       <p
                         className="absolute w-full m-0 text-center"
@@ -91,6 +94,7 @@ const Cart = () => {
                       </p>
                     </div>
                   ) : (
+                    // List out items in cart
                     <div>
                       {cartItem.map((item, index) => (
                         <div key={index}>
@@ -114,6 +118,7 @@ const Cart = () => {
                               style={{ marginLeft: "auto" }}
                             >
                               <p>${item.movie.price.toFixed(2)}</p>
+                              {/* Remove button */}
                               <button
                                 className="absolute bottom-4 right-1"
                                 onClick={() => {
@@ -144,12 +149,16 @@ const Cart = () => {
                     </div>
                   )}
                 </div>
+
+                {/* Subtotal */}
                 <div className="py-6">
                   <p className="px-4 text-lg font-semibold">
                     Subtotal
                     <span style={{ float: "right" }}>${getTotalPrice()}</span>
                   </p>
                 </div>
+
+                {/* Button to checkout */}
                 <div className="mb-10 ">
                   {(cartItem.length !== 0) && (
                     <Link to="/checkout">
@@ -167,6 +176,7 @@ const Cart = () => {
                   )}
 
                   {(cartItem.length === 0) && (
+                    // Button redirecting to Homepage if cart is empty
                     <button
                       className="py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white"
                       style={{

@@ -3,27 +3,9 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AuthContext from "../../service/auth-context";
 
-const MovieItem = ({ funct, movie, index }) => {
+const MovieItem = ({ movie, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const history = useHistory();
-
-  // const handleCart = (e) => {
-  //   e.preventDefault();
-  //   var url = `http://localhost:4000/api/v1/carts?movie_id=${movie._id}`;
-  //   const data = {
-  //     movie: movie._id,
-  //     createdBy: localStorage.getItem("_id"),
-  //   };
-
-  //   let axiosConfig = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + localStorage.getItem("accessToken"),
-  //     },
-  //   };
-  //   axios.post(url, data, axiosConfig);
-  //   funct();
-  // };
 
   const handleOnSubmit = () => {
     history.push(`/login`);
@@ -36,6 +18,7 @@ const MovieItem = ({ funct, movie, index }) => {
         return (
           <div>
             {isHovered ? (
+              // Effect when a movie card is hovered
               <div
                 className="hoverItem bg-netflix-black"
                 id="item"
@@ -113,6 +96,8 @@ const MovieItem = ({ funct, movie, index }) => {
                 </div>
               </div>
             ) : null}
+
+            {/* Default movie card */}
             <div
               className="movieItem w-60 h-36 mr-1 bg-netflix-black text-white cursor-pointer"
               onMouseEnter={() => setIsHovered(true)}

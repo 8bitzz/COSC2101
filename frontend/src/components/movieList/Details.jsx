@@ -15,7 +15,7 @@ export default function Details(props) {
   const [category, setCategory] = useState([]);
   var gerne = "";
 
-  //Get the _id of the movie from props and fectch API to get data of the movie
+  // Get the _id of the movie from props and fectch API to get data of the movie
   useEffect(() => {
     const _id = props.match.params._id;
     const url = `${BASE_API_URL}/api/v1/movies/${_id}`;
@@ -29,13 +29,10 @@ export default function Details(props) {
         console.log(err);
       });
   }, [props.match.params._id]);
-
-  const handleOnSubmit = () => {
-    history.push(`/login`);
-  };
   
-  //Fetch the categories list in categories API to compare with the value of gerne
-  //Result gerne returned in movie API is cateories _id so that we need to fetch category list to compare and get the gerne name for the movie
+  // Fetch the categories list in categories API to compare with the value of gerne
+  // Result genre returned in movie API is categories _id 
+  // so that we need to fetch category list to compare and get the gerne name for the movie
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/v1/categories`)
@@ -48,6 +45,12 @@ export default function Details(props) {
       });
     // eslint-disable-next-line
   }, []);
+
+  // Function to redirect user to login if not logged in
+  const handleOnSubmit = () => {
+    history.push(`/login`);
+  };
+
   return (
     <AuthContext.Consumer>
       {(context) => {
@@ -60,6 +63,7 @@ export default function Details(props) {
               style={{ marginLeft: 0 + "px", marginTop: 0 + "px" }}
             >
               <div className="bg-netflix-black overflow-hidden text-white md:object-center">
+                {/* Movie trailer */}
                 <div className="movie-wrapper">
                   <div className="trailer-wrapper min-h-full pt-100">
                     <iframe
@@ -77,6 +81,7 @@ export default function Details(props) {
                       frameBorder="0"
                     ></iframe>
                   </div>
+                  {/* Movie detail information */}
                   <div
                     className="movie-details"
                     style={{ paddingLeft: 15 + "%", paddingRight: 25 + "%" }}
@@ -127,11 +132,12 @@ export default function Details(props) {
                           Back{" "}
                         </button>
                       </div>
+                      {/* Add To Cart button */}
                       <div>
                         {localStorage.getItem("accessToken") ? (
+                          // Add movie to cart if user logged in
                           <button
                             className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white"
-                            // onClick={handleCart}
                             onClick={() => {
                               handleItemAdd(movie._id);
                             }}
@@ -139,6 +145,7 @@ export default function Details(props) {
                             Add to cart
                           </button>
                         ) : (
+                          // Redirect to login if not logged in
                           <button
                             className="p-3 ml-10 border-2 bg-red-500 hover:bg-red-700 border-white text-white"
                             onClick={handleOnSubmit}

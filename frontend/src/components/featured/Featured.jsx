@@ -6,27 +6,6 @@ import AuthContext from "../../service/auth-context";
 const Featured = ({ type, movie }) => {
   const history = useHistory();
 
-  // const handleCart = (e) => {
-  //   e.preventDefault();
-  //   var url = `http://localhost:4000/api/v1/carts?movie_id=${movie._id}`
-  //   const data = {
-  //     movie: movie._id,
-  //     createdBy: localStorage.getItem('_id')
-  //   }
-
-  //   let axiosConfig = {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-  //     }
-  //   };
-  //   axios.post(url, data, axiosConfig)
-  //     .then(res => {
-  //       console.log(res);
-  //       console.log(res.data);
-  //     })
-  // };
-
   const handleOnSubmit = () => {
     history.push(`/login`);
   };
@@ -43,12 +22,15 @@ const Featured = ({ type, movie }) => {
               className="w-full h-full object-cover opacity-80"
             />
             <div className="w-2/5 absolute inset-x-14 bottom-14 flex flex-col text-white">
+              {/* Movie summarised info */}
               <h1 className="text-5xl font-extrabold">{movie.title}</h1>
               <span className="my-6 text-xl font-medium drop-shadow-md">
                 {movie.description}
               </span>
+              {/* Add To Cart button */}
               <div className="flex items-center">
                 {localStorage.getItem("accessToken") ? (
+                  // Button to add movie to cart if the user is logged in
                   <button
                     onClick={() => handleItemAdd(movie._id)}
                     className="flex items-center bg-gray-50 text-netflix-black cursor-pointer font-medium text-xl rounded-md py-3 px-6"
@@ -68,6 +50,7 @@ const Featured = ({ type, movie }) => {
                     <span className="ml-3">Add to cart</span>
                   </button>
                 ) : (
+                  // Button redirecting to login page if the user is not logged in
                   <button
                     onClick={handleOnSubmit}
                     className="flex items-center bg-gray-50 text-netflix-black cursor-pointer font-medium text-xl rounded-md py-3 px-6"
@@ -88,6 +71,7 @@ const Featured = ({ type, movie }) => {
                   </button>
                 )}
 
+                {/* More Info button */}
                 <Link to={`/details/${movie._id}`}>
                   <button className="flex items-center bg-gray-400 text-white cursor-pointer font-medium text-xl rounded-md ml-3 py-3 px-6">
                     <svg

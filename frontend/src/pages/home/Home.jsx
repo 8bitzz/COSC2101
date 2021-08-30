@@ -9,8 +9,6 @@ const Home = () => {
   const [movies, setMovie] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [highlightedMovie, setHighLightedMovie] = useState([]);
-  // const [count, setCount] = useState(0);
-  // const [value, setValue] = useState(0);
   
   //Fetch movie from API
   useEffect(() => {
@@ -26,37 +24,9 @@ const Home = () => {
       });
     // eslint-disable-next-line
   }, []);
-  //console.log('highlight', highlightedMovie)
-  // console.log('cate', movies.map((item)=>item.filter(category=> category.category.name==="Dramas")))
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken")) {
-  //     axios
-  //       .get(`${BASE_API_URL}/api/v1/carts`, {
-  //         headers: {
-  //           "Authorization": "Bearer " + localStorage.getItem("accessToken")
-  //         }
-  //       })
-  //       .then((res) => {
-  //         setCount(res.data.data.carts.length)
-  //         setValue(res.data.data.carts.length)
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  //   else {
-  //     return;
-  //   }
-  // }, [value])
-
-  function updateValue() {
-    // return setValue(0);
-  }
 
   return (
     <div>
-      {/* <NavBar count={count}/> */}
       <NavBar />
       <div className="bg-netflix-black overflow-hidden">
         {/* {displayMovieList(search, category)} */}
@@ -65,7 +35,6 @@ const Home = () => {
           return (
             <MovieList
               key={index}
-              funct={updateValue}
               title={movieTitle}
               movie={movies.map((item, index) =>
                 item.filter(

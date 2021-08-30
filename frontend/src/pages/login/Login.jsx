@@ -21,6 +21,7 @@ export default class LogIn extends Component {
     //Get the current value of email and password
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
+    
     //Check if email and password are filled
     if (email.trim().length === 0 || password.trim().length === 0) {
       if (email.trim().length === 0) {
@@ -30,6 +31,7 @@ export default class LogIn extends Component {
       }
       return;
     }
+
     var regex =
     /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
     if (!email.match(regex)) {
@@ -41,6 +43,7 @@ export default class LogIn extends Component {
     }
     this.setState({ disabled: true });
     var url = "http://localhost:4000/api/v1/auth/login";
+
     //Consume auth API
     fetch(url, {
       method: "POST",
@@ -75,6 +78,7 @@ export default class LogIn extends Component {
         console.log(err);
       });
   };
+  
   render() {
     return (
       <div className="login">
