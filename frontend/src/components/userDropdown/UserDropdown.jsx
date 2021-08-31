@@ -44,6 +44,7 @@ const UserDropdown = ({ handleLogout }) => {
               </span>
             </div>
             <div className="text-left">
+              {/* Order button */}
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -58,6 +59,7 @@ const UserDropdown = ({ handleLogout }) => {
                   </button>
                 )}
               </Menu.Item>
+              {/* Logout button */}
               <Menu.Item>
                 {({ active }) => (
                   <button

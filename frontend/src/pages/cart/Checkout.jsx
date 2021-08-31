@@ -1,7 +1,6 @@
 import React from "react";
 import NavBar from "../../components/navbar/NavBar";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { BASE_API_URL } from "../../utils/constants";
 import { usePaymentInputs } from "react-payment-inputs";
@@ -13,7 +12,6 @@ const Checkout = () => {
   const [cvc, setCvc] = useState("");
   const [cartItem, setCartItem] = useState([]);
   const { meta, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
-  let history = useHistory();
 
   // Fetch movie from cart
   useEffect(() => {
@@ -38,35 +36,6 @@ const Checkout = () => {
     }
   }, []);
 
-  // Function to handle payment form submit
-  const handleSubmit = (e) => {
-    // If no error, send input data to backend and redirect to Homepage
-    if (!meta.error) {
-      e.preventDefault();
-      var url = `${BASE_API_URL}/api/v1/orders`
-      const data = {  // Data to send to backend
-        creditCard: {
-          number: cardNumber.replace(/\s+/g, ''),
-          expiredDate: formatDate(expDate),
-          cvc: cvc.replace(/\s+/g, '')
-        }
-      }
-      let axiosConfig = { // Configuration for axios 
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-        } 
-      }
-      // POST method
-      axios.post(url, data, axiosConfig)
-           .then((res) => console.log(res))
-           .catch((err) => console.log(err))
-      history.push("/") // Redirect to Homepage 
-      alert("Thank you! Please enjoy your movies!") //Display notice
-      return;
-    }
-  }
-
   // Function to get total price of all items in cart 
   const getTotalPrice = () => {
     var total = 0;
@@ -89,18 +58,7 @@ const Checkout = () => {
   const handleCvcInput = (e) => {
     setCvc(e.target.value)
   }
-
-  // Function to transform date format "MM / YY" (card format) to "MM/YYYY" (Backend format)
-  const formatDate = (date) => {
-    date = date.replace(/\s+/g, '');  // Remove space -> MM/YY
-    var splitDate = date.split("/");  // Split into month and year -> [MM], [YY]
-    var yearHead = "20";
-    var year = yearHead.concat(splitDate[1]); // Add 2000 to year -? [MM], [20YY]
-    var formatted = splitDate[0] + "/" + year;  // Rejoin into formatted date -> MM/YYYY
-    return formatted;
-  }
   
-  // Form only need creditcard, total, checkout button 
   return (
     <AuthContext.Consumer>
       {(context) => {
@@ -111,11 +69,16 @@ const Checkout = () => {
             <NavBar/>
             {/* Page title */}
             <h1 className="text-white text-3xl font-semibold text-center my-6">Checkout</h1>
+            <img 
+              className="h-10 m-auto mb-10"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Visa_2021.svg/1920px-Visa_2021.svg.png" 
+              alt="Visa card logo" 
+            />
             {/* Page content */}
             <div style={{marginLeft: "25%", marginRight:"25%"}}>
               {/* Payment form */}
               <div className="w-full p-10 bg-gray-700 bg-opacity-25 border-white border-2 border-opacity-75 rounded-md object-center">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(e) => handleItemClear(e, cardNumber, expDate, cvc)}>
                   {/* Card number field */}
                   <div>
                     <input 
@@ -159,7 +122,6 @@ const Checkout = () => {
                         value="Pay now" 
                         className="min-w-max mt-4 py-1.5 px-3 min-w-min border-white border-2 border-opacity-75 rounded-md text-white bg-netflix-black"
                         style={{ width: "24%", margin: "auto"}}
-                        onClick={() => handleItemClear()}
                       />
                     }
 

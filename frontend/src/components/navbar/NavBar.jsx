@@ -9,12 +9,9 @@ import UserDropdown from "../userDropdown/UserDropdown";
 
 function NavBar(props) {
   const [movieList, setMovieList] = useState([]);
-  // const [count, setCount] = useState(0);
-  // const [cartItem, setCartItem] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const history = useHistory();
-
   const [isScrolled, setIsScrolled] = useState(false);
+  const history = useHistory();
 
   // Put search term to URL param then push to /search page
   const putSearchParam = (event) => {
@@ -54,6 +51,7 @@ function NavBar(props) {
     });
   };
 
+  // Function to handle category select
   const handleCategorySelect = (event) => {
     let genre = event.target.value;
     putFilterParam(genre);
@@ -79,27 +77,6 @@ function NavBar(props) {
     // eslint-disable-next-line
   }, []);
 
-  //Fetch cart from API
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken")) {
-  //     axios
-  //       .get(`${BASE_API_URL}/api/v1/carts`, {
-  //         headers: {
-  //           Authorization: "Bearer " + localStorage.getItem("accessToken"),
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setCartItem(res.data.data.carts);
-  //         setCount(res.data.data.carts.length);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     return;
-  //   }
-  // }, [props.count]);
-
   return (
     <AuthContext.Consumer>
       {(context) => {
@@ -107,13 +84,17 @@ function NavBar(props) {
           <div className={isScrolled ? "navbar bg-netflix-black" : "navbar"}>
             <div className="h-20 py-3 px-12 flex justify-between items-center text-sm">
               <div className="flex items-center font-light">
+
+                {/* Logo */}
                 <Link to="/">
                   <img
                     className="h-6 mr-8 cursor-pointer"
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-                    alt=""
+                    alt="Netflix logo"
                   />
                 </Link>
+
+                {/* Movie genre selector */}
                 <select
                   name="category"
                   id="category"
@@ -128,7 +109,9 @@ function NavBar(props) {
                   ))}
                 </select>
               </div>
+
               <div className=" flex items-center">
+                {/* Search field */}
                 <div className=" bg-netflix-black rounded-md my-auto opacity-80 p-2 mr-4 ">
                   <form
                     className=" bg-netflix-black flex items-center"
@@ -158,6 +141,7 @@ function NavBar(props) {
                   </form>
                 </div>
                 {localStorage.getItem("accessToken") && (
+                  // Button to Cart only appear when logged in
                   <Link to="/cart">
                     <button
                       className="py-4 px-1 relative border-2 border-transparent  rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out"
@@ -178,9 +162,9 @@ function NavBar(props) {
                           d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                         ></path>
                       </svg>
+                      {/* Number badge counting number of item in Cart */}
                       <span className="absolute inset-0 object-right-top -mr-6">
                         <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
-                          {/* {props.count} */}
                           {context.count}
                         </div>
                       </span>
@@ -189,11 +173,13 @@ function NavBar(props) {
                 )}
 
                 {!localStorage.getItem("accessToken") && (
+                  // Login button shows when not logged in
                   <button className="bg-red-600 rounded-md py-2 px-4">
                     <Link to="/login">Sign In</Link>
                   </button>
                 )}
                 {localStorage.getItem("accessToken") && (
+                  // Show account menu if logged in
                   <>
                     <UserDropdown handleLogout={context.logout}/>
                   </>

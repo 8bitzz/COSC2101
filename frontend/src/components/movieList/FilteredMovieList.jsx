@@ -11,10 +11,8 @@ const FilteredMovieList = ({ location }) => {
   const param = useLocation().search;
   //Set param to category
   const category = new URLSearchParams(param).get("type");
-  console.log(category);
+
   const [filteredMovies, setFilteredMovies] = useState([]);
-  // const [count, setCount] = useState(0);
-  // const [value, setValue] = useState(0);
 
   //Fetch data according to the category
   useEffect(() => {
@@ -29,48 +27,24 @@ const FilteredMovieList = ({ location }) => {
       });
   }, [category]);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken")) {
-  //     axios
-  //       .get(`${BASE_API_URL}/api/v1/carts`, {
-  //         headers: {
-  //           "Authorization": "Bearer " + localStorage.getItem("accessToken")
-  //         }
-  //       })
-  //       .then((res) => {
-  //         setCount(res.data.data.carts.length)
-  //         setValue(res.data.data.carts.length)
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  //   else {
-  //     return;
-  //   }
-  // }, [value])
-
-  function updateValue() {
-    // return setValue(0);
-  }
-
   return (
     <div className="bg-netflix-black bg-cover w-full py-24 text-white" style={{minHeight: "100vh"}}>
-      {/* <NavBar count={count}/> */}
       <NavBar />
       <p className="my-10 ml-12 text-3xl font-bold text-white">{category}</p>
       <div className=" flex bg-netflix-black h-screen w-full">
         {filteredMovies.length <= 0 ? (
+          // Show message if returned list is empty
           <div className="text-white ml-12">
             <p>There is no movies at this category at the moment</p>
           </div>
         ) : (
+          // Display items if not null
           <div
             className="movieContainer ml-12"
           >
             <div className="flex flex-wrap gap-2">
               {filteredMovies.map((movie, index) => {
-                return <MovieItem funct={updateValue} movie={movie} key={movie._id} index={index} />;
+                return <MovieItem movie={movie} key={movie._id} index={index} />;
               })}
             </div>
           </div>
