@@ -5,6 +5,7 @@ import axios from "axios";
 import { BASE_API_URL } from "../../utils/constants";
 import { usePaymentInputs } from "react-payment-inputs";
 import AuthContext from "../../service/auth-context";
+import { getTotalPrice } from "../../utils/utils";
 
 const Checkout = () => {
   const [cardNumber, setCardNumber] = useState("");
@@ -35,16 +36,6 @@ const Checkout = () => {
       return;
     }
   }, []);
-
-  // Function to get total price of all items in cart 
-  const getTotalPrice = () => {
-    var total = 0;
-    for (var i = 0; i < cartItem.length; i++) {
-      var moviePrice = cartItem[i]["movie"]["price"];
-      total += moviePrice;
-    }
-    return total.toFixed(2);
-  }
 
   // Functions to handle user input to payment form
   const handleCardNumberInput = (e) => {
@@ -109,7 +100,7 @@ const Checkout = () => {
 
                   {/* Total price */}
                   <div className="mt-4 mb-8">
-                    <p className="mb-2 text-2xl font-semibold">Total<span style={{ float: "right" }}>${getTotalPrice()}</span></p>
+                    <p className="mb-2 text-2xl font-semibold">Total<span style={{ float: "right" }}>${getTotalPrice(cartItem)}</span></p>
                     <hr/>
                   </div>
 

@@ -6,6 +6,7 @@ import { BASE_API_URL } from "../../utils/constants";
 import AuthContext from "../../service/auth-context";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { getTotalPrice } from "../../utils/utils";
 
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
@@ -34,16 +35,6 @@ const Cart = () => {
       return;
     }
   }, []);
-
-  // Function to calculate total price of all movies in Cart 
-  const getTotalPrice = () => {
-    var total = 0;
-    for (var i = 0; i < cartItem.length; i++) {
-      var moviePrice = cartItem[i]["movie"]["price"];
-      total += moviePrice;
-    }
-    return total.toFixed(2);
-  };
 
   // Exclude removed item from the Cart
   const filterCartItems = removedItem => {
@@ -154,7 +145,7 @@ const Cart = () => {
                 <div className="py-6">
                   <p className="px-4 text-lg font-semibold">
                     Subtotal
-                    <span style={{ float: "right" }}>${getTotalPrice()}</span>
+                    <span style={{ float: "right" }}>${getTotalPrice(cartItem)}</span>
                   </p>
                 </div>
 
