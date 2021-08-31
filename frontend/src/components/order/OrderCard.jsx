@@ -1,5 +1,5 @@
 import React from "react";
-import DateFormatter from "../../utils/DateFormatter";
+import DateFormatter from "../../utils/utils";
 import OrderItem from "./OrderItem";
 
 const OrderCard = ({ order }) => {

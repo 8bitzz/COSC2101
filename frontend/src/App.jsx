@@ -17,7 +17,7 @@ import Checkout from "./pages/cart/Checkout";
 import OrderHistory from "./pages/orderHistory/OrderHistory";
 import { BASE_API_URL } from "./utils/constants";
 import axios from "axios";
-import { formatCardDate } from "./utils/DateFormatter";
+import { formatCardDate } from "./utils/utils";
 
 export default class App extends React.Component {
   // Set state for accessToken and _id
