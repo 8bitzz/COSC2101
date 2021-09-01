@@ -3,7 +3,7 @@ import NavBar from "../../components/navbar/NavBar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_API_URL } from "../../utils/constants";
-import { usePaymentInputs } from "react-payment-inputs";
+import { usePaymentInputs } from 'react-payment-inputs';
 import AuthContext from "../../service/auth-context";
 
 const Checkout = () => {
