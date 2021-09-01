@@ -5,6 +5,7 @@ import { Component } from "react";
 export default class Register extends Component {
   static contextType = AuthContext;
 
+  //Create a constructor and set initiali value for username, email, password
   constructor(props) {
     super(props);
     this.state = {
@@ -16,14 +17,17 @@ export default class Register extends Component {
     };
   }
 
+  //function to hanlde user input change
   handleChange(e) {
     var obj = {};
     obj[e.target.name] = e.target.value;
     this.setState(obj);
   }
 
+  //Signup function then log in if sign up successfully
   handleSubmit = async (e) => {
     e.preventDefault();
+    //Check if username, email and password are filled
     if (
       this.state.email.trim().length === 0 ||
       this.state.password.trim().length === 0 ||
@@ -39,7 +43,10 @@ export default class Register extends Component {
       return;
     }
 
+    //Get the token
     const token = this.context.token;
+
+    //Check if username and passwor match with the defined regex
     var email_regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
 
     if (!this.state.email.match(email_regex)) {
@@ -58,8 +65,9 @@ export default class Register extends Component {
         return;
       }
       this.setState({ disabled: true });
-      //Consume auth API
+      //Consume auth sign up API
       var url = "http://localhost:4000/api/v1/auth/register";
+      //Fetch and set header configurations
       await fetch(url, {
         method: "post",
         headers: {
@@ -67,6 +75,7 @@ export default class Register extends Component {
           Authorization: "Bearer " + token,
           Accept: "application/json",
         },
+        //Set username, password and email values to body
         body: JSON.stringify({
           username: this.state.username,
           password: this.state.password,
@@ -74,17 +83,21 @@ export default class Register extends Component {
         }),
       })
         .then((res) => {
+          //If server responds with status 401 => failed (email is existing)
           if (res.status === 401) {
             this.setState({ message: "Email has been registered" });
             this.setState({ disabled: false });
             throw new Error("Email already existed");
-          } else if (res.status === 200 || res.status === 201) {
+          } // If server return with statucs 200 or 201 => sucessfully registered
+          else if (res.status === 200 || res.status === 201) {
             this.setState({ message: "" });
             var ask = window.confirm(
               "User added! \nClick OK to go back to Homepage"
             );
             if (ask) {
+              //If user confirmed, consume login auth API with the provided email and password info
               var url1 = "http://localhost:4000/api/v1/auth/login";
+              //Fetch the login endpoint and set header configaration
               fetch(url1, {
                 method: "POST",
                 headers: {
@@ -97,6 +110,7 @@ export default class Register extends Component {
                 }) 
               })
               .then((res) => {
+                //If logged in sucessfully, redirect bac to homepage
                 if (res.status === 200 || res.status === 201){
                   window.location.href = "http://localhost:3000/";
                 }

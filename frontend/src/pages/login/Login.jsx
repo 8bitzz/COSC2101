@@ -6,6 +6,7 @@ import React from "react";
 export default class LogIn extends Component {
   static contextType = AuthContext;
 
+  //Set initial state for error message, button status, email and password
   constructor(props) {
     super(props);
     this.state = {
@@ -32,6 +33,7 @@ export default class LogIn extends Component {
       return;
     }
 
+    //Check if user inputted email has a valid format
     var regex =
     /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
     if (!email.match(regex)) {
@@ -42,21 +44,25 @@ export default class LogIn extends Component {
       return;
     }
     this.setState({ disabled: true });
+
+    //Consume auth login API
     var url = "http://localhost:4000/api/v1/auth/login";
 
-    //Consume auth API
+    //Fetch the login endpoint and add header configuratios
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      //Stringtify the response and set email and password value to send to the server
       body: JSON.stringify({
         email: email,
         password: password,
       }) 
     })
       .then((res) => {
+        //If the server not repsonse with status 200 or 201 => failed (wrong username or password)
         if (res.status !== 200 && res.status !== 201) {
           throw (
             (new Error("Failed!"),
@@ -64,11 +70,14 @@ export default class LogIn extends Component {
             this.setState({disabled: false}))
           );
         }
+        //if the server respoonse with status 200 or 201 => login sucessfully
         else if (res.status === 200 || res.status === 201){
           window.location.href = "http://localhost:3000/";
         }
+        //Retusn the user infomation
         return res.json();
       })
+      //Set the token
       .then((res) => {
         if (res.accessToken) {
           this.context.login(res.accessToken, res._id, res.tokenExpiration);

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import axios from "axios"
+import DateFormatter, { formatCardDate, getTotalPrice } from './utils/utils';
 
 // Sample data to check received data from database 
 const movie1 = [{
@@ -32,6 +33,49 @@ const movie2 = [{
   "__v":0,
   "highlight":"http://img.youtube.com/vi/mUe79BSig_4/maxresdefault.jpg"
 }];
+
+const cart = [
+  {
+      "_id": "612d92d5d0a96503b06f00e9",
+      "createdBy": "612652e635352a92c413b493",
+      "movie": {
+          "images": [],
+          "_id": "60f82c01db6ff52c99fc171c",
+          "title": "Breakpoint Bad",
+          "description": "A high school chemistry teacher dying of cancer teams with a former student to secure his family's future by manufacturing and selling crystal meth.",
+          "duration": "2h 12m",
+          "publishYear": "2013",
+          "price": 10.9,
+          "thumbnail": "https://occ-0-395-58.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABUr3Y1-NF-H2vxX46gBEwdYqSlvDsY126karuPPoXnHjijxuk1cXPIb8lrLk8TfN3YXWzniCLhrTOROMXuLaKcji8lI.jpg",
+          "category": "60f7fea473c33425420f7129",
+          "trailerURL": "https://www.youtube.com/watch?v=HhesaQXLuRY",
+          "casts": "Bryan Cranston, Aaron Paul, Anna Gunn, more.",
+          "__v": 0
+      },
+      "createdAt": "2021-08-31T02:24:21.736Z",
+      "__v": 0
+  },
+  {
+      "_id": "612d92d7d0a96503b06f00ed",
+      "createdBy": "612652e635352a92c413b493",
+      "movie": {
+          "images": [],
+          "_id": "610d119e68de48deec1bcb53",
+          "title": "Chasing Coral",
+          "description": "Divers, scientists and photographers around the world mount an epic underwater campaign to document the disappearance of coral reefs.",
+          "duration": "1h 29m",
+          "publishYear": "2017",
+          "price": 11.99,
+          "thumbnail": "https://occ-0-325-395.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABfiFcvxTHwDmo09AtFa0WuCMxjFEJTZCIaynzV2kgMY4QppZ82OOHvWSILvlAruaWQOR8Ra7mqKcfCLEAcisSuTmGslDVx489GoylqBoGDLTq8Iyw1bej1GkvcaX.jpg?r=211",
+          "category": "60f7feb573c33425420f712d",
+          "trailerURL": "https://www.youtube.com/watch?v=b6fHA9R2cKI",
+          "casts": "N/A",
+          "__v": 0
+      },
+      "createdAt": "2021-08-31T02:24:23.105Z",
+      "__v": 0
+  }
+]
 
 // Testing fetching for all movies 
 describe("Fetch in Home", () => {
@@ -99,5 +143,30 @@ describe("Fetch movie by category", () => {
     // Compare results
     expect(received1).toEqual(expect.arrayContaining(expected1));
     expect(received2).toEqual(expect.arrayContaining(expected2));
+  })
+})
+
+describe("Test date formatter", () => {
+  it("DateFormatter", () => {
+    const testDate = "2021-08-30T10:43:16.284+00:00";
+    const expected = "30-08-2021"; 
+    const received = DateFormatter(testDate);
+    expect(received).toEqual(expected);
+  })
+
+  it("formatCardDate", () => {
+    const cardDate = "12 / 23";
+    const expected = "12/2023";
+    const received = formatCardDate(cardDate);
+    expect(received).toEqual(expected);
+  })
+})
+
+describe("Calculate total price of a cart", () => {
+  it("getTotalPrice", () => {
+    const testData = cart;
+    const expected = "22.89";
+    const received = getTotalPrice(testData);
+    expect(received).toEqual(expected);
   })
 })

@@ -24,3 +24,12 @@ export const formatCardDate = (date) => {
   var formatted = splitDate[0] + "/" + year;  // Rejoin into formatted date -> MM/YYYY
   return formatted;
 }
+
+export const getTotalPrice = (cartItem) => {
+  var total = 0;
+  for (var i = 0; i < cartItem.length; i++) {
+    var moviePrice = cartItem[i]["movie"]["price"];
+    total += moviePrice;
+  }
+  return total.toFixed(2);
+}
