@@ -1,47 +1,141 @@
-import { useRef, useState } from "react";
 import "./signup.css";
 import { Link } from "react-router-dom";
-import AuthContext from "../../service/auth-context.js"
-export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+import AuthContext from "../../service/auth-context.js";
+import { Component } from "react";
+export default class Register extends Component {
+  static contextType = AuthContext;
 
-  const handleSubmit = (e) => {
+  //Create a constructor and set initiali value for username, email, password
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: "",
+      disabled: false,
+      email: "",
+      password: "",
+      username: "",
+    };
+  }
+
+  //function to hanlde user input change
+  handleChange(e) {
+    var obj = {};
+    obj[e.target.name] = e.target.value;
+    this.setState(obj);
+  }
+
+  //Signup function then log in if sign up successfully
+  handleSubmit = async (e) => {
     e.preventDefault();
-    //Check if email and password are filled
-       if (email.trim().length === 0 || password.trim().length === 0) {
-      if (email.trim().length === 0) {
-        alert('Email must not be empty')
-      }
-      else if (password.trim().length === 0) {
-        alert('Password must not be empty')
+    //Check if username, email and password are filled
+    if (
+      this.state.email.trim().length === 0 ||
+      this.state.password.trim().length === 0 ||
+      this.state.username.trim().length === 0
+    ) {
+      if (this.state.username.trim().length === 0) {
+        this.setState({ message: "Username must not be empty" });
+      } else if (this.state.email.trim().length === 0) {
+        this.setState({ message: "Email must not be empty" });
+      } else if (this.state.password.trim().length === 0) {
+        this.setState({ message: "Password must not be empty" });
       }
       return;
     }
-    //Consume auth API
-    const token = AuthContext.accessToken //Get token from AuthContext
-    var url = 'http://localhost:4000/api/v1/auth/register'
-    fetch(url, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ email: email, password: password, username: username })
-    })
-      .then(res => {
-        if (res.status === 409) {
-          throw new Error('Email already existed'),
-          alert('Email already existed')
-        } else {
-          alert('User added!')
-        }
+
+    //Get the token
+    const token = this.context.token;
+
+    //Check if username and passwor match with the defined regex
+    var email_regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+
+    if (!this.state.email.match(email_regex)) {
+      this.setState({ message: "Please input a valid email" });
+      this.setState({ disabled: false });
+    } 
+    else if (!this.state.password.match(/(?=.*\d)(?=.*[A-Z]).{6,}/)) {
+      this.setState({
+        message:
+          "Password must be at least 6 characters long, must contain a number, must contain an uppercase",
+      });
+      this.setState({ disabled: false });
+    } 
+    else {
+      if (this.state.disabled) {
+        return;
+      }
+      this.setState({ disabled: true });
+      //Consume auth sign up API
+      var url = "http://localhost:4000/api/v1/auth/register";
+      //Fetch and set header configurations
+      await fetch(url, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+        },
+        //Set username, password and email values to body
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password,
+          email: this.state.email,
+        }),
       })
+        .then((res) => {
+          //If server responds with status 401 => failed (email is existing)
+          if (res.status === 401) {
+            this.setState({ message: "Email has been registered" });
+            this.setState({ disabled: false });
+            throw new Error("Email already existed");
+          } // If server return with statucs 200 or 201 => sucessfully registered
+          else if (res.status === 200 || res.status === 201) {
+            this.setState({ message: "" });
+            var ask = window.confirm(
+              "User added! \nClick OK to go back to Homepage"
+            );
+            if (ask) {
+              //If user confirmed, consume login auth API with the provided email and password info
+              var url1 = "http://localhost:4000/api/v1/auth/login";
+              //Fetch the login endpoint and set header configaration
+              fetch(url1, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({
+                  email: this.state.email,
+                  password: this.state.password,
+                }) 
+              })
+              .then((res) => {
+                //If logged in sucessfully, redirect bac to homepage
+                if (res.status === 200 || res.status === 201){
+                  window.location.href = "http://localhost:3000/";
+                }
+                return res.json();
+              })
+              .then((res) => {
+                if (res.accessToken) {
+                  this.context.login(res.accessToken, res._id, res.tokenExpiration);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
-  return (
-    <div className="register">
+
+  render() {
+    return (
+      <div className="register">
         <div className="navbar w-screen fixed top-0 z-50 text-white">
           <div className="h-20 py-3 px-12 flex justify-between items-center text-sm">
             <div className="flex items-center font-light">
@@ -61,24 +155,63 @@ export default function Register() {
           </div>
         </div>
         <div className="container">
-          <h1 className="text-5xl font-extrabold">Unlimited movies, TV shows, and more.</h1>
-          <h2 className="text-3xl my-4 font-bold">Watch anywhere. Cancel anytime.</h2>
+          <h1 className="text-5xl font-extrabold">
+            Unlimited movies, TV shows, and more.
+          </h1>
+          <h2 className="text-3xl my-4 font-bold">
+            Watch anywhere. Cancel anytime.
+          </h2>
           <p className="text-xl mb-4">
             Ready to watch? Enter your email to start checking out your cart.
           </p>
-          <form className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-80" action="post">
+          <form
+            className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-100"
+            action="post"
+          >
             <h1 className="text-xl font-semibold text-center">Sign Up</h1>
-            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="username" name="username" value={username} placeholder="Username" onChange={e=>setUsername(e.target.value)} />
-            <input className="h-12 rounded-md pl-2 text-gray-600" type="text" id="email" name="email" value={email} placeholder="Email" onChange={e=>setEmail(e.target.value)} />
-            <input type="password" className="h-12 rounded-md pl-2 text-gray-600" id="password" name="password" value={password} placeholder="Password" onChange={e=>setPassword(e.target.value)}/>
+
+            <input
+              className="h-12 rounded-md pl-2 text-gray-600"
+              type="text"
+              id="username"
+              name="username"
+              value={this.state.username}
+              placeholder="Username"
+              onChange={this.handleChange.bind(this)}
+              required
+            />
+            <input
+              className="h-12 rounded-md pl-2 text-gray-600"
+              type="text"
+              id="email"
+              name="email"
+              value={this.state.email}
+              placeholder="Email"
+              onChange={this.handleChange.bind(this)}
+              required
+            />
+            <input
+              type="password"
+              className="h-12 rounded-md pl-2 text-gray-600"
+              id="password"
+              name="password"
+              value={this.state.password}
+              placeholder="Password"
+              onChange={this.handleChange.bind(this)}
+              required
+            />
             <button
               className=" bg-red-600 rounded-md py-2 px-4 "
-              onClick={handleSubmit}
+              onClick={this.handleSubmit}
             >
-              Register
+              {this.state.disabled ? "Signing up..." : "Register"}
             </button>
           </form>
+          <div style={{ border: "100px" }}>
+            <p style={{ color: "red" }}>{this.state.message}</p>
+          </div>
         </div>
       </div>
-  );
+    );
+  }
 }

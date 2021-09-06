@@ -7,10 +7,16 @@ const {
   getMovieByID
 } = require("../controllers/movieControllers");
 
+// Endpoint to get all movies in a category
 router.get("/category", getMovieByCategory);
-router.get("/", getAllMovie);
-router.post("/", createNewMovie);
-router.get("/:id", getMovieByID);
 
+// Endpoint to get all movies in all categories
+router.get("/", getAllMovie);
+
+// Endpoint to create new movies
+router.post("/", createNewMovie);
+
+// Endpoint to get a movie by a given ID
+router.get("/:id", getMovieByID);
 
 module.exports = router;

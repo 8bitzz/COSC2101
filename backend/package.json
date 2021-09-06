@@ -14,6 +14,7 @@
     "body-parser": "^1.19.0",
     "config": "^3.3.6",
     "cors": "^2.8.5",
+    "credit-card-validate": "^0.9.3",
     "crypto-js": "^4.0.0",
     "dotenv": "^10.0.0",
     "escape-string-regexp": "^5.0.0",
@@ -25,7 +26,8 @@
     "mongoose": "^5.13.2",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "util": "^0.12.4"
   },
   "devDependencies": {
     "chai": "^4.3.4",

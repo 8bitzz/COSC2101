@@ -1,65 +1,94 @@
 import { Link } from "react-router-dom";
 import "./login.css";
-import { Component, useRef, useState } from "react";
-import AuthContext from "../../service/auth-context.js"
+import { Component } from "react";
+import AuthContext from "../../service/auth-context.js";
 import React from "react";
 export default class LogIn extends Component {
   static contextType = AuthContext;
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            message: "",
-        }
-        this.emailEl = React.createRef()
-        this.passwordEl = React.createRef()
-    }
+  //Set initial state for error message, button status, email and password
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: "",
+      disabled: false,
+    };
+    this.emailEl = React.createRef();
+    this.passwordEl = React.createRef();
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
     //Get the current value of email and password
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
+    
     //Check if email and password are filled
-    if (email.trim().length === 0 || email.trim().length === 0) {
+    if (email.trim().length === 0 || password.trim().length === 0) {
       if (email.trim().length === 0) {
-        alert('Username must not be empty')
-      }
-      else if (password.trim().length === 0) {
-        alert('Password must not be empty')
+        this.setState({ message: "Email must not be empty" });
+      } else if (password.trim().length === 0) {
+        this.setState({ message: "Password must not be empty" });
       }
       return;
     }
-    console.log(email, password)
-    //Consume auth API
-    fetch('http://localhost:4000/api/v1/auth/login', {
-      method: 'POST',
+
+    //Check if user inputted email has a valid format
+    var regex =
+    /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+    if (!email.match(regex)) {
+      this.setState({ message: "Invalid email" });
+      return;
+    }
+    if (this.state.disabled) {
+      return;
+    }
+    this.setState({ disabled: true });
+
+    //Consume auth login API
+    var url = "http://localhost:4000/api/v1/auth/login";
+
+    //Fetch the login endpoint and add header configuratios
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      //Stringtify the response and set email and password value to send to the server
       body: JSON.stringify({
         email: email,
-        password: password
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
+        password: password,
+      }) 
     })
-      .then(res => {
+      .then((res) => {
+        //If the server not repsonse with status 200 or 201 => failed (wrong username or password)
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Failed!'),
-          this.setState({message: "Wrong username or password"})
+          throw (
+            (new Error("Failed!"),
+            this.setState({ message: "Wrong email or password" }),
+            this.setState({disabled: false}))
+          );
         }
-        return res.json()
+        //if the server respoonse with status 200 or 201 => login sucessfully
+        else if (res.status === 200 || res.status === 201){
+          window.location.href = "http://localhost:3000/";
+        }
+        //Retusn the user infomation
+        return res.json();
       })
-      .then(res => {
+      //Set the token
+      .then((res) => {
         if (res.accessToken) {
-          this.context.login(res.accessToken, res._id, res.tokenExpiration)
+          this.context.login(res.accessToken, res._id, res.tokenExpiration);
         }
       })
-      .catch(err => {
-        console.log(err)
-    })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  render(){
+  
+  render() {
     return (
       <div className="login">
         <div className="navbar w-screen fixed top-0 z-50 text-white">
@@ -83,6 +112,7 @@ export default class LogIn extends Component {
         <div className="container">
           <form className="w-1/4 h-2/5 rounded-md bg-netflix-black flex flex-col justify-around p-6 opacity-80">
             <h1 className="text-xl font-semibold text-center">Sign In</h1>
+            <span style={{ color: "red" }}>{this.state.message}</span>
             <input
               className="h-12 rounded-md pl-2 text-gray-600"
               type="email"
@@ -99,7 +129,7 @@ export default class LogIn extends Component {
               className="bg-red-600 rounded-md py-2 px-4"
               onClick={this.handleSubmit}
             >
-              Sign In
+              {this.state.disabled ? "Logging in..." : "Sign In"}
             </button>
             <span>
               New to Netflix?{" "}
@@ -111,16 +141,13 @@ export default class LogIn extends Component {
               This page is protected by Google reCAPTCHA to ensure you're not a
               bot.{" "}
               <b>
-                <a className="z-10 cursor-pointer">Learn more</a>
+                <p className="z-10 cursor-pointer">Learn more</p>
               </b>
-              .
+              
             </small>
           </form>
         </div>
       </div>
     );
-
   }
-    
-};
-
+}

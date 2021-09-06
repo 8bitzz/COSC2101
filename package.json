@@ -19,5 +19,7 @@
   "bugs": {
     "url": "https://github.com/NghiaTranUIT/COSC2101/issues"
   },
-  "homepage": "https://github.com/NghiaTranUIT/COSC2101#readme"
+  "homepage": "https://github.com/NghiaTranUIT/COSC2101#readme",
+  "dependencies": {},
+  "devDependencies": {}
 }

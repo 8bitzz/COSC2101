@@ -5,19 +5,20 @@ var cors = require("cors");
 let morgan = require('morgan');
 let config = require('config');
 const path = require('path');
-const AppError = require("./src/util/appError");
 require("dotenv").config();
 
 // Import routes
 const categoryRoutes = require("./src/routes/categoryRoutes");
 const movieRoutes = require("./src/routes/movieRoutes");
 const authRoutes = require("./src/routes/authRoutes");
+const cartRoutes = require("./src/routes/cartRoutes");
+const orderRoutes = require("./src/routes/orderRoutes");
 
 // App config
 var app = express();
 const PORT = process.env.PORT || 4000;
 
-//MongoDB
+//MongoDB connect
 mongoose.connect(config.DBHost, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -53,6 +54,8 @@ app.use(express.static(buildPath));
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/carts", cartRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 // Express App initialize
 app.listen(PORT, function () {

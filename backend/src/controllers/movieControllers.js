@@ -3,6 +3,7 @@ const Category = require("../models/category");
 const catchAsync = require("../util/catchAsync");
 const { populateYoutubeThumbnail, getRandomInt } = require("../util/utils");
 
+// Async function to get all movies or search movies by name
 exports.getAllMovie = catchAsync(async (req, res, next) => {
   const name = req.query.name;
   if (name) {
@@ -12,6 +13,7 @@ exports.getAllMovie = catchAsync(async (req, res, next) => {
   }
 });
 
+// Async function to create new movie
 exports.createNewMovie = catchAsync(async (req, res, next) => {
   const movie = await Movie.create(req.body);
   res.status(201).json({
@@ -22,6 +24,7 @@ exports.createNewMovie = catchAsync(async (req, res, next) => {
   });
 });
 
+// Async function to filter movies in category
 exports.getMovieByCategory = catchAsync(async (req, res, next) => {
   var name = req.query.name;
   if (!name) {
@@ -31,7 +34,7 @@ exports.getMovieByCategory = catchAsync(async (req, res, next) => {
     });
   }
 
-  // Find a category with a given name
+  // Find a category with a given name, using Regex to search category with lowercase
   const category = await Category.findOne({
     name: { $regex: name, $options: "i" },
   });
@@ -53,6 +56,7 @@ exports.getMovieByCategory = catchAsync(async (req, res, next) => {
   });
 });
 
+// Async function to get a movie by ID
 exports.getMovieByID = catchAsync(async (req, res, next) => {
   const movie = await Movie.findById(req.params.id);
 
@@ -64,10 +68,12 @@ exports.getMovieByID = catchAsync(async (req, res, next) => {
   });
 });
 
+// Function to format input to ensure that it is in correct format
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
 
+// Find a movie with a given name, using Regex to search movies with lowercase 
 async function filterMovieByName(req, res, next) {
   const name = req.query.name;
 
@@ -87,6 +93,7 @@ async function filterMovieByName(req, res, next) {
   });
 }
 
+// Async function to return all movies by categories along with a highlighted movie
 async function getMovieAndHighlight(req, res, next) {
   var movies = [];
 

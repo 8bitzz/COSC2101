@@ -11,6 +11,7 @@ const SearchMovieList = () => {
   const param = useLocation().search;
   //Set param to search keyword
   const search = new URLSearchParams(param).get("term");
+
   const [filteredMovies, setFilteredMovies] = useState([]);
 
   //Fetch data according to search keyword
@@ -25,24 +26,29 @@ const SearchMovieList = () => {
         console.log(err);
       });
   }, [search]);
+
   const listRef = useRef();
   return (
-    <div>
+    <div className="bg-netflix-black bg-cover w-full py-24 text-white" style={{minHeight: "100vh"}}>
       <NavBar />
-      <div className="container-fluid h-screen w-full mt-24">
+
+      <div className="mb-10 text-2xl font-bold text-white">
+        <p>Result for "{search}" </p>
+      </div>
+
+      <div className="flex w-full mt-24">
         {filteredMovies.length <= 0 ? (
+          // Message when result is empty
           <div className="text-white ml-12">
             <p>There is no matching movies with provided keyword</p>
           </div>
         ) : (
+          // List movies if result not null
           <div
             className="movieContainer ml-12 mt-3 flex flex-col flex-wrap"
             ref={listRef}
           >
-            <div className="mb-10 text-2xl font-bold text-white">
-              <p>Result for "{search}" </p>
-            </div>
-            <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-4 ">
+            <div className="flex gap-2 flex-wrap">
               {filteredMovies.map((movie, index) => {
                 return <MovieItem movie={movie} key={movie._id} index={index} />;
               })}

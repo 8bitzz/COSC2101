@@ -24,8 +24,6 @@ const Home = () => {
       });
     // eslint-disable-next-line
   }, []);
-  //console.log('highlight', highlightedMovie)
-  // console.log('cate', movies.map((item)=>item.filter(category=> category.category.name==="Dramas")))
 
   return (
     <div>

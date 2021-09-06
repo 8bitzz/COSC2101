@@ -2,15 +2,19 @@ import "./movieList.css";
 import MovieItem from "../movieItem/MovieItem";
 import { useRef, useState, useEffect } from "react";
 
-const MovieList = ({ title, movie }) => {
+const MovieList = ({ funct, title, movie }) => {
   const [newArr, setNewArr] = useState([]);
+
   //For each matching movies from Home, add into a new movie list.
   useEffect(()=>{
     for (let i=0; i< movie.length; i++) { 
-      if (movie[i].length !== 0 )  setNewArr(movie[i])
+      if (movie[i].length !== 0 ) {
+        setNewArr(movie[i])
+      } 
     }  
   }, [movie])
   
+  // Arrow slides controller
   const [slideNumber, setSlideNumber] = useState(0);
   const listRef = useRef();
   const handleClick = (direction) => {
@@ -32,6 +36,7 @@ const MovieList = ({ title, movie }) => {
       </div>
       <span className="text-white text-2xl font-bold ml-12">{title}</span>
       <div className=" text-white relative ">
+        {/* Left arrow */}
         <div className="sliderArrow w-12 h-full absolute inset-y-0 left-0 z-40 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -49,14 +54,17 @@ const MovieList = ({ title, movie }) => {
             />
           </svg>
         </div>
+
+        {/* Movie list */}
         <div className="movieContainer ml-12 mt-3 flex flex-wrap" ref={listRef}>
           {newArr.map((movie, index) => {
             return (
-              <MovieItem movie={movie} key={movie._id} index={index} />
+              <MovieItem funct={funct} movie={movie} key={movie._id} index={index} />
             );
           })}
         </div>
         
+        {/* Right arrow */}
         <div className="sliderArrow w-12 h-full absolute inset-y-0 right-0 z-40 cursor-pointer ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
