@@ -1,16 +1,7 @@
-# COSC2101
+# COSC2101 - Netflix R
 - An online movie renting system using ReactJS, ExpressJS, NodeJS, MongoDB
 
-### Frontend
-1. Change directory to backend folder
-```bash
-$ cd frontend
-```
-2. Start the server at http://localhost:3000
-```bash
-$ npm run dev
-```
-
+## How to run on localhost
 ### Backend
 1. Change directory to backend folder
 ```bash
@@ -25,10 +16,55 @@ $ npm install
 $ npm run dev
 ```
 
-### Backend - Unit Test on local
+### Frontend
+1. Make sure you've already started the Backend
+2. Start Frontend 
+```bash
+$ cd frontend
+```
+3. Install all packages
+```bash
+$ npm install
+```
+4. Start the Frontend app
+```bash
+$ npm run dev
+```
+5. Open Google Chrome and visit http://localhost:3000
+
+## How to run by Docker
+1. Make sure you install and start Docker on your machine
+2. At root directory, execute:
+```bash
+docker-compose up -d
+```
+3. Open Google Chrome and visit http://localhost:3000
+
+## How to run Unit Tests
+### Backend
 1. Change directory to backend folder
 ```bash
 $ cd backend
+```
+2. Install all packages
+```bash
+$ npm install
+```
+3. Start testing all unit tests
+```bash
+$ npm test
+```
+
+### Frontend
+1. Start a Backend
+```bash
+cd backend
+npm install
+npm run dev
+```
+3. Open new Terminal app and Don't stop the backend server
+```bash
+$ cd frontend
 ```
 2. Install all packages
 ```bash
