@@ -1,5 +1,12 @@
 # COSC2101 - Netflix R
 - An online movie renting system using ReactJS, ExpressJS, NodeJS, MongoDB
+- URL: https://netflix-rmit-app.herokuapp.com/
+
+### Team 2
+- Tran Vinh Nghia - S3713031
+- Nguyen Thu Hang - S3798976
+- Nguyen Kim Ngan Hong - S3757107
+- Tran Duy Long - S3752375
 
 ## How to run on localhost
 ### Backend
