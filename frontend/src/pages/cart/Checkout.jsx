@@ -137,6 +137,7 @@ const Checkout = () => {
                   </div>
                 </form>
               </div>
+              <p className="text-gray-500 p-2">For testing purpose: Visa Card: 4111 1111 1111 1111, CVV: 322</p>
             </div>
           </div>
         );

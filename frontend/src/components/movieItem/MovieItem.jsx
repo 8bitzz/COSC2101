@@ -26,7 +26,9 @@ const MovieItem = ({ movie, index }) => {
                 onMouseLeave={() => setIsHovered(false)}
                 style={{ left: isHovered && index * 240 - 48 + index * 4 }}
               >
-                <img src={movie.thumbnail} alt="" />
+                <Link to={`/details/${movie._id}`}>
+                  <img src={movie.thumbnail} alt="" />
+                </Link>
                 <div className="itemInfo">
                   <div className="icons flex justify-between text-white items-center my-1">
                     <div className="flex justify-between text-white items-center">
